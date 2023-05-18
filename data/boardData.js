@@ -1,16 +1,18 @@
 let posting = [
     {
         id: 1,
+        title: "title1",
         content: "게시판 test",
-        username: "test1",
         userId: "1",
+        username: "test1",
         createdAt: new Date().toString(),
     },
     {
         id: 2,
+        title: "title2",
         content: "안뇽!",
+        userId: "2",
         username: "test2",
-        userId: "1",
         createdAt: new Date().toString(),
     },
 ];
