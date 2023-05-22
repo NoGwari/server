@@ -11,12 +11,12 @@ function required(key, defalutValue = undefined) {
 
 export const config = {
     port: parseInt(required("PORT", 3000)),
-    // db: {
-    //     host: required("DB_HOST"),
-    //     user: required("DB_USER"),
-    //     database: required("DB_DATABASE"),
-    //     password: required("DB_PASSWORD"),
-    // },
+    db: {
+        host: required("DB_HOST"),
+        user: required("DB_USER"),
+        database: required("DB_DATABASE"),
+        password: required("DB_PASSWORD"),
+    },
     cors: {
         allowedOrigin: required("CORS_ALLOW_ORIGIN"),
     },
