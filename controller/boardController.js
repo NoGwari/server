@@ -1,4 +1,4 @@
-import * as boardRepository from "../data/board_Data.js";
+import * as boardRepository from "../data/boardData.js";
 
 export async function getPostings(req, res) {
     const username = req.query.username;

@@ -3,7 +3,8 @@ import "express-async-errors";
 import cors from "cors";
 import helmet from "helmet";
 import morgan from "morgan";
-import boardRouter from "./router/board_Router.js";
+import boardRouter from "./router/boardRouter.js";
+// import {config} from "./config.js";
 const app = express();
 
 const corsOption = {
@@ -27,6 +28,6 @@ app.use((error, req, res, next) => {
     console.log(error);
     res.sendStatus(500);
 });
-
 app.listen(8080);
+// app.listen(config.port);
 console.log("Connect!");
