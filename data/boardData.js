@@ -27,7 +27,7 @@ export async function getAllByUsername(username) {
 }
 
 export async function getById(id) {
-    const posts = posting.find((post) => post.id === id);
+    const posts = posting.find((post) => post.id === parseInt(id));
     return posts;
 }
 
