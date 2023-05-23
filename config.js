@@ -15,6 +15,7 @@ export const config = {
         host: required("DB_HOST"),
         user: required("DB_USER"),
         database: required("DB_DATABASE"),
+        port: required("DB_PORT"),
         password: required("DB_PASSWORD"),
     },
     cors: {
