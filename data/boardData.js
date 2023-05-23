@@ -54,8 +54,34 @@ const Posts = sequelize.define("post", {
     },
 });
 
+// Board.belongsTo(User);
+
+// const INCLUDED_USER = {
+//     attributes: [
+//         "BoardID",
+//         "BoardTitle",
+//         "BoardContent",
+//         "BoardHits",
+//         "BoardViews",
+//         "BoardDislikes",
+//         "BoardReported",
+//         "BoardHidden",
+//         "BoardCreatedAt",
+//         "BoardUpdatedAt",
+//         [Sequelize.col("user.UserIDtoNum"), "UserIDtoNum"],
+//         [Sequelize.col("user.UserNickname"), "UserNickname"],
+//         [Sequelize.col("user.UserImg"), "UserImg"],
+//         [Sequelize.col("user.UserGrade"), "UserGrade"],
+//     ],
+//     include: {
+//         model: User,
+//         attributes: [],
+//     },
+// };
+// const ORDER_DESC = {order: [["createdAt", "DESC"]]};
+
 export async function getAll() {
-    return posting;
+    return Sequelize.find;
 }
 
 export async function getAllByUsername(username) {
