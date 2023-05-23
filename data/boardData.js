@@ -1,21 +1,58 @@
-let posting = [
-    {
-        id: 1,
-        title: "title1",
-        content: "게시판 test",
-        userId: "1",
-        username: "test1",
-        createdAt: new Date().toString(),
+import SQ, {TEXT} from "sequelize";
+import {sequelize} from "../db/database.js";
+
+const Sequelize = SQ.Sequelize;
+const DateTypes = SQ.DataTypes;
+
+const Posts = sequelize.define("post", {
+    BoardID: {
+        type: DateTypes.INTEGER,
+        primaryKey: true,
+        unique: true,
+        autoIncrement: true,
+        allowNull: false,
     },
-    {
-        id: 2,
-        title: "title2",
-        content: "안뇽!",
-        userId: "2",
-        username: "test2",
-        createdAt: new Date().toString(),
+    BoardTitle: {
+        type: DateTypes.CHAR(20),
+        allowNull: false,
     },
-];
+    BoardContent: {
+        type: DateTypes.TEXT,
+        allowNull: false,
+    },
+    BoardViews: {
+        type: DateTypes.INTEGER,
+        unique: true,
+        allowNull: false,
+    },
+    BoardHits: {
+        type: DateTypes.INTEGER,
+        unique: true,
+        allowNull: false,
+    },
+    BoardDislikes: {
+        type: DateTypes.INTEGER,
+        unique: true,
+        allowNull: false,
+    },
+    BoardReported: {
+        type: DateTypes.INTEGER,
+        unique: true,
+        allowNull: false,
+    },
+    BoardHidden: {
+        type: DateTypes.CHAR(1),
+        allowNull: false,
+    },
+    BoardCreatedAt: {
+        type: DateTypes.DATE,
+        allowNull: false,
+    },
+    BoardUpdatedAt: {
+        type: DateTypes.DATE,
+        allowNull: true,
+    },
+});
 
 export async function getAll() {
     return posting;
