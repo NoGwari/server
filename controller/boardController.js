@@ -3,7 +3,6 @@ import * as boardRepository from "../data/boardData.js";
 export async function getPostings(req, res) {
     const username = req.query.username;
     const data = await (username ? boardRepository.getAllByUsername(username) : boardRepository.getAll());
-    console.log(data);
     res.status(200).json(data);
 }
 
