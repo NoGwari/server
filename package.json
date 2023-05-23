@@ -9,7 +9,8 @@
         "morgan": "^1.10.0",
         "mysql": "^2.18.1",
         "nodemon": "^2.0.22",
-        "sequelize": "^6.31.1"
+        "sequelize": "^6.31.1",
+        "validate": "^5.2.0"
     },
     "name": "test",
     "version": "1.0.0",
