@@ -1,6 +1,6 @@
 let posting = [
     {
-        id: "1",
+        id: 1,
         title: "title1",
         content: "게시판 test",
         userId: "1",
@@ -8,7 +8,7 @@ let posting = [
         createdAt: new Date().toString(),
     },
     {
-        id: "2",
+        id: 2,
         title: "title2",
         content: "안뇽!",
         userId: "2",
@@ -27,8 +27,7 @@ export async function getAllByUsername(username) {
 }
 
 export async function getById(id) {
-    const posts = posting.find((post) => post.id === id);
-    console.log("posts값: ", posts);
+    const posts = posting.find((post) => post.id === parseInt(id));
     return posts;
 }
 

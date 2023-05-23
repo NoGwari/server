@@ -8,9 +8,7 @@ export async function getPostings(req, res) {
 
 export async function getPosting(req, res) {
     const id = req.params.id;
-    console.log("id값:", id);
     const data = await boardRepository.getById(id);
-    console.log("data값:", data);
     if (!data) {
         res.status(404).json(id);
     }
