@@ -1,9 +1,9 @@
-import {db, sequelize} from "../db/database.js";
+import {sequelize} from "../db/database.js";
 import SQ, {TEXT} from "sequelize";
 const DateTypes = SQ.DataTypes;
 
 export const Category = sequelize.define(
-    "categorie",
+    "boardcategorie",
     {
         CategoryID: {
             type: DateTypes.INTEGER,
