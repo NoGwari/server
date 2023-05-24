@@ -4,7 +4,7 @@ import {sequelize} from "../db/database.js";
 const Sequelize = SQ.Sequelize;
 const DateTypes = SQ.DataTypes;
 
-const Posts = sequelize.define("post", {
+const Board = sequelize.define("board", {
     BoardID: {
         type: DateTypes.INTEGER,
         primaryKey: true,
@@ -78,10 +78,26 @@ const Posts = sequelize.define("post", {
 //         attributes: [],
 //     },
 // };
-// const ORDER_DESC = {order: [["createdAt", "DESC"]]};
+
+const attributes = {
+    attributes: [
+        "BoardID",
+        "BoardTitle",
+        "BoardContent",
+        "BoardHits",
+        "BoardViews",
+        "BoardDislikes",
+        "BoardReported",
+        "BoardHidden",
+        "BoardCreatedAt",
+        "BoardUpdatedAt",
+    ],
+};
+
+const ORDER_DESC = {order: [["BoardCreatedAt", "DESC"]]};
 
 export async function getAll() {
-    return Sequelize.find;
+    return Board.findAll({...attributes, ...ORDER_DESC});
 }
 
 export async function getAllByUsername(username) {
