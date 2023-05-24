@@ -1,33 +1,31 @@
-import {db, sequelize} from "../db/database.js";
+import {sequelize} from "../db/database.js";
 import SQ, {TEXT} from "sequelize";
 const DateTypes = SQ.DataTypes;
 
 export const Reply = sequelize.define("boardreplie", {
-    ReplyId: {
+    ReplyID: {
         type: DateTypes.INTEGER,
         autoIncrement: true,
         allowNull: false,
         primaryKey: true,
     },
-    UserID: {
-        type: DateTypes.STRING(20),
-        allowNull: false,
-        unique: true,
-    },
-    UserPassword: {
-        type: DateTypes.STRING(100),
+    ReplyContent: {
+        type: DateTypes.TEXT,
         allowNull: false,
     },
-    UserNickName: {
+    ReplyUsername: {
         type: DateTypes.STRING(10),
         allowNull: false,
-        unique: true,
     },
-    UserRealName: {
-        type: DateTypes.STRING(30),
+    ReplyOriginID: {
+        type: DateTypes.INTEGER,
         allowNull: false,
     },
-    UserDepth: {
+    ReplyOrder: {
+        type: DateTypes.INTEGER,
+        allowNull: false,
+    },
+    ReplyDepth: {
         type: DateTypes.INTEGER,
         allowNull: false,
     },
