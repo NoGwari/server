@@ -1,4 +1,4 @@
-import {db, sequelize} from "../db/database.js";
+import {sequelize} from "../db/database.js";
 import SQ, {TEXT} from "sequelize";
 const DateTypes = SQ.DataTypes;
 
