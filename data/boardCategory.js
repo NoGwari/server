@@ -16,7 +16,7 @@ export const Category = sequelize.define(
             allowNull: false,
         },
         post_num: {
-            type: DateTypes.INTEGER,
+            type: DateTypes.INTEGER.ZEROFILL,
             allowNull: false,
             unique: true,
         },
