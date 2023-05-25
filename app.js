@@ -3,7 +3,7 @@ import "express-async-errors";
 import cors from "cors";
 import helmet from "helmet";
 import morgan from "morgan";
-import boardRouter from "./router/boardRouter.js";
+import boardRouter from "./router/board_router.js";
 import {config} from "./config.js";
 import {sequelize} from "./db/database.js";
 const app = express();

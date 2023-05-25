@@ -1,6 +1,6 @@
 import express from "express";
 import "express-async-errors";
-import * as boardController from "../controller/boardController.js";
+import * as boardController from "../controller/board_controller.js";
 const router = express.Router();
 
 // GET /board
