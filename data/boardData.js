@@ -3,7 +3,7 @@ import {sequelize} from "../db/database.js";
 import {Category} from "./boardCategory.js";
 import {User} from "./user.js";
 import {Reply} from "./boardReply.js";
-import {Img} from "./boardimg.js";
+import {Img} from "./boardImg.js";
 
 const Sequelize = SQ.Sequelize;
 const DateTypes = SQ.DataTypes;
