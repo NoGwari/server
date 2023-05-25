@@ -59,5 +59,5 @@ export const User = sequelize.define(
             allowNull: false,
         },
     },
-    {timestamps: false}
+    {timestamps: false, tableName: "users", charset: "utf8", collate: "utf8_general_ci"}
 );

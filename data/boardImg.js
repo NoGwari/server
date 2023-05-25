@@ -16,5 +16,5 @@ export const Img = sequelize.define(
             allowNull: false,
         },
     },
-    {timestamps: false}
+    {timestamps: false, charset: "utf8", collate: "utf8_general_ci"}
 );

@@ -21,5 +21,5 @@ export const Category = sequelize.define(
             unique: true,
         },
     },
-    {timestamps: false, tableName: "category"}
+    {timestamps: false, tableName: "category", charset: "utf8", collate: "utf8_general_ci"}
 );
