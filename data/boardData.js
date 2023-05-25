@@ -10,47 +10,48 @@ const DateTypes = SQ.DataTypes;
 
 // define을 쓰면 자동으로 테이블을 만드는데 난 왜 일일이 만들고 그렇게 했을까?
 // 스키마를 정의하는 과정에서 테이블명을 빼는게 좋은 이유?
-const Board = sequelize.define("board", {
-    id: {
-        type: DateTypes.INTEGER,
-        primaryKey: true,
-        unique: true,
-        autoIncrement: true,
-        allowNull: false,
+
+export const Board = sequelize.define(
+    "board",
+    {
+        id: {
+            type: DateTypes.INTEGER,
+            primaryKey: true,
+            unique: true,
+            autoIncrement: true,
+            allowNull: false,
+        },
+        title: {
+            type: DateTypes.STRING(20),
+            allowNull: false,
+        },
+        content: {
+            type: DateTypes.TEXT,
+            allowNull: false,
+        },
+        views: {
+            type: DateTypes.INTEGER.ZEROFILL,
+            allowNull: false,
+        },
+        hits: {
+            type: DateTypes.INTEGER.ZEROFILL,
+            allowNull: false,
+        },
+        dislikes: {
+            type: DateTypes.INTEGER.ZEROFILL,
+            allowNull: false,
+        },
+        reported: {
+            type: DateTypes.INTEGER.ZEROFILL,
+            allowNull: false,
+        },
+        hidden: {
+            type: DateTypes.STRING(1),
+            allowNull: false,
+        },
     },
-    title: {
-        type: DateTypes.STRING(20),
-        allowNull: false,
-    },
-    content: {
-        type: DateTypes.TEXT,
-        allowNull: false,
-    },
-    views: {
-        type: DateTypes.INTEGER.ZEROFILL,
-        unique: true,
-        allowNull: false,
-    },
-    hits: {
-        type: DateTypes.INTEGER.ZEROFILL,
-        unique: true,
-        allowNull: false,
-    },
-    dislikes: {
-        type: DateTypes.INTEGER.ZEROFILL,
-        unique: true,
-        allowNull: false,
-    },
-    reported: {
-        type: DateTypes.INTEGER.ZEROFILL,
-        unique: true,
-        allowNull: false,
-    },
-    hidden: {
-        type: DateTypes.STRING(1),
-        allowNull: false,
-    },
-});
+    {tableName: "board", charset: "utf8", collate: "utf8_general_ci"}
+);
 
 // Board User 일대일관계
 User.hasOne(Board);
@@ -79,10 +80,10 @@ const INCLUDED_ALL = {
         "updatedAt",
         "userId",
         "categoryId",
-        [Sequelize.col("user.nickname"), "nickname"],
-        [Sequelize.col("user.img"), "img"],
-        [Sequelize.col("user.grade"), "grade"],
-        [Sequelize.col("category.name"), "name"],
+        [Sequelize.col("user.nickname"), "userNickname"],
+        [Sequelize.col("user.img"), "userImg"],
+        [Sequelize.col("user.grade"), "userGrade"],
+        [Sequelize.col("category.name"), "categoryName"],
     ],
     include: [
         {
@@ -105,32 +106,43 @@ export async function getAll() {
     });
 }
 
-export async function getAllByUsername(username) {
+export async function getAllByUsername(nickName) {
     return Board.findAll({
         ...INCLUDED_ALL,
         ...ORDER_DESC,
-        include: {
-            where: {username},
-        },
+        include: [
+            {
+                model: User,
+                attributes: [],
+                where: {nickname: nickName},
+            },
+            {
+                model: Category,
+                attributes: [],
+            },
+        ],
     });
 }
 
 export async function getById(id) {
     return Board.findOne({
         ...INCLUDED_ALL,
-        include: {
-            where: {id},
-        },
+        where: {id},
     });
 }
 
-export async function create(title, content, hiddenNum, username, categoryId) {
+export async function create(title, content, hiddenNum, userId, categoryId) {
     return Board.create({
-        BoardTitle: title,
-        BoardContent: content,
-        BoardHidden: hiddenNum,
+        title: title,
+        content: content,
+        views: 1,
+        hits: 0,
+        dislikes: 0,
+        reported: 0,
+        hidden: hiddenNum,
+        userId,
+        categoryId,
     }).then((result) => {
-        console.log(title, content);
         return getById(result.dataValues.id);
     });
 }
