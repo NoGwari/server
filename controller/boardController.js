@@ -11,8 +11,9 @@ export async function getPosting(req, res) {
     const data = await boardRepository.getById(id);
     if (!data) {
         res.status(404).json(id);
+    } else {
+        res.status(200).json(data);
     }
-    res.status(200).json(data);
 }
 
 export async function newPostings(req, res) {
