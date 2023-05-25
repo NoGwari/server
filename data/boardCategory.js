@@ -3,23 +3,23 @@ import SQ, {TEXT} from "sequelize";
 const DateTypes = SQ.DataTypes;
 
 export const Category = sequelize.define(
-    "boardcategorie",
+    "category",
     {
-        CategoryID: {
+        id: {
             type: DateTypes.INTEGER,
             autoIncrement: true,
             allowNull: false,
             primaryKey: true,
         },
-        CategoryName: {
+        name: {
             type: DateTypes.STRING(30),
             allowNull: false,
         },
-        CategoryPostNum: {
+        post_num: {
             type: DateTypes.INTEGER,
             allowNull: false,
             unique: true,
         },
     },
-    {timestamps: false}
+    {timestamps: false, tableName: "category"}
 );

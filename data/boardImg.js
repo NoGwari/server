@@ -3,15 +3,15 @@ import SQ, {TEXT} from "sequelize";
 const DateTypes = SQ.DataTypes;
 
 export const Img = sequelize.define(
-    "boardimg",
+    "img",
     {
-        ImgID: {
+        id: {
             type: DateTypes.INTEGER,
             autoIncrement: true,
             allowNull: false,
             primaryKey: true,
         },
-        ImgURL: {
+        url: {
             type: DateTypes.STRING(300),
             allowNull: false,
         },

@@ -5,57 +5,57 @@ const DateTypes = SQ.DataTypes;
 export const User = sequelize.define(
     "user",
     {
-        UserIDtoNum: {
+        id: {
             type: DateTypes.INTEGER,
             autoIncrement: true,
             allowNull: false,
             primaryKey: true,
         },
-        UserID: {
+        realid: {
             type: DateTypes.STRING(20),
             allowNull: false,
             unique: true,
         },
-        UserPassword: {
+        password: {
             type: DateTypes.STRING(100),
             allowNull: false,
         },
-        UserNickName: {
+        nickname: {
             type: DateTypes.STRING(10),
             allowNull: false,
             unique: true,
         },
-        UserRealName: {
+        realname: {
             type: DateTypes.STRING(30),
             allowNull: false,
         },
-        UserGender: {
+        gender: {
             type: DateTypes.STRING(5),
             allowNull: false,
         },
-        UserEmail: {
+        email: {
             type: DateTypes.STRING(30),
             allowNull: false,
             unique: true,
         },
-        UserGrade: {
+        grade: {
             type: DateTypes.STRING(10),
             allowNull: false,
         },
-        UserImg: {
+        img: {
             type: DateTypes.STRING(100),
             allowNull: true,
         },
-        UserPostingNum: {
-            type: DateTypes.INTEGER,
+        posting_num: {
+            type: DateTypes.INTEGER.ZEROFILL,
             allowNull: false,
         },
-        UserReplyNum: {
-            type: DateTypes.INTEGER,
+        reply_num: {
+            type: DateTypes.INTEGER.ZEROFILL,
             allowNull: false,
         },
-        UserReported: {
-            type: DateTypes.INTEGER,
+        reported: {
+            type: DateTypes.INTEGER.ZEROFILL,
             allowNull: false,
         },
     },
