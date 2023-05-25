@@ -1,9 +1,9 @@
 import SQ, {TEXT} from "sequelize";
-import {sequelize} from "../db/database.js";
-import {Category} from "./boardCategory.js";
-import {User} from "./user.js";
-import {Reply} from "./boardReply.js";
-import {Img} from "./boardImg.js";
+import {sequelize} from "../../db/database.js";
+import {Category} from "./category.js";
+import {User} from "../user.js";
+import {Reply} from "./reply.js";
+import {Img} from "./img.js";
 
 const Sequelize = SQ.Sequelize;
 const DateTypes = SQ.DataTypes;
