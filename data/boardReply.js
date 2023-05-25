@@ -11,7 +11,7 @@ export const Reply = sequelize.define(
             allowNull: false,
             primaryKey: true,
         },
-        text: {
+        content: {
             type: DateTypes.TEXT,
             allowNull: false,
         },
