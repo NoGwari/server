@@ -5,6 +5,7 @@ import helmet from "helmet";
 import morgan from "morgan";
 import boardRouter from "./router/boardRouter.js";
 import {config} from "./config.js";
+import {sequelize} from "./db/database.js";
 const app = express();
 
 const corsOption = {
@@ -29,6 +30,9 @@ app.use((error, req, res, next) => {
     res.sendStatus(500);
 });
 
-app.listen(config.port);
-console.log("Connect!");
+sequelize.sync().then(() => {
+    console.log("Connect!");
+    app.listen(config.port);
+});
+
 //
