@@ -1,8 +1,8 @@
 import * as boardRepository from "../data/board/data.js";
 
 export async function getPostings(req, res) {
-    const pageId = req.query.page;
-    const listNum = req.query.list_num;
+    const pageId = req.query.page ? req.query.page : 1;
+    const listNum = req.query.list_num ? req.query.list_num : 5;
     const offset = 0 + (pageId - 1) * listNum; // skip할 item의 개수
     if (!pageId) {
         res.status(404).json(id);
