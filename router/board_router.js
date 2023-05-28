@@ -7,20 +7,15 @@ const router = express.Router();
 router.get("/", boardController.getPostingByPage);
 
 // GET /board/:id
-// router.get("/:id", isAuth, boardController.getTweet);
 router.get("/:id", boardController.getPosting);
 
 // POST /board
-// router.post("/", isAuth, validateTweet, boardController.createTweet);
 router.post("/post", boardController.newPostings);
 
 // PUT /board/:id
 router.put("/:id", boardController.updatePost);
 
 // DELETE /board/:id
-// router.delete("/:id", isAuth, boardController.deleteTweet);
-
-// DELETE /board?username=:username
-// router.delete("/", isAuth, boardController.deleteTweetByUserId);
+router.delete("/:id", boardController.deletePost);
 
 export default router;

@@ -38,3 +38,14 @@ export async function updatePost(req, res) {
     const updatePosts = await boardRepository.update(id, title, content, hiddenNum, categoryId);
     res.status(200).json(updatePosts);
 }
+
+export async function deletePost(req, res) {
+    const id = req.params.id;
+    const post = boardRepository.getById(id);
+    if (!post) {
+        res.status(404).json(id);
+    }
+    //fix userId 확인절차 추가해야함
+    const deletePosts = await boardRepository.remove(id);
+    res.status(200).json(deletePosts);
+}

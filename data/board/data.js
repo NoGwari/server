@@ -161,3 +161,11 @@ export async function update(id, title, content, hiddenNum, categoryId) {
         return post.save();
     });
 }
+
+export async function remove(id) {
+    return Board.findByPk(id, {
+        ...INCLUDED_ALL,
+    }).then((post) => {
+        post.destroy();
+    });
+}
