@@ -99,10 +99,12 @@ const INCLUDED_ALL = {
 
 const ORDER_DESC = {order: [["createdAt", "DESC"]]};
 
-export async function getAll() {
+export async function getAllbyPages(offset, listNum) {
     return Board.findAll({
         ...INCLUDED_ALL,
         ...ORDER_DESC,
+        offset: offset,
+        limit: parseInt(listNum),
     });
 }
 
