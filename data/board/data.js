@@ -105,6 +105,7 @@ export async function getAllbyPages(offset, listNum) {
         ...ORDER_DESC,
         offset: offset,
         limit: parseInt(listNum),
+        where: {hidden: 0},
     });
 }
 
