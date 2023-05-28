@@ -4,7 +4,7 @@ import * as boardController from "../controller/board_controller.js";
 const router = express.Router();
 
 // GET /board?page=1&list_num=10
-router.get("/", boardController.getPostings);
+router.get("/", boardController.getPostingByPage);
 
 // GET /board/:id
 // router.get("/:id", isAuth, boardController.getTweet);
@@ -15,7 +15,7 @@ router.get("/:id", boardController.getPosting);
 router.post("/post", boardController.newPostings);
 
 // PUT /board/:id
-// router.put("/:id", isAuth, validateTweet, boardController.updateTweet);
+router.put("/:id", boardController.updatePost);
 
 // DELETE /board/:id
 // router.delete("/:id", isAuth, boardController.deleteTweet);

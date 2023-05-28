@@ -23,6 +23,18 @@ export async function getPosting(req, res) {
 
 export async function newPostings(req, res) {
     const {title, content, hiddenNum, userId, categoryId} = req.body;
-    const newposts = await boardRepository.create(title, content, hiddenNum, userId, categoryId);
-    res.status(200).json(newposts);
+    const newPosts = await boardRepository.create(title, content, hiddenNum, userId, categoryId);
+    res.status(200).json(newPosts);
+}
+
+export async function updatePost(req, res) {
+    const id = req.params.id;
+    const {title, content, hiddenNum, categoryId} = req.body;
+    const post = boardRepository.getById(id);
+    if (!post) {
+        res.status(404).json(id);
+    }
+    //fix userId 확인절차 추가해야함
+    const updatePosts = await boardRepository.update(id, title, content, hiddenNum, categoryId);
+    res.status(200).json(updatePosts);
 }

@@ -149,3 +149,15 @@ export async function create(title, content, hiddenNum, userId, categoryId) {
         return getById(result.dataValues.id);
     });
 }
+
+export async function update(id, title, content, hiddenNum, categoryId) {
+    return Board.findByPk(id, {
+        ...INCLUDED_ALL,
+    }).then((post) => {
+        post.title = title;
+        post.content = content;
+        post.hidden = hiddenNum;
+        post.categoryId = categoryId;
+        return post.save();
+    });
+}
