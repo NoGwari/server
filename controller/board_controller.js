@@ -1,13 +1,13 @@
 import * as boardRepository from "../data/board/data.js";
 
-export async function getPostings(req, res) {
+export async function getPostingByPage(req, res) {
     const pageId = req.query.page ? req.query.page : 1;
-    const listNum = req.query.list_num ? req.query.list_num : 5;
+    const listNum = req.query.list_num ? req.query.list_num : 5; // 검색할 post 개수
     const offset = 0 + (pageId - 1) * listNum; // skip할 item의 개수
-    if (!pageId) {
+    const data = await boardRepository.getAllbyPages(offset, listNum);
+    if (!data) {
         res.status(404).json(id);
     }
-    const data = await boardRepository.getAllbyPages(offset, listNum);
     res.status(200).json(data);
 }
 
