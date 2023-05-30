@@ -10,7 +10,7 @@ router.get("/", boardController.getPostingByPage);
 router.get("/:id", boardController.getPosting);
 
 // POST /board
-router.post("/post", boardController.newPostings);
+router.post("/post", boardController.newPosting);
 
 // PUT /board/:id
 router.put("/:id", boardController.updatePost);

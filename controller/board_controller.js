@@ -21,7 +21,7 @@ export async function getPosting(req, res) {
     }
 }
 
-export async function newPostings(req, res) {
+export async function newPosting(req, res) {
     const {title, content, hiddenNum, userId, categoryId} = req.body;
     const newPosts = await boardRepository.create(title, content, hiddenNum, userId, categoryId);
     res.status(200).json(newPosts);
