@@ -3,6 +3,7 @@ import "express-async-errors";
 import cors from "cors";
 import helmet from "helmet";
 import morgan from "morgan";
+import mainRouter from "./router/main_router.js";
 import boardRouter from "./router/board_router.js";
 import authRouter from "./router/auth_router.js";
 import {config} from "./config.js";
@@ -19,6 +20,7 @@ app.use(cors(corsOption));
 app.use(helmet());
 app.use(morgan("tiny"));
 
+app.use("/", mainRouter);
 app.use("/board", boardRouter);
 app.use("/auth", authRouter);
 
@@ -36,5 +38,3 @@ sequelize.sync().then(() => {
     console.log("Connect!");
     app.listen(config.port);
 });
-
-//
