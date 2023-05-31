@@ -21,4 +21,11 @@ export const config = {
     cors: {
         allowedOrigin: required("CORS_ALLOW_ORIGIN"),
     },
+    jwt: {
+        secretKey: required("JWT_SECRET"),
+        expriesInSec: parseInt(required("JWT_EXPRIES_SEC", 86400)),
+    },
+    bcrypt: {
+        saltRounds: parseInt(required("BCRYPT_SALT_ROUNDS", 12)),
+    },
 };
