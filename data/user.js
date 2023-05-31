@@ -1,5 +1,7 @@
 import {sequelize} from "../db/database.js";
 import SQ, {TEXT} from "sequelize";
+
+const Sequelize = SQ.Sequelize;
 const DateTypes = SQ.DataTypes;
 
 export const User = sequelize.define(
@@ -61,3 +63,15 @@ export const User = sequelize.define(
     },
     {timestamps: false, tableName: "users", charset: "utf8", collate: "utf8_general_ci"}
 );
+
+export async function findByRealId(realId) {
+    return User.findOne({where: {realId: realId}});
+}
+
+export async function findById(id) {
+    return User.findByPk(id);
+}
+
+export async function createUser(user) {
+    return User.create(user).then((result) => result.dataValues.id);
+}

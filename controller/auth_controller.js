@@ -1,1 +1,40 @@
 import * as userRepository from "../data/user.js";
+
+export async function signup(req, res) {
+    const {realid, password, nickname, gender, email, img} = req.body;
+    const found = await userRepository.findByRealId(realid);
+    if (found) {
+        return res.status(409).json({message: `${realid} is already exists!`});
+    }
+    const hashed = await bcrypt.hash(password, config.bcrypt.saltRounds);
+    const userId = await userRepository.createUser({
+        realid,
+        password: hashed,
+        nickname,
+        gender,
+        email,
+        img,
+    });
+    const token = createJwtToken(userId);
+    res.status(200).json({token, realid});
+}
+
+export async function login(req, res) {
+    const {realid, password} = req.body;
+    const user = await userRepository.findByRealId(realid);
+    if (!user) {
+        return res.status(401).json({message: `Invaild user or password`});
+    }
+    const isValidPassword = await bcrypt.compare(password, user.password);
+    if (!isValidPassword) {
+        return res.status(401).json({message: `Invaild user or password`});
+    }
+    const token = createJwtToken(user.id);
+    res.status(200).json({token, realid});
+}
+
+function createJwtToken(id) {
+    return jwt.sign({id}, config.jwt.secretKey, {
+        expiresIn: config.jwt.expriesInSec,
+    });
+}
