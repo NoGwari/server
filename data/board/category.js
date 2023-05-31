@@ -1,5 +1,7 @@
 import {sequelize} from "../../db/database.js";
 import SQ, {TEXT} from "sequelize";
+
+const Sequelize = SQ.Sequelize;
 const DateTypes = SQ.DataTypes;
 
 export const Category = sequelize.define(
@@ -23,3 +25,10 @@ export const Category = sequelize.define(
     },
     {timestamps: false, tableName: "category", charset: "utf8", collate: "utf8_general_ci"}
 );
+
+export async function getCategory() {
+    return Category.findAll({
+        attributes: ["id", "name", "post_num"],
+        order: [["id", "ASC"]],
+    });
+}
