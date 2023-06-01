@@ -1,7 +1,11 @@
+import jwt from "jsonwebtoken";
+import bcrypt from "bcrypt";
+import {} from "express-async-errors";
 import * as userRepository from "../data/user.js";
+import {config} from "../config.js";
 
 export async function signup(req, res) {
-    const {realid, password, nickname, gender, email, img} = req.body;
+    const {realid, password, nickname, realname, gender, email, img} = req.body;
     const found = await userRepository.findByRealId(realid);
     if (found) {
         return res.status(409).json({message: `${realid} is already exists!`});
@@ -11,6 +15,7 @@ export async function signup(req, res) {
         realid,
         password: hashed,
         nickname,
+        realname,
         gender,
         email,
         img,

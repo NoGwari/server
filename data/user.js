@@ -73,5 +73,18 @@ export async function findById(id) {
 }
 
 export async function createUser(user) {
-    return User.create(user).then((result) => result.dataValues.id);
+    const {realid, password, nickname, realname, gender, email, img} = user;
+    return User.create({
+        realid: realid,
+        password: password,
+        nickname: nickname,
+        realname: realname,
+        gender: gender,
+        email: email,
+        grade: "grade1",
+        img: img,
+        posting_num: 0,
+        reply_num: 0,
+        reported: 0,
+    }).then((result) => result.dataValues.id);
 }
