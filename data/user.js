@@ -27,14 +27,6 @@ export const User = sequelize.define(
             allowNull: false,
             unique: true,
         },
-        realname: {
-            type: DateTypes.STRING(30),
-            allowNull: false,
-        },
-        gender: {
-            type: DateTypes.STRING(5),
-            allowNull: false,
-        },
         email: {
             type: DateTypes.STRING(30),
             allowNull: false,
@@ -73,13 +65,11 @@ export async function findById(id) {
 }
 
 export async function createUser(user) {
-    const {realid, password, nickname, realname, gender, email, img} = user;
+    const {realid, password, nickname, email, img} = user;
     return User.create({
         realid: realid,
         password: password,
         nickname: nickname,
-        realname: realname,
-        gender: gender,
         email: email,
         grade: "grade1",
         img: img,
