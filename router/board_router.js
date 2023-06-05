@@ -3,7 +3,7 @@ import "express-async-errors";
 import * as boardController from "../controller/board_controller.js";
 const router = express.Router();
 
-// GET /board?page=1&list_num=10
+// GET /board?page=1&list_num=10&category=1
 router.get("/", boardController.getPostingByPage);
 
 // GET /board/:id

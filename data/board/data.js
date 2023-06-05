@@ -9,7 +9,6 @@ const Sequelize = SQ.Sequelize;
 const DateTypes = SQ.DataTypes;
 
 // define을 쓰면 자동으로 테이블을 만드는데 난 왜 일일이 만들고 그렇게 했을까?
-// 스키마를 정의하는 과정에서 테이블명을 빼는게 좋은 이유?
 
 export const Board = sequelize.define(
     "board",
@@ -53,18 +52,10 @@ export const Board = sequelize.define(
     {tableName: "board", charset: "utf8", collate: "utf8_general_ci"}
 );
 
-// Board User 일대일관계
-User.hasOne(Board);
+// // Board User 일대일관계
 Board.belongsTo(User);
-// Board Category 일대일관계
-Category.hasOne(Board);
+// // Board Category 일대일관계
 Board.belongsTo(Category);
-// Board Reply 일대다관계
-Board.hasMany(Reply);
-Reply.belongsTo(Board);
-// Board Img 일대다관계
-Board.hasMany(Img);
-Img.belongsTo(Board);
 
 const INCLUDED_ALL = {
     attributes: [
@@ -106,6 +97,27 @@ export async function getAllbyPages(offset, listNum) {
         offset: offset,
         limit: parseInt(listNum),
         where: {hidden: 0},
+    });
+}
+
+export async function getPagesToCategory(offset, listNum, categoryID) {
+    return Board.findAll({
+        ...INCLUDED_ALL,
+        ...ORDER_DESC,
+        offset: offset,
+        limit: parseInt(listNum),
+        where: {hidden: 0},
+        include: [
+            {
+                model: Category,
+                attributes: [],
+                where: {id: categoryID},
+            },
+            {
+                model: User,
+                attributes: [],
+            },
+        ],
     });
 }
 
