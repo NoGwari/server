@@ -1,9 +1,9 @@
 import express from "express";
 import "express-async-errors";
-import * as mainController from "../controller/main_controller.js";
+import * as categoryController from "../controller/category_controller.js";
 const router = express.Router();
 
 // GET /
-router.get("/", mainController.getCategory);
+router.get("/", categoryController.getCategory);
 
 export default router;
