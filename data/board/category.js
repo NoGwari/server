@@ -20,7 +20,6 @@ export const Category = sequelize.define(
         post_num: {
             type: DateTypes.INTEGER.ZEROFILL,
             allowNull: false,
-            unique: true,
         },
     },
     {timestamps: false, tableName: "category", charset: "utf8", collate: "utf8_general_ci"}
