@@ -7,6 +7,7 @@ export async function getPostingByPage(req, res) {
     const offset = 0 + (pageId - 1) * listNum; // skip할 item의 개수
     let data;
     if (!categoryID) {
+        // categoryID가 없다면 전체 게시글 조회
         data = await boardRepository.getAllbyPages(offset, listNum);
     } else {
         data = await boardRepository.getPagesToCategory(offset, listNum, categoryID);
