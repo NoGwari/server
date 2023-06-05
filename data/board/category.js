@@ -1,5 +1,5 @@
 import {sequelize} from "../../db/database.js";
-import SQ, {TEXT} from "sequelize";
+import SQ, {TEXT, where} from "sequelize";
 
 const Sequelize = SQ.Sequelize;
 const DateTypes = SQ.DataTypes;
@@ -29,5 +29,17 @@ export async function getCategory() {
     return Category.findAll({
         attributes: ["id", "name", "post_num"],
         order: [["id", "ASC"]],
+    });
+}
+
+export async function create(name) {
+    return Category.create({
+        name: name,
+        post_num: 0,
+    }).then((result) => {
+        return Category.findOne({
+            attributes: ["id", "name", "post_num"],
+            where: {id: result.dataValues.id},
+        });
     });
 }

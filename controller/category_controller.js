@@ -7,3 +7,9 @@ export async function getCategory(req, res) {
     }
     res.status(200).json(data);
 }
+
+export async function newCategory(req, res) {
+    const {name} = req.body;
+    const newCategory = await categoryRepository.create(name);
+    res.status(200).json(newCategory);
+}
