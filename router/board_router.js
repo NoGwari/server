@@ -3,10 +3,43 @@ import "express-async-errors";
 import * as boardController from "../controller/board_controller.js";
 const router = express.Router();
 
-// GET /board?page=1&list_num=10&category=1
+/**
+ * @swagger
+ * paths:
+ *  /board:
+ *    get:
+ *      summary: "전체 게시글 조회"
+ *      description: ""
+ *      responses:
+ *        "200":
+ *          description: 전체 게시글 목록조회
+ *          content:
+ *            application/json:
+ *              schema:
+ *                type: object
+ *                properties:
+ *                    posts:
+ *                      type: object
+ */
 router.get("/", boardController.getPostingByPage);
-
-// GET /board/:id
+/**
+ * @swagger
+ * paths:
+ *  /board:/{id}:
+ *    get:
+ *      summary: "전체 게시글 조회"
+ *      description: ""
+ *      responses:
+ *        "200":
+ *          description: 전체 게시글 목록조회
+ *          content:
+ *            application/json:
+ *              schema:
+ *                type: object
+ *                properties:
+ *                    posts:
+ *                      type: object
+ */
 router.get("/:id", boardController.getPosting);
 
 // POST /board
