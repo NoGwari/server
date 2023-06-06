@@ -17,12 +17,13 @@ const corsOption = {
     optionsSuccessStatus: 200,
 };
 
+app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(specs));
+
 app.use(express.json());
 app.use(cors(corsOption));
 app.use(helmet());
 app.use(morgan("tiny"));
 
-app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(specs));
 app.use("/board", boardRouter);
 app.use("/category", categoryRouter);
 app.use("/auth", authRouter);
