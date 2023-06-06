@@ -3,6 +3,7 @@ import swaggerJsdoc from "swagger-jsdoc";
 
 const options = {
     swaggerDefinition: {
+        version: "3.0.0",
         info: {
             title: "Nogwari",
             version: "1.0.0",
