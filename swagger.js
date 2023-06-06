@@ -1,5 +1,6 @@
 import swaggerUi from "swagger-ui-express";
 import swaggerJsdoc from "swagger-jsdoc";
+import {config} from "./config.js";
 
 const options = {
     swaggerDefinition: {
@@ -9,7 +10,7 @@ const options = {
             version: "1.0.0",
             description: "Nogwari swagger",
         },
-        host: "localhost:3000",
+        host: config.swagger.host,
         basePath: "/",
     },
     apis: ["./router/*.js"],

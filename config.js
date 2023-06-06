@@ -28,4 +28,7 @@ export const config = {
     bcrypt: {
         saltRounds: parseInt(required("BCRYPT_SALT_ROUNDS", 12)),
     },
+    swagger: {
+        host: required("SWAGGER_HOST"),
+    },
 };
