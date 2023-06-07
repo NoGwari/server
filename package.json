@@ -14,12 +14,18 @@
         "mysql2": "^3.3.2",
         "nodemon": "^2.0.22",
         "sequelize": "^6.31.1",
+        "swagger-autogen": "^2.23.1",
         "validate": "^5.2.0"
     },
     "name": "test",
     "version": "1.0.0",
     "main": "app.js",
     "type": "module",
+    "nodemonConfig": {
+        "ignore": [
+            "./swagger-output.json"
+        ]
+    },
     "scripts": {
         "test": "echo \"Error: no test specified\" && exit 1",
         "start": "nodemon app"
