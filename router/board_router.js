@@ -3,7 +3,14 @@ import "express-async-errors";
 import * as boardController from "../controller/board_controller.js";
 const router = express.Router();
 
-// GET /board?page=1&list_num=5&category=1
+/**
+ * @swagger
+ * tags:
+ *   - name: Board
+ *     description: Board api
+ */
+
+// Board difine
 /**
  * @swagger
  * definitions:
@@ -43,12 +50,14 @@ const router = express.Router();
  *         type: string
  */
 
+// GET /board?page=1&list_num=5&category=1
 /**
  * @swagger
  * paths:
  *  /board:
  *    get:
  *      summary: "전체 게시글 조회"
+ *      tags: [Board]
  *      parameters:
  *      - in: query
  *        name: page
@@ -80,6 +89,7 @@ router.get("/", boardController.getPostingByPage);
  *  /board/{id}:
  *    get:
  *      summary: "단일 게시글 조회"
+ *      tags: [Board]
  *      parameters:
  *        - in: path
  *          name: id
@@ -106,6 +116,7 @@ router.get("/:id", boardController.getPosting);
  *  /board:
  *    post:
  *      summary: "게시글 추가"
+ *      tags: [Board]
  *      consumes:
  *        - application/json
  *      parameters:
@@ -146,6 +157,7 @@ router.post("/", boardController.newPosting);
  *  /board/{id}:
  *    put:
  *      summary: "게시글 수정"
+ *      tags: [Board]
  *      consumes:
  *        - application/json
  *      parameters:
@@ -191,6 +203,7 @@ router.put("/:id", boardController.updatePost);
  *  /board/{id}:
  *    delete:
  *      summary: "단일 게시글 삭제"
+ *      tags: [Board]
  *      parameters:
  *        - in: path
  *          name: id
