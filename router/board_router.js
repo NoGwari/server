@@ -124,7 +124,7 @@ router.get("/:id", boardController.getPosting);
  *              content:
  *                type: string
  *              hiddenNum:
- *                type: binary
+ *                type: string
  *              userId:
  *                type: integer
  *              categoryId:
