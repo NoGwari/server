@@ -29,7 +29,11 @@ export async function getPosting(req, res) {
 }
 
 export async function newPosting(req, res) {
-    const {title, content, hiddenNum, userId, categoryId} = req.body;
+    const {title, content, userId, categoryId} = req.body;
+    let {hiddenNum} = req.body;
+    if (!hiddenNum) {
+        hiddenNum = "0";
+    }
     const newPosts = await boardRepository.create(title, content, hiddenNum, userId, categoryId);
     res.status(200).json(newPosts);
 }
