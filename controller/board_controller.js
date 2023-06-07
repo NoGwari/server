@@ -40,7 +40,11 @@ export async function newPosting(req, res) {
 
 export async function updatePost(req, res) {
     const id = req.params.id;
-    const {title, content, hiddenNum, categoryId} = req.body;
+    const {title, content, categoryId} = req.body;
+    let {hiddenNum} = req.body;
+    if (!hiddenNum) {
+        hiddenNum = "0";
+    }
     const post = boardRepository.getById(id);
     if (!post) {
         res.status(404).json(id);
