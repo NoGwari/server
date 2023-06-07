@@ -140,9 +140,74 @@ router.get("/:id", boardController.getPosting);
 router.post("/", boardController.newPosting);
 
 // PUT /board/:id
+/**
+ * @swagger
+ * paths:
+ *  /board/{id}:
+ *    put:
+ *      summary: "게시글 수정"
+ *      consumes:
+ *        - application/json
+ *      parameters:
+ *        - in: path
+ *          name: id
+ *          required: true
+ *          type: integer
+ *          minimun: 1
+ *          description: "게시글의 ID값으로 수정대상 찾기"
+ *        - in: body
+ *          name: board
+ *          schema:
+ *            type: object
+ *            required:
+ *              - title
+ *              - content
+ *              - categoryId
+ *            properties:
+ *              title:
+ *                type: string
+ *              content:
+ *                type: string
+ *              hiddenNum:
+ *                type: string
+ *              categoryId:
+ *                type: integer
+ *      responses:
+ *        "200":
+ *          description: 게시글 수정 성공
+ *          content:
+ *            application/json:
+ *              schema:
+ *                $ref: '#/definitions/Board'
+ *        "404":
+ *          description: 해당 게시글 미존재
+ */
 router.put("/:id", boardController.updatePost);
 
 // DELETE /board/:id
+/**
+ * @swagger
+ * paths:
+ *  /board/{id}:
+ *    delete:
+ *      summary: "단일 게시글 삭제"
+ *      parameters:
+ *        - in: path
+ *          name: id
+ *          required: true
+ *          type: integer
+ *          minimun: 1
+ *          description: "게시글의 ID값으로 서칭"
+ *      responses:
+ *        "200":
+ *          description: 게시글 조회 성공
+ *          content:
+ *            application/json:
+ *              schema:
+ *                $ref: '#/definitions/Board'
+ *        "404":
+ *          description: 해당 게시글 미존재
+ */
 router.delete("/:id", boardController.deletePost);
 
 export default router;
