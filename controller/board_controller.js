@@ -28,6 +28,30 @@ export async function getPosting(req, res) {
     }
 }
 
+export async function getSearch(req, res) {
+    const pageId = req.query.page ? req.query.page : 1;
+    const listNum = req.query.list_num ? req.query.list_num : 5; // 검색할 post 개수
+    const offset = 0 + (pageId - 1) * listNum; // skip할 item의 개수
+    const searchType = req.query.searchType;
+    const keyword = req.query.keyword;
+    if (!(searchType && keyword)) {
+        return res.status(400).json({message: "값을 제대로 입력해주세요."});
+    }
+    let data;
+    switch (searchType) {
+        case "title":
+            data = await boardRepository.getPagesToTitle(offset, listNum, keyword);
+            break;
+        case "nickname":
+            data = await boardRepository.getPagesToNickname(offset, listNum, keyword);
+            break;
+    }
+    if (!data) {
+        return res.status(404).json(keyword);
+    }
+    res.status(200).json(data);
+}
+
 export async function newPosting(req, res) {
     const {title, content, userId, categoryId} = req.body;
     let {hiddenNum} = req.body;

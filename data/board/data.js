@@ -1,4 +1,4 @@
-import SQ, {TEXT} from "sequelize";
+import SQ, {Op} from "sequelize";
 import {sequelize} from "../../db/database.js";
 import {Category} from "./category.js";
 import {User} from "../user.js";
@@ -116,6 +116,46 @@ export async function getPagesToCategory(offset, listNum, categoryID) {
             {
                 model: User,
                 attributes: [],
+            },
+        ],
+    });
+}
+
+export async function getPagesToTitle(offset, listNum, title) {
+    return Board.findAll({
+        ...INCLUDED_ALL,
+        ...ORDER_DESC,
+        offset: offset,
+        limit: parseInt(listNum),
+        where: {
+            hidden: 0,
+            title: {
+                [Op.like]: "%" + title + "%",
+            },
+        },
+    });
+}
+
+export async function getPagesToNickname(offset, listNum, nickName) {
+    return Board.findAll({
+        ...INCLUDED_ALL,
+        ...ORDER_DESC,
+        offset: offset,
+        limit: parseInt(listNum),
+        where: {hidden: 0},
+        include: [
+            {
+                model: Category,
+                attributes: [],
+            },
+            {
+                model: User,
+                attributes: [],
+                where: {
+                    nickname: {
+                        [Op.like]: "%" + nickName + "%",
+                    },
+                },
             },
         ],
     });

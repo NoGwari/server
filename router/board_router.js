@@ -79,8 +79,46 @@ const router = express.Router();
  *              schema:
  *                $ref: '#/definitions/Board'
  */
-
 router.get("/", boardController.getPostingByPage);
+
+// GET /board/search?searchType=title&keyword=title1
+/**
+ * @swagger
+ * paths:
+ *  /board/search:
+ *    get:
+ *      summary: "게시글 검색"
+ *      tags: [Board]
+ *      parameters:
+ *      - in: query
+ *        name: page
+ *        type: integer
+ *        description: "page 번호 / defalut = 1"
+ *      - in: query
+ *        name: list_num
+ *        type: integer
+ *        description: "item 개수 / defalut = 5"
+ *      - in: query
+ *        name: searchType
+ *        type: string
+ *        description: "제목검색 - title / 작성자검색 - nickname "
+ *      - in: query
+ *        name: keyword
+ *        type: string
+ *        description: "searchType에 대한 keyword값"
+ *      responses:
+ *        "200":
+ *          description: 게시글 목록 검색 성공
+ *          content:
+ *            application/json:
+ *              schema:
+ *                $ref: '#/definitions/Board'
+ *        "400":
+ *          description: searchType/keyword 값 미존재
+ *        "404":
+ *          description: 검색된 데이터 없음
+ */
+router.get("/search", boardController.getSearch);
 
 // GET /board/id
 /**
