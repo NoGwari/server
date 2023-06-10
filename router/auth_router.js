@@ -1,6 +1,7 @@
 import express from "express";
 import "express-async-errors";
 import * as authController from "../controller/auth_controller.js";
+import {isAuth} from "../middleware/auth_middleware.js";
 const router = express.Router();
 
 // Auth difine
@@ -21,6 +22,28 @@ const router = express.Router();
  *   - name: Auth
  *     description: Login api
  */
+
+// GET /auth/me
+/**
+ * @swagger
+ * paths:
+ *  /auth/me:
+ *    get:
+ *      summary: "로그인 확인"
+ *      tags: [Auth]
+ *      responses:
+ *        "200":
+ *          description: 로그인 확인 완료
+ *          content:
+ *            application/json:
+ *              schema:
+ *                $ref: '#/definitions/Auth'
+ *        "401":
+ *          description: Authentication Error
+ *        "404":
+ *          description: 해당 로그인 정보 없음
+ */
+router.get("/me", isAuth, authController.me);
 
 // POST /auth/login
 /**
