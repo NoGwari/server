@@ -13,3 +13,14 @@ export async function newCategory(req, res) {
     const newCategory = await categoryRepository.create(name);
     res.status(200).json(newCategory);
 }
+
+export async function deleteCategory(req, res) {
+    const id = req.params.id;
+    const category = categoryRepository.getById(id);
+    if (!category) {
+        res.status(404).json(id);
+    }
+    //TODO 관리자 권한 파악후 삭제여부 기능 추가
+    const deleteCategoryID = await categoryRepository.remove(id);
+    res.status(200).json(deleteCategoryID);
+}
