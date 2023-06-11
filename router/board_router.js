@@ -186,6 +186,8 @@ router.get("/:id", boardController.getPosting);
  *            application/json:
  *              schema:
  *                $ref: '#/definitions/Board'
+ *        "401":
+ *          description: 인증 실패
  */
 router.post("/", isAuth, boardController.newPosting);
 
@@ -230,6 +232,10 @@ router.post("/", isAuth, boardController.newPosting);
  *            application/json:
  *              schema:
  *                $ref: '#/definitions/Board'
+ *        "401":
+ *          description: 인증 실패
+ *        "403":
+ *          description: 수정 권한 없음
  *        "404":
  *          description: 해당 게시글 미존재
  */
@@ -257,6 +263,10 @@ router.put("/:id", isAuth, boardController.updatePost);
  *            application/json:
  *              schema:
  *                $ref: '#/definitions/Board'
+ *        "401":
+ *          description: 인증 실패
+ *        "403":
+ *          description: 삭제 권한 없음
  *        "404":
  *          description: 해당 게시글 미존재
  */
