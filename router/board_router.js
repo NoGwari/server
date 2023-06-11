@@ -1,6 +1,7 @@
 import express from "express";
 import "express-async-errors";
 import * as boardController from "../controller/board_controller.js";
+import {isAuth} from "../middleware/auth_middleware.js";
 const router = express.Router();
 
 /**
@@ -186,7 +187,7 @@ router.get("/:id", boardController.getPosting);
  *              schema:
  *                $ref: '#/definitions/Board'
  */
-router.post("/", boardController.newPosting);
+router.post("/", isAuth, boardController.newPosting);
 
 // PUT /board/:id
 /**
@@ -232,7 +233,7 @@ router.post("/", boardController.newPosting);
  *        "404":
  *          description: 해당 게시글 미존재
  */
-router.put("/:id", boardController.updatePost);
+router.put("/:id", isAuth, boardController.updatePost);
 
 // DELETE /board/:id
 /**
@@ -259,6 +260,6 @@ router.put("/:id", boardController.updatePost);
  *        "404":
  *          description: 해당 게시글 미존재
  */
-router.delete("/:id", boardController.deletePost);
+router.delete("/:id", isAuth, boardController.deletePost);
 
 export default router;
