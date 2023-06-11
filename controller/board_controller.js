@@ -71,9 +71,11 @@ export async function updatePost(req, res) {
     }
     const post = boardRepository.getById(id);
     if (!post) {
-        res.status(404).json(id);
+        return res.status(404).json(id);
     }
-    //TODO userId 확인절차 추가해야함
+    if (req.userId !== post.userId) {
+        return res.sendStatus(403);
+    }
     const updatePosts = await boardRepository.update(id, title, content, hiddenNum, categoryId);
     res.status(200).json(updatePosts);
 }
@@ -84,7 +86,9 @@ export async function deletePost(req, res) {
     if (!post) {
         res.status(404).json(id);
     }
-    //TODO userId 확인절차 추가해야함
+    if (req.userId !== post.userId) {
+        return res.sendStatus(403);
+    }
     const deletePosts = await boardRepository.remove(id);
     res.status(200).json(deletePosts);
 }
