@@ -78,3 +78,7 @@ export async function createUser(user) {
         reported: 0,
     }).then((result) => result.dataValues.id);
 }
+
+export async function checkAdmin(realId) {
+    return User.findOne({where: {realId: realId, grade: "admin"}});
+}
