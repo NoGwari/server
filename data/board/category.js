@@ -32,6 +32,13 @@ export async function getCategory() {
     });
 }
 
+export async function getById(id) {
+    return Category.findOne({
+        attributes: ["id", "name", "post_num"],
+        where: {id},
+    });
+}
+
 export async function create(name) {
     return Category.create({
         name: name,
@@ -41,5 +48,13 @@ export async function create(name) {
             attributes: ["id", "name", "post_num"],
             where: {id: result.dataValues.id},
         });
+    });
+}
+
+export async function remove(id) {
+    return Category.findByPk(id, {
+        attributes: ["id", "name", "post_num"],
+    }).then((post) => {
+        post.destroy();
     });
 }
