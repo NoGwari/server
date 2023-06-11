@@ -19,7 +19,8 @@ export async function signup(req, res) {
         img,
     });
     const token = createJwtToken(userId);
-    res.status(200).json({token, realid});
+    const expriesInSec = config.jwt;
+    res.status(200).json({token, realid, expriesInSec});
 }
 
 export async function login(req, res) {
@@ -33,7 +34,8 @@ export async function login(req, res) {
         return res.status(401).json({message: `Invaild user or password`});
     }
     const token = createJwtToken(user.id);
-    res.status(200).json({token, realid});
+    const expriesInSec = config.jwt;
+    res.status(200).json({token, realid, expriesInSec});
 }
 
 function createJwtToken(id) {
