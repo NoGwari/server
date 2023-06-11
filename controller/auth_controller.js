@@ -35,6 +35,10 @@ export async function login(req, res) {
     }
     const token = createJwtToken(user.id);
     const expriesInSec = config.jwt;
+    const isAdmin = await userRepository.checkAdmin(realid);
+    if (isAdmin) {
+        return res.status(200).json({token, realid, expriesInSec, role: "admin"});
+    }
     res.status(200).json({token, realid, expriesInSec});
 }
 
