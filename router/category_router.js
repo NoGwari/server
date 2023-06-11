@@ -73,4 +73,31 @@ router.get("/", categoryController.getCategory);
  */
 router.post("/", categoryController.newCategory);
 
+// DELETE /category/:id
+/**
+ * @swagger
+ * paths:
+ *  /category/{id}:
+ *    delete:
+ *      summary: "단일 카테고리 삭제"
+ *      tags: [Category]
+ *      parameters:
+ *        - in: path
+ *          name: id
+ *          required: true
+ *          type: integer
+ *          minimun: 1
+ *          description: "게시글의 ID값으로 서칭"
+ *      responses:
+ *        "200":
+ *          description: 카테고리 삭제 성공
+ *          content:
+ *            application/json:
+ *              schema:
+ *                $ref: '#/definitions/Category'
+ *        "404":
+ *          description: 해당 게시글 미존재
+ */
+router.delete("/:id", categoryController.deleteCategory);
+
 export default router;
