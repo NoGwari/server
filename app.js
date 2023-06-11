@@ -8,9 +8,9 @@ import boardRouter from "./router/board_router.js";
 import authRouter from "./router/auth_router.js";
 import swaggerUi from "swagger-ui-express";
 import {specs} from "./swagger.js";
-
 import {config} from "./config.js";
 import {sequelize} from "./db/database.js";
+
 const app = express();
 
 const corsOption = {
