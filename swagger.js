@@ -5,12 +5,33 @@ import {config} from "./config.js";
 
 // 기본 swagger 사용시
 const options = {
-    swaggerDefinition: {
-        version: "3.0.0",
+    // swaggerDefinition: {
+    //     version: "3.0.0",
+    //     info: {
+    //         title: "Nogwari",
+    //         version: "1.0.0",
+    //         description: "Nogwari swagger",
+    //     },
+    //     host: config.swagger.host,
+    //     basePath: "/",
+    // },
+    // apis: ["./router/*.js"],
+    definition: {
+        openapi: "3.0.3",
         info: {
             title: "Nogwari",
             version: "1.0.0",
             description: "Nogwari swagger",
+        },
+        components: {
+            securitySchemes: {
+                Authorization: {
+                    type: "http",
+                    scheme: "bearer",
+                    bearerFormat: "JWT",
+                    value: "Bearer <JWT token here>",
+                },
+            },
         },
         host: config.swagger.host,
         basePath: "/",
