@@ -7,7 +7,7 @@ import categoryRouter from "./router/category_router.js";
 import boardRouter from "./router/board_router.js";
 import authRouter from "./router/auth_router.js";
 import swaggerUi from "swagger-ui-express";
-import {specs} from "./swagger.js";
+import YAML from "yamljs";
 import {config} from "./config.js";
 import {sequelize} from "./db/database.js";
 
@@ -19,7 +19,12 @@ const corsOption = {
 };
 
 // 기본 swagger 사용시
-app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(specs));
+// import {specs} from "./swagger.js";
+// app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
+
+// YAML파일 사용하여 swagger 사용시
+const swaggerDocument = YAML.load("./swagger.yaml");
+app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 // swagger auto-gen 사용시
 // import swaggerFile from "./swagger-output.json" assert {type: "json"};
