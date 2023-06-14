@@ -15,7 +15,8 @@
         "nodemon": "^2.0.22",
         "sequelize": "^6.31.1",
         "swagger-autogen": "^2.23.1",
-        "validate": "^5.2.0"
+        "validate": "^5.2.0",
+        "yamljs": "^0.3.0"
     },
     "name": "test",
     "version": "1.0.0",
