@@ -56,8 +56,8 @@ export const User = sequelize.define(
     {timestamps: false, charset: "utf8", collate: "utf8_general_ci"}
 );
 
-export async function findByRealId(realId) {
-    return User.findOne({where: {realId: realId}});
+export async function findByRealId(realid) {
+    return User.findOne({where: {realid: realid}});
 }
 
 export async function findById(id) {
@@ -79,6 +79,6 @@ export async function createUser(user) {
     }).then((result) => result.dataValues.id);
 }
 
-export async function checkAdmin(realId) {
-    return User.findOne({where: {realId: realId, grade: "admin"}});
+export async function checkAdmin(realid) {
+    return User.findOne({where: {realid: realid, grade: "admin"}});
 }
