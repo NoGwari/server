@@ -34,7 +34,7 @@ export async function login(req, res) {
         return res.status(401).json({message: `Invaild user or password`});
     }
     const token = createJwtToken(user.id);
-    const expriesInSec = config.jwt;
+    const expriesInSec = config.jwt.expriesInSec;
     const isAdmin = await userRepository.checkAdmin(realid);
     if (isAdmin) {
         return res.status(200).json({token, realid, expriesInSec, role: "admin"});
