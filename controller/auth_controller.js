@@ -26,6 +26,8 @@ export async function signup(req, res) {
 export async function login(req, res) {
     const {realid, password} = req.body;
     const user = await userRepository.findByRealId(realid);
+    const token = createJwtToken(user.id);
+    const expriesInSec = config.jwt.expriesInSec;
     if (!user) {
         return res.status(401).json({message: `Invaild user or password`});
     }
@@ -33,8 +35,6 @@ export async function login(req, res) {
     if (!isValidPassword) {
         return res.status(401).json({message: `Invaild user or password`});
     }
-    const token = createJwtToken(user.id);
-    const expriesInSec = config.jwt.expriesInSec;
     const isAdmin = await userRepository.checkAdmin(realid);
     if (isAdmin) {
         return res.status(200).json({token, realid, expriesInSec, role: "admin"});
