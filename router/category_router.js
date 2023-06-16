@@ -1,7 +1,7 @@
 import express from "express";
 import "express-async-errors";
 import * as categoryController from "../controller/category_controller.js";
-import {isAuth} from "../middleware/auth_middleware.js";
+import {isAdimin, isAuth} from "../middleware/auth_middleware.js";
 const router = express.Router();
 
 // Category difine
@@ -42,7 +42,7 @@ const router = express.Router();
  *                $ref: '#/definitions/Category'
  */
 
-router.get("/", isAuth, categoryController.getCategory);
+router.get("/", categoryController.getCategory);
 
 // POST /category
 /**
@@ -72,7 +72,7 @@ router.get("/", isAuth, categoryController.getCategory);
  *              schema:
  *                $ref: '#/definitions/Category'
  */
-router.post("/", isAuth, categoryController.newCategory);
+router.post("/", isAuth, isAdimin, categoryController.newCategory);
 
 // DELETE /category/:id
 /**
@@ -99,6 +99,6 @@ router.post("/", isAuth, categoryController.newCategory);
  *        "404":
  *          description: 해당 게시글 미존재
  */
-router.delete("/:id", isAuth, categoryController.deleteCategory);
+router.delete("/:id", isAuth, isAdimin, categoryController.deleteCategory);
 
 export default router;
