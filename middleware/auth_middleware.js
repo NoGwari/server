@@ -19,6 +19,14 @@ export const isAuth = async (req, res, next) => {
             return res.status(401).json(AUTH_ERROR);
         }
         req.userId = user.id;
+        req.role = user.grade;
         next();
     });
+};
+
+export const isAdimin = async (req, res, next) => {
+    if (req.role !== "admin") {
+        return res.status(401).json(AUTH_ERROR);
+    }
+    next();
 };
