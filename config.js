@@ -31,4 +31,8 @@ export const config = {
     swagger: {
         host: required("SWAGGER_HOST"),
     },
+    aws: {
+        accessKey: required("AWS_ACCESS_KEY"),
+        secretAccessKey: required("AWS_SECRET_ACCESS_KEY"),
+    },
 };
