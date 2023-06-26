@@ -10,11 +10,13 @@
         "helmet": "^7.0.0",
         "jsonwebtoken": "^9.0.0",
         "morgan": "^1.10.0",
+        "multer": "^1.4.5-lts.1",
         "multer-s3": "^3.0.1",
         "mysql": "^2.18.1",
         "mysql2": "^3.3.2",
         "nodemon": "^2.0.22",
         "sequelize": "^6.31.1",
+        "shortid": "^2.2.16",
         "swagger-autogen": "^2.23.1",
         "validate": "^5.2.0",
         "yamljs": "^0.3.0"
