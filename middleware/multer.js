@@ -11,9 +11,9 @@ export const upload = multer({
                 accessKeyId: config.aws.accessKey,
                 secretAccessKey: config.aws.secretAccessKey,
             },
-            region: "us-east-2",
+            region: "ap-northeast-2",
         }),
-        bucket: "nogwari",
+        bucket: "nogwari2",
         acl: "public-read-write",
         contentType: multerS3.AUTO_CONTENT_TYPE,
         key: function (req, file, cb) {
