@@ -7,6 +7,7 @@ import categoryRouter from "./router/category_router.js";
 import boardRouter from "./router/board_router.js";
 import authRouter from "./router/auth_router.js";
 import swaggerUi from "swagger-ui-express";
+import passport from "./middleware/auth_middleware.js";
 import YAML from "yamljs";
 import {config} from "./config.js";
 import {sequelize} from "./db/database.js";
@@ -34,6 +35,8 @@ app.use(express.json());
 app.use(cors(corsOption));
 app.use(helmet());
 app.use(morgan("tiny"));
+
+app.use(passport.initialize());
 
 app.use("/board", boardRouter);
 app.use("/category", categoryRouter);
