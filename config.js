@@ -35,4 +35,8 @@ export const config = {
         accessKey: required("AWS_ACCESS_KEY"),
         secretAccessKey: required("AWS_SECRET_ACCESS_KEY"),
     },
+    oauth: {
+        googleLoginID: required("GOOGLE_LOGIN_ID"),
+        googleLoginPW: required("GOOGLE_LOGIN_PW"),
+    },
 };
