@@ -7,7 +7,7 @@ import categoryRouter from "./router/category_router.js";
 import boardRouter from "./router/board_router.js";
 import authRouter from "./router/auth_router.js";
 import swaggerUi from "swagger-ui-express";
-import passport from "./middleware/auth_middleware.js";
+import passport from "./controller/auth_controller.js";
 import YAML from "yamljs";
 import {config} from "./config.js";
 import {sequelize} from "./db/database.js";

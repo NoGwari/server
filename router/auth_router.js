@@ -1,6 +1,6 @@
 import express from "express";
 import "express-async-errors";
-import passport from "../middleware/auth_middleware.js";
+import passport from "../controller/auth_controller.js";
 import * as authController from "../controller/auth_controller.js";
 import {isAuth} from "../middleware/auth_middleware.js";
 

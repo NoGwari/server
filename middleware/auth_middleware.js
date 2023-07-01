@@ -1,6 +1,4 @@
 import jwt from "jsonwebtoken";
-import passport from "passport";
-import {Strategy as GoogleStrategy} from "passport-google-oauth20";
 import * as userRepository from "../data/user.js";
 import {config} from "../config.js";
 
@@ -32,18 +30,3 @@ export const isAdimin = async (req, res, next) => {
     }
     next();
 };
-
-passport.use(
-    new GoogleStrategy(
-        {
-            clientID: config.oauth.googleLoginID,
-            clientSecret: config.oauth.googleLoginPW,
-            callbackURL: "/auth/google/callback",
-        },
-        (accessToken, refreshToken, profile, done) => {
-            return done(null, profile);
-        }
-    )
-);
-
-export default passport;
