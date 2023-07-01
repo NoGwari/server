@@ -58,8 +58,7 @@ export async function me(req, res, next) {
     return res.status(200).json({username: user.username});
 }
 
-async function signupToGoogle(profile) {
-    console.log(profile);
+async function loginToGoogle(profile) {
     const found = await userRepository.findByRealId(profile.sub);
     if (!found) {
         const hashed = await bcrypt.hash(profile.sub, config.bcrypt.saltRounds);
@@ -71,7 +70,7 @@ async function signupToGoogle(profile) {
             img: profile.picture,
         });
     }
-    const token = createJwtToken(profile.sub);
+    const token = await createJwtToken(profile.sub);
     return token;
 }
 
@@ -82,12 +81,9 @@ passport.use(
             clientSecret: config.oauth.googleLoginPW,
             callbackURL: "/auth/google/callback",
         },
-        (accessToken, refreshToken, profile, done) => {
-            let token = signupToGoogle(profile._json);
+        async (accessToken, refreshToken, profile, done) => {
+            const token = await loginToGoogle(profile._json);
             const realId = profile.id;
-            if (!token) {
-                token = createJwtToken(realId);
-            }
             const expriesInSec = config.jwt.expriesInSec;
             return done(null, {realId, token, expriesInSec});
         }
