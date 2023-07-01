@@ -21,7 +21,7 @@ export async function signup(req, res) {
         img,
     });
     const token = createJwtToken(userId);
-    const expriesInSec = config.jwt;
+    const expriesInSec = config.jwt.expriesInSec;
     res.status(200).json({token, realid, expriesInSec});
 }
 
@@ -58,6 +58,23 @@ export async function me(req, res, next) {
     return res.status(200).json({username: user.username});
 }
 
+async function signupToGoogle(profile) {
+    console.log(profile);
+    const found = await userRepository.findByRealId(profile.sub);
+    if (!found) {
+        const hashed = await bcrypt.hash(profile.sub, config.bcrypt.saltRounds);
+        const userId = await userRepository.createUser({
+            realid: profile.sub,
+            password: hashed,
+            nickname: profile.name,
+            email: profile.email,
+            img: profile.picture,
+        });
+    }
+    const token = createJwtToken(profile.sub);
+    return token;
+}
+
 passport.use(
     new GoogleStrategy(
         {
@@ -66,10 +83,13 @@ passport.use(
             callbackURL: "/auth/google/callback",
         },
         (accessToken, refreshToken, profile, done) => {
-            const token = createJwtToken(profile.id);
+            let token = signupToGoogle(profile._json);
+            const realId = profile.id;
+            if (!token) {
+                token = createJwtToken(realId);
+            }
             const expriesInSec = config.jwt.expriesInSec;
-            console.log(profile);
-            return done(null, {profile, token});
+            return done(null, {realId, token, expriesInSec});
         }
     )
 );
