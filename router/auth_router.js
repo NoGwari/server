@@ -17,7 +17,8 @@ router.post("/signup", authController.signup);
 
 router.get("/google", passport.authenticate("google", {scope: ["profile", "email"]}));
 router.get("/google/callback", passport.authenticate("google", {failureRedirect: "/", session: false}), (req, res) => {
-    res.redirect("/board");
+    const {realId, token, expriesInSec} = req.user;
+    res.status(200).json({token, realId, expriesInSec});
 });
 
 export default router;
