@@ -61,7 +61,8 @@ export async function me(req, res, next) {
 async function loginToGoogle(profile) {
     const found = await userRepository.findByRealId(profile.sub);
     if (!found) {
-        const hashed = await bcrypt.hash(profile.sub, config.bcrypt.saltRounds);
+        // ID가 DB에 없으므로 회원가입
+        const hashed = await bcrypt.hash(profile.sub, config.bcrypt.saltRounds); // 비밀번호는 ID를 hash함
         const userId = await userRepository.createUser({
             realid: profile.sub,
             password: hashed,
