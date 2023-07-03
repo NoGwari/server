@@ -39,4 +39,9 @@ export const config = {
         googleLoginID: required("GOOGLE_LOGIN_ID"),
         googleLoginPW: required("GOOGLE_LOGIN_PW"),
     },
+    email: {
+        emailService: required("EMAIL_SERVICE", "Gmail"),
+        emailID: required("EMAIL_ID"),
+        emailPW: required("EMAIL_PW"),
+    },
 };
