@@ -18,9 +18,11 @@
         "nodemon": "^2.0.22",
         "passport": "^0.6.0",
         "passport-google-oauth20": "^2.0.0",
+        "redis": "^4.6.7",
         "sequelize": "^6.31.1",
         "shortid": "^2.2.16",
         "swagger-autogen": "^2.23.1",
+        "typescript": "^5.1.6",
         "validate": "^5.2.0",
         "yamljs": "^0.3.0"
     },
