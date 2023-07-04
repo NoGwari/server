@@ -44,4 +44,10 @@ export const config = {
         emailID: required("EMAIL_ID"),
         emailPW: required("EMAIL_PW"),
     },
+    redis: {
+        username: required("REDIS_USERNAME"),
+        password: required("REDIS_PASSWORD"),
+        host: required("REDIS_HOST"),
+        port: required("REDIS_PORT"),
+    },
 };
