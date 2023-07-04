@@ -35,7 +35,7 @@ export async function mailSubmit(req, res) {
     req.redisClient.connect(); // redis connect 완료
     const {email} = req.body;
     const verifyKey = Math.floor(Math.random() * 899999) + 100000; // 무작위값 생성
-    await req.redisClient.set(`${email}`, `${verifyKey}`, "EX", 3000);
+    await req.redisClient.set(`${email}`, `${verifyKey}`, "EX", 300);
     const emailConfig = {
         service: config.email.emailService,
         auth: {
