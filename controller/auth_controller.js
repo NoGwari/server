@@ -1,6 +1,8 @@
 import jwt from "jsonwebtoken";
 import bcrypt from "bcrypt";
 import passport from "passport";
+import nodemailer from "nodemailer";
+import redis from "redis";
 import {Strategy as GoogleStrategy} from "passport-google-oauth20";
 import {} from "express-async-errors";
 import * as userRepository from "../data/user.js";
@@ -9,8 +11,12 @@ import {config} from "../config.js";
 export async function signup(req, res) {
     const {realid, password, nickname, email, img} = req.body;
     const found = await userRepository.findByRealId(realid);
-    if (found) {
-        return res.status(409).json({message: `${realid} is already exists!`});
+    // if (found) {
+    //     return res.status(409).json({message: `${realid} is already exists!`});
+    // }
+    const isSccess = await mailSubmit(email, nickname);
+    if (!isSccess) {
+        return res.status(404).json({message: `${email} is not exists!`});
     }
     const hashed = await bcrypt.hash(password, config.bcrypt.saltRounds);
     const userId = await userRepository.createUser({
@@ -23,6 +29,55 @@ export async function signup(req, res) {
     const token = createJwtToken(userId);
     const expriesInSec = config.jwt.expriesInSec;
     res.status(200).json({token, realid, expriesInSec});
+}
+
+export async function mailSubmit(req, res) {
+    req.redisClient.connect(); // redis connect 완료
+    const {email} = req.body;
+    const verifyKey = Math.floor(Math.random() * 899999) + 100000; // 무작위값 생성
+    await req.redisClient.set(`${email}`, `${verifyKey}`, "EX", 3000);
+    const emailConfig = {
+        service: config.email.emailService,
+        auth: {
+            user: config.email.emailID,
+            pass: config.email.emailPW,
+        },
+    };
+    const transporter = nodemailer.createTransport(emailConfig);
+    const mailOptions = {
+        from: emailConfig,
+        to: email,
+        subject: "Nogwari 이메일 인증",
+        text: `안녕하세요!\n\n 아래에 나오는 인증번호로 인증 부탁드려요! \n\n 인증번호 : ${verifyKey}`,
+    };
+
+    await transporter.sendMail(mailOptions, (error, info) => {
+        if (error) {
+            return res.sendStatus(404);
+        } else {
+            console.log("Email sent: " + info.response);
+        }
+    });
+    res.sendStatus(200);
+}
+
+export async function checkVerifyKey(req, res) {
+    req.redisClient.connect(); // redis connect 완료
+    const {email, verifyKey} = req.body;
+    req.redisClient.get(`${email}`, (error, result) => {
+        if (error) {
+            console.error("Error:", error);
+            return res.sendStatus(404);
+        } else if (result === null) {
+            return res.sendStatus(404);
+        } else {
+            if (result === verifyKey) {
+                return res.sendStatus(200);
+            } else {
+                return res.sendStatus(404);
+            }
+        }
+    });
 }
 
 export async function login(req, res) {
