@@ -35,13 +35,16 @@
     },
     "scripts": {
         "test": "echo \"Error: no test specified\" && exit 1",
-        "start": "concurrently \"tsc -w\" \"nodemon dist/app.js\"",
-        "nodemon start": "nodemon app.js"
+        "start": "concurrently \"tsc -w\" \"nodemon dist/app.js\""
     },
     "author": "",
     "license": "ISC",
     "description": "",
     "devDependencies": {
+        "@types/cors": "^2.8.13",
+        "@types/express": "^4.17.17",
+        "@types/morgan": "^1.9.4",
+        "@types/yamljs": "^0.2.31",
         "concurrently": "^8.2.0",
         "nodemon": "^2.0.22",
         "swagger-autogen": "^2.23.4",
