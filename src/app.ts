@@ -5,6 +5,7 @@ import helmet from "helmet";
 import morgan from "morgan";
 import YAML from "yamljs";
 import swaggerUi from "swagger-ui-express";
+import path from "path";
 import categoryRouter from "./router/category_router.js";
 import boardRouter from "./router/board_router.js";
 import authRouter from "./router/auth_router.js";
@@ -19,18 +20,9 @@ const corsOption = {
     optionsSuccessStatus: 200,
 };
 
-// 기본 swagger 사용시
-// import {specs} from "./swagger.js";
-// app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
-
-// YAML파일 사용하여 swagger 사용시
-const swaggerDocument = YAML.load("./swagger.yaml");
+const __dirname = path.resolve();
+const swaggerDocument = YAML.load(path.join(__dirname, "../server/dist/swagger.yaml"));
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
-
-// swagger auto-gen 사용시
-// import swaggerFile from "./swagger-output.json" assert {type: "json"};
-// app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerFile));
-
 app.use(express.json());
 app.use(cors(corsOption));
 app.use(helmet());
