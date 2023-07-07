@@ -3,8 +3,8 @@ import * as redis from "redis";
 declare global {
     namespace Express {
         interface Request {
-            userId?: string;
-            role?: string;
+            userId?: number;
+            role: string;
             redisClient?: redis;
         }
     }
