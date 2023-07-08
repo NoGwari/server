@@ -1,5 +1,5 @@
 import {sequelize} from "../db/database.js";
-import SQ, {TEXT} from "sequelize";
+import SQ, {TEXT, Model, InferAttributes, InferCreationAttributes, CreationOptional, Optional} from "sequelize";
 
 const Sequelize = SQ.Sequelize;
 const DateTypes = SQ.DataTypes;
@@ -56,15 +56,15 @@ export const User = sequelize.define(
     {timestamps: false, charset: "utf8", collate: "utf8_general_ci"}
 );
 
-export async function findByRealId(realid) {
+export async function findByRealId(realid: string) {
     return User.findOne({where: {realid: realid}});
 }
 
-export async function findById(id) {
+export async function findById(id: number) {
     return User.findByPk(id);
 }
 
-export async function createUser(user) {
+export async function createUser(user: any) {
     const {realid, password, nickname, email, img} = user;
     return User.create({
         realid: realid,
@@ -79,6 +79,6 @@ export async function createUser(user) {
     }).then((result) => result.dataValues.id);
 }
 
-export async function checkAdmin(realid) {
+export async function checkAdmin(realid: string) {
     return User.findOne({where: {realid: realid, grade: "admin"}});
 }
