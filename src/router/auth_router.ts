@@ -15,14 +15,17 @@ router.post("/login", authController.login);
 // POST /auth/signup
 router.post("/signup", authController.signup);
 
+// POST /auth/mailsubmit
 router.post("/mailsubmit", redisMiddleware, authController.mailSubmit);
 
+// POST /auth/checkkey
 router.post("/checkkey", redisMiddleware, authController.checkVerifyKey);
 
+// GET /auth/google
 router.get("/google", passport.authenticate("google", {scope: ["profile", "email"]}));
 router.get("/google/callback", passport.authenticate("google", {failureRedirect: "/", session: false}), (req, res) => {
-    const {realId, token, expriesInSec} = req.user;
     res.redirect("/");
+    // const {realId, token, expriesInSec} = req.user;
     // res.status(200).json({token, realId, expriesInSec});
 });
 
