@@ -119,7 +119,7 @@ export async function createUser(user: UserType) {
         posting_num: 0,
         reply_num: 0,
         reported: 0,
-    }).then((result) => result.dataValues.id);
+    }).then((result) => result.dataValues.id.toString());
 }
 
 export async function checkAdmin(realid: string) {

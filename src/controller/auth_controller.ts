@@ -49,6 +49,10 @@ export async function signup(req: Request, res: Response) {
         nickname,
         email,
         img,
+        grade: "",
+        posting_num: 0,
+        reply_num: 0,
+        reported: 0,
     });
     const token = createJwtToken(userId);
     const expriesInSec = config.jwt.expriesInSec;
@@ -152,6 +156,10 @@ async function loginToGoogle(profile: any) {
             nickname: profile.name,
             email: profile.email,
             img: profile.picture,
+            grade: "grade1",
+            posting_num: 0,
+            reply_num: 0,
+            reported: 0,
         });
     }
     const token = createJwtToken(profile.sub);
