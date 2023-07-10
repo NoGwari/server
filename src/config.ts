@@ -1,14 +1,13 @@
 import dotenv from "dotenv";
 dotenv.config();
 
-function required(key, defalutValue = undefined) {
+function required(key: any, defalutValue: any = undefined) {
     const value = process.env[key] || defalutValue;
     if (value == null) {
         throw new Error(`key ${key} is undefined!`);
     }
     return value;
 }
-
 export const config = {
     port: parseInt(required("PORT", 3000)),
     db: {
