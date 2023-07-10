@@ -1,60 +1,155 @@
 import {sequelize} from "../db/database.js";
-import SQ, {TEXT, Model, InferAttributes, InferCreationAttributes, CreationOptional, Optional} from "sequelize";
+import SQ from "sequelize";
 
-const Sequelize = SQ.Sequelize;
-const DateTypes = SQ.DataTypes;
+const DataTypes = SQ.DataTypes;
 
-export const User = sequelize.define(
-    "user",
+interface UserType {
+    realid: string;
+    password: string;
+    nickname: string;
+    email: string;
+    grade: string;
+    posting_num: number;
+    reply_num: number;
+    reported: number;
+    img?: string;
+}
+
+interface UserAttributes extends UserType {
+    id: number;
+    grade: string;
+    posting_num: number;
+    reply_num: number;
+    reported: number;
+}
+
+export class User extends SQ.Model<UserAttributes, UserType> implements UserAttributes {
+    public id!: number;
+    public realid!: string;
+    public password!: string;
+    public nickname!: string;
+    public email!: string;
+    public grade!: string;
+    public img?: string;
+    public posting_num!: number;
+    public reply_num!: number;
+    public reported!: number;
+
+    public readonly createdAt!: Date;
+    public readonly updatedAt!: Date;
+}
+
+User.init(
     {
         id: {
-            type: DateTypes.INTEGER,
+            type: DataTypes.INTEGER,
             autoIncrement: true,
             allowNull: false,
             primaryKey: true,
         },
         realid: {
-            type: DateTypes.STRING(20),
+            type: DataTypes.STRING(20),
             allowNull: false,
             unique: true,
         },
         password: {
-            type: DateTypes.STRING(100),
+            type: DataTypes.STRING(100),
             allowNull: false,
         },
         nickname: {
-            type: DateTypes.STRING(10),
+            type: DataTypes.STRING(10),
             allowNull: false,
             unique: true,
         },
         email: {
-            type: DateTypes.STRING(30),
+            type: DataTypes.STRING(30),
             allowNull: false,
             unique: true,
         },
         grade: {
-            type: DateTypes.STRING(10),
+            type: DataTypes.STRING(10),
             allowNull: false,
         },
         img: {
-            type: DateTypes.STRING(100),
+            type: DataTypes.STRING(100),
             allowNull: true,
         },
         posting_num: {
-            type: DateTypes.INTEGER.ZEROFILL,
+            type: DataTypes.INTEGER,
             allowNull: false,
+            defaultValue: 0,
         },
         reply_num: {
-            type: DateTypes.INTEGER.ZEROFILL,
+            type: DataTypes.INTEGER,
             allowNull: false,
+            defaultValue: 0,
         },
         reported: {
-            type: DateTypes.INTEGER.ZEROFILL,
+            type: DataTypes.INTEGER,
             allowNull: false,
+            defaultValue: 0,
         },
     },
-    {timestamps: false, charset: "utf8", collate: "utf8_general_ci"}
+    {
+        sequelize,
+        modelName: "user",
+        timestamps: false,
+        charset: "utf8",
+        collate: "utf8_general_ci",
+    }
 );
+
+// export const User = sequelize.define(
+//     "user",
+//     {
+//         id: {
+//             type: DateTypes.INTEGER,
+//             autoIncrement: true,
+//             allowNull: false,
+//             primaryKey: true,
+//         },
+//         realid: {
+//             type: DateTypes.STRING(20),
+//             allowNull: false,
+//             unique: true,
+//         },
+//         password: {
+//             type: DateTypes.STRING(100),
+//             allowNull: false,
+//         },
+//         nickname: {
+//             type: DateTypes.STRING(10),
+//             allowNull: false,
+//             unique: true,
+//         },
+//         email: {
+//             type: DateTypes.STRING(30),
+//             allowNull: false,
+//             unique: true,
+//         },
+//         grade: {
+//             type: DateTypes.STRING(10),
+//             allowNull: false,
+//         },
+//         img: {
+//             type: DateTypes.STRING(100),
+//             allowNull: true,
+//         },
+//         posting_num: {
+//             type: DateTypes.INTEGER.ZEROFILL,
+//             allowNull: false,
+//         },
+//         reply_num: {
+//             type: DateTypes.INTEGER.ZEROFILL,
+//             allowNull: false,
+//         },
+//         reported: {
+//             type: DateTypes.INTEGER.ZEROFILL,
+//             allowNull: false,
+//         },
+//     },
+//     {timestamps: false, charset: "utf8", collate: "utf8_general_ci"}
+// );
 
 export async function findByRealId(realid: string) {
     return User.findOne({where: {realid: realid}});
@@ -64,7 +159,7 @@ export async function findById(id: number) {
     return User.findByPk(id);
 }
 
-export async function createUser(user: any) {
+export async function createUser(user: UserType) {
     const {realid, password, nickname, email, img} = user;
     return User.create({
         realid: realid,
