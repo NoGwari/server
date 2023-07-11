@@ -1,9 +1,32 @@
+import {Request, Response} from "express";
 import * as boardRepository from "../data/board/data.js";
 
-export async function getPostingByPage(req, res) {
-    const pageId = req.query.page ? req.query.page : 1;
-    const listNum = req.query.list_num ? req.query.list_num : 5; // 검색할 post 개수
-    const categoryID = req.query.category;
+interface Board {
+    id: number;
+    title: string;
+    content: string;
+    hits: number;
+    views: number;
+    dislikes: number;
+    reported: number;
+    hidden: string;
+    createdAt: Date;
+    updatedAt: Date;
+}
+
+interface BoardJoined extends Board {
+    userId: number;
+    categoryId: number;
+    nickname: string;
+    img: string;
+    grade: string;
+    name: string;
+}
+
+export async function getPostingByPage(req: Request, res: Response) {
+    const pageId: number = req.query.page ? Number(req.query.page) : 1;
+    const listNum: number = req.query.list_num ? Number(req.query.list_num) : 5; // 검색할 post 개수
+    const categoryID: number | undefined = req.query.category ? Number(req.query.category) : undefined;
     const offset = 0 + (pageId - 1) * listNum; // skip할 item의 개수
     let data;
     if (!categoryID) {
@@ -13,14 +36,14 @@ export async function getPostingByPage(req, res) {
         data = await boardRepository.getPagesToCategory(offset, listNum, categoryID);
     }
     if (!data) {
-        res.status(404).json(id);
+        res.sendStatus(404);
     }
     res.status(200).json(data);
 }
 
-export async function getPosting(req, res) {
-    const id = req.params.id;
-    const data = await boardRepository.getById(id);
+export async function getPosting(req: Request, res: Response) {
+    const id: number = Number(req.params.id);
+    const data: any = await boardRepository.getById(id);
     if (!data) {
         res.status(404).json(id);
     } else {
@@ -28,9 +51,9 @@ export async function getPosting(req, res) {
     }
 }
 
-export async function getSearch(req, res) {
-    const pageId = req.query.page ? req.query.page : 1;
-    const listNum = req.query.list_num ? req.query.list_num : 5; // 검색할 post 개수
+export async function getSearch(req: Request, res: Response) {
+    const pageId: number = req.query.page ? Number(req.query.page) : 1;
+    const listNum: number = req.query.list_num ? Number(req.query.list_num) : 5; // 검색할 post 개수
     const offset = 0 + (pageId - 1) * listNum; // skip할 item의 개수
     const searchType = req.query.searchType;
     const keyword = req.query.keyword;
@@ -52,7 +75,7 @@ export async function getSearch(req, res) {
     res.status(200).json(data);
 }
 
-export async function newPosting(req, res) {
+export async function newPosting(req: Request, res: Response) {
     const {title, content, userId, categoryId} = req.body;
     let {hiddenNum} = req.body;
     if (!hiddenNum) {
@@ -62,14 +85,14 @@ export async function newPosting(req, res) {
     res.status(200).json(newPosts);
 }
 
-export async function updatePost(req, res) {
+export async function updatePost(req: Request, res: Response) {
     const id = req.params.id;
     const {title, content, categoryId} = req.body;
     let {hiddenNum} = req.body;
     if (!hiddenNum) {
         hiddenNum = "0";
     }
-    const post = boardRepository.getById(id);
+    const post: any = boardRepository.getById(id);
     if (!post) {
         return res.status(404).json(id);
     }
@@ -80,9 +103,9 @@ export async function updatePost(req, res) {
     res.status(200).json(updatePosts);
 }
 
-export async function deletePost(req, res) {
+export async function deletePost(req: Request, res: Response) {
     const id = req.params.id;
-    const post = boardRepository.getById(id);
+    const post: any = boardRepository.getById(id);
     if (!post) {
         res.status(404).json(id);
     }
