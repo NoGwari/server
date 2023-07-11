@@ -3,7 +3,6 @@ import jwt from "jsonwebtoken";
 import redis from "redis";
 import * as userRepository from "../data/user.js";
 import {config} from "../config.js";
-import {TLSSocket} from "tls";
 
 const AUTH_ERROR = {message: "Authentication Error"};
 
