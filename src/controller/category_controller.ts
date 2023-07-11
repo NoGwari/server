@@ -1,20 +1,21 @@
+import {Request, Response} from "express";
 import * as categoryRepository from "../data/board/category.js";
 
-export async function getCategory(req, res) {
+export async function getCategory(req: Request, res: Response) {
     const data = await categoryRepository.getCategory();
     if (!data) {
-        res.status(404).json();
+        res.sendStatus(404);
     }
     res.status(200).json(data);
 }
 
-export async function newCategory(req, res) {
+export async function newCategory(req: Request, res: Response) {
     const {name} = req.body;
     const newCategory = await categoryRepository.create(name);
     res.status(200).json(newCategory);
 }
 
-export async function deleteCategory(req, res) {
+export async function deleteCategory(req: Request, res: Response) {
     const id = req.params.id;
     const category = categoryRepository.getById(id);
     if (!category) {
