@@ -16,7 +16,7 @@ export async function newCategory(req: Request, res: Response) {
 }
 
 export async function deleteCategory(req: Request, res: Response) {
-    const id = req.params.id;
+    const id = Number(req.params.id);
     const category = categoryRepository.getById(id);
     if (!category) {
         res.status(404).json(id);
