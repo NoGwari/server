@@ -40,7 +40,7 @@ Category.init(
     {
         sequelize,
         modelName: "category",
-        timestamps: false,
+        timestamps: true,
         charset: "utf8",
         collate: "utf8_general_ci",
     }
