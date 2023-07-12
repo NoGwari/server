@@ -1,0 +1,420 @@
+openapi: 3.0.0
+info:
+    title: Nogwari
+    version: 1.0.0
+    description: "Nogwari swagger"
+servers:
+    - url: /
+      description: Local development server
+paths:
+    /board:
+        get:
+            summary: "전체 게시글 조회"
+            tags: [Board]
+            parameters:
+                - in: query
+                  name: page
+                  type: integer
+                  description: "page 번호 / defalut = 1"
+                - in: query
+                  name: list_num
+                  type: integer
+                  description: "item 개수 / defalut = 5"
+                - in: query
+                  name: category
+                  type: integer
+                  description: "category 번호 / 기입안할시 전체 게시글 검색"
+            responses:
+                "200":
+                    description: 게시글 조회 성공
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Board"
+        post:
+            summary: "게시글 추가"
+            security:
+                - bearerAuth: []
+            tags: [Board]
+            requestBody:
+                required: true
+                content:
+                    application/json:
+                        schema:
+                            $ref: "#/components/schemas/Board"
+            responses:
+                "201":
+                    description: 게시글 추가 성공
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Board"
+                "401":
+                    description: 인증 실패
+    /board/search:
+        get:
+            summary: "게시글 검색"
+            tags: [Board]
+            parameters:
+                - in: query
+                  name: page
+                  type: integer
+                  description: "page 번호 / defalut = 1"
+                - in: query
+                  name: list_num
+                  type: integer
+                  description: "item 개수 / defalut = 5"
+                - in: query
+                  name: searchType
+                  type: string
+                  description: "제목검색 - title / 작성자검색 - nickname "
+                - in: query
+                  name: keyword
+                  type: string
+                  description: "searchType에 대한 keyword값"
+            responses:
+                "200":
+                    description: 게시글 목록 검색 성공
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Board"
+                "400":
+                    description: searchType/keyword 값 미존재
+                "404":
+                    description: 검색된 데이터 없음
+    /board/{id}:
+        get:
+            summary: "단일 게시글 조회"
+            tags: [Board]
+            parameters:
+                - in: path
+                  name: id
+                  required: true
+                  type: integer
+                  minimun: 1
+                  description: "게시글의 ID값으로 서칭"
+            responses:
+                "200":
+                    description: 게시글 조회 성공
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Board"
+                "404":
+                    description: 해당 게시글 미존재
+        put:
+            summary: "게시글 수정"
+            security:
+                - bearerAuth: []
+            tags: [Board]
+            consumes:
+                - application/json
+            parameters:
+                - in: path
+                  name: id
+                  required: true
+                  type: integer
+                  minimun: 1
+                  description: "게시글의 ID값으로 서칭"
+            responses:
+                "200":
+                    description: 게시글 수정 성공
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Board"
+                "401":
+                    description: 인증 실패
+                "403":
+                    description: 수정 권한 없음
+                "404":
+                    description: 해당 게시글 미존재
+        delete:
+            summary: "단일 게시글 삭제"
+            security:
+                - bearerAuth: []
+            tags: [Board]
+            parameters:
+                - in: path
+                  name: id
+                  required: true
+                  type: integer
+                  minimun: 1
+                  description: "게시글의 ID값으로 서칭"
+            responses:
+                "204":
+                    description: 게시글 삭제 성공
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Board"
+                "401":
+                    description: 인증 실패
+                "403":
+                    description: 삭제 권한 없음
+                "404":
+                    description: 해당 게시글 미존재
+    /auth/me:
+        get:
+            summary: "로그인 확인"
+            tags: [Auth]
+            responses:
+                "200":
+                    description: 로그인 확인 완료
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Signup"
+                "401":
+                    description: Authentication Error
+                "404":
+                    description: 해당 로그인 정보 없음
+    /auth/signup:
+        post:
+            summary: "회원가입"
+            tags: [Auth]
+            requestBody:
+                required: true
+                content:
+                    application/json:
+                        schema:
+                            $ref: "#/components/schemas/Signup"
+            responses:
+                "201":
+                    description: 회원가입 성공
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Signup"
+                "401":
+                    description: 회원가입 실패
+    /auth/mailsubmit:
+        post:
+            summary: "인증키 메일 전송"
+            tags: [Auth]
+            requestBody:
+                required: true
+                content:
+                    application/json:
+                        schema:
+                            $ref: "#/components/schemas/MailSubmit"
+            responses:
+                "200":
+                    description: 메일전송 성공
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/MailSubmit"
+                "404":
+                    description: 메일 찾을 수 없음
+    /auth/checkkey:
+        post:
+            summary: "인증키 확인"
+            tags: [Auth]
+            requestBody:
+                required: true
+                content:
+                    application/json:
+                        schema:
+                            $ref: "#/components/schemas/VerifyKey"
+            responses:
+                "200":
+                    description: 인증키 확인 성공
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/VerifyKey"
+                "404":
+                    description: 인증키 불일치
+    /auth/login:
+        post:
+            summary: "로그인"
+            tags: [Auth]
+            consumes:
+                - application/json
+            requestBody:
+                required: true
+                content:
+                    application/json:
+                        schema:
+                            $ref: "#/components/schemas/Login"
+            responses:
+                "200":
+                    description: 로그인 성공
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Auth"
+                "401":
+                    description: 로그인 실패
+    /Category:
+        get:
+            summary: "전체 카테고리 조회"
+            tags: [Category]
+            responses:
+                "200":
+                    description: 카테고리 조회 성공
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Category"
+                "404":
+                    description: 카테고리 찾을 수 없음
+        post:
+            summary: "카테고리 추가"
+            security:
+                - bearerAuth: []
+            tags: [Category]
+            requestBody:
+                required: true
+                content:
+                    application/json:
+                        schema:
+                            $ref: "#/components/schemas/PostCategory"
+            responses:
+                "201":
+                    description: 카테고리 추가 성공
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Category"
+                "401":
+                    description: 인증 실패
+    /category/{id}:
+        delete:
+            summary: "카테고리 삭제"
+            security:
+                - bearerAuth: []
+            tags: [Category]
+            parameters:
+                - in: path
+                  name: id
+                  required: true
+                  type: integer
+                  minimun: 1
+                  description: "게시글의 ID값으로 서칭"
+            responses:
+                "200":
+                    description: 카테고리 삭제 성공
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Board"
+                "401":
+                    description: 인증 실패
+                "403":
+                    description: 삭제 권한 없음
+                "404":
+                    description: 해당 게시글 미존재
+components:
+    schemas:
+        Board:
+            required:
+                - id
+                - title
+            properties:
+                id:
+                    type: integer
+                    format: int64
+                title:
+                    type: string
+                content:
+                    type: string
+                views:
+                    type: integer
+                    format: int64
+                hits:
+                    type: integer
+                    format: int64
+                dislikes:
+                    type: integer
+                    format: int64
+                reported:
+                    type: integer
+                    format: int64
+                createdAt:
+                    type: string
+                    format: date-time
+                updatedAt:
+                    type: string
+                    format: date-time
+                userId:
+                    type: integer
+                    format: int64
+                categoryId:
+                    type: integer
+                    format: int64
+                userNickname:
+                    type: string
+                userImg:
+                    type: string
+                userGrade:
+                    type: string
+                categoryName:
+                    type: string
+        Auth:
+            properties:
+                token:
+                    type: string
+                realid:
+                    type: string
+        Category:
+            properties:
+                id:
+                    type: integer
+                    format: int64
+                name:
+                    type: string
+                post_num:
+                    type: integer
+                    format: int64
+        PostCategory:
+            propertirs:
+                name:
+                    type: string
+        Signup:
+            properties:
+                required:
+                    - realid
+                    - password
+                    - nickname
+                    - email
+                realid:
+                    type: string
+                password:
+                    type: string
+                nickname:
+                    type: string
+                email:
+                    type: string
+                img:
+                    type: string
+        Login:
+            properties:
+                realid:
+                    type: string
+                password:
+                    type: string
+        MailSubmit:
+            properties:
+                email:
+                    type: string
+        VerifyKey:
+            properties:
+                email:
+                    type: string
+                verifyKey:
+                    type: string
+        Error:
+            properties:
+                code:
+                    type: integer
+                    format: int32
+                message:
+                    type: string
+    securitySchemes:
+        bearerAuth:
+            type: http
+            scheme: bearer
+            bearerFormat: JWT
