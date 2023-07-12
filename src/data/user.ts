@@ -90,6 +90,7 @@ User.init(
     {
         sequelize,
         modelName: "user",
+        tableName: "users",
         timestamps: true,
         charset: "utf8",
         collate: "utf8_general_ci",
