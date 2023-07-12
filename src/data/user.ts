@@ -8,19 +8,15 @@ interface UserType {
     password: string;
     nickname: string;
     email: string;
+    img?: string;
     grade: string;
     posting_num: number;
     reply_num: number;
     reported: number;
-    img?: string;
 }
 
 interface UserAttributes extends UserType {
     id: number;
-    grade: string;
-    posting_num: number;
-    reply_num: number;
-    reported: number;
 }
 
 export class User extends SQ.Model<UserAttributes, UserType> implements UserAttributes {
@@ -69,6 +65,7 @@ User.init(
         grade: {
             type: DataTypes.STRING(10),
             allowNull: false,
+            defaultValue: "grade1",
         },
         img: {
             type: DataTypes.STRING(100),
@@ -93,21 +90,21 @@ User.init(
     {
         sequelize,
         modelName: "user",
-        timestamps: false,
+        timestamps: true,
         charset: "utf8",
         collate: "utf8_general_ci",
     }
 );
 
-export async function findByRealId(realid: string) {
+export async function findByRealId(realid: string): Promise<UserAttributes | null> {
     return User.findOne({where: {realid: realid}});
 }
 
-export async function findById(id: number) {
+export async function findById(id: number): Promise<UserAttributes | null> {
     return User.findByPk(id);
 }
 
-export async function createUser(user: UserType) {
+export async function createUser(user: UserType): Promise<string> {
     const {realid, password, nickname, email, img} = user;
     return User.create({
         realid: realid,
@@ -122,6 +119,6 @@ export async function createUser(user: UserType) {
     }).then((result) => result.dataValues.id.toString());
 }
 
-export async function checkAdmin(realid: string) {
+export async function checkAdmin(realid: string): Promise<UserAttributes | null> {
     return User.findOne({where: {realid: realid, grade: "admin"}});
 }
