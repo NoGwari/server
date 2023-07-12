@@ -55,11 +55,11 @@ export async function getSearch(req: Request, res: Response) {
     const pageId: number = req.query.page ? Number(req.query.page) : 1;
     const listNum: number = req.query.list_num ? Number(req.query.list_num) : 5; // 검색할 post 개수
     const offset = 0 + (pageId - 1) * listNum; // skip할 item의 개수
-    const searchType = req.query.searchType;
-    const keyword = req.query.keyword;
-    if (!(searchType && keyword)) {
+    if (!(req.query.searchType && req.query.searchType)) {
         return res.status(400).json({message: "값을 제대로 입력해주세요."});
     }
+    const searchType: string = String(req.query.searchType);
+    const keyword: string = String(req.query.searchType);
     let data;
     switch (searchType) {
         case "title":
@@ -86,7 +86,7 @@ export async function newPosting(req: Request, res: Response) {
 }
 
 export async function updatePost(req: Request, res: Response) {
-    const id = req.params.id;
+    const id = Number(req.params.id);
     const {title, content, categoryId} = req.body;
     let {hiddenNum} = req.body;
     if (!hiddenNum) {
@@ -104,7 +104,7 @@ export async function updatePost(req: Request, res: Response) {
 }
 
 export async function deletePost(req: Request, res: Response) {
-    const id = req.params.id;
+    const id = Number(req.params.id);
     const post: any = boardRepository.getById(id);
     if (!post) {
         res.status(404).json(id);
