@@ -76,11 +76,8 @@ export async function getSearch(req: Request, res: Response) {
 }
 
 export async function newPosting(req: Request, res: Response) {
-    const {title, content, userId, categoryId} = req.body;
-    let {hiddenNum} = req.body;
-    if (!hiddenNum) {
-        hiddenNum = "0";
-    }
+    const {title, content, hiddenNum, categoryId} = req.body;
+    const userId: number = req.userId!;
     const newPosts = await boardRepository.create(title, content, hiddenNum, userId, categoryId);
     res.status(200).json(newPosts);
 }
