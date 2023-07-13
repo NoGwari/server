@@ -114,19 +114,19 @@ Board.init(
         },
         userNickname: {
             type: DataTypes.STRING(10),
-            allowNull: false,
+            allowNull: true,
         },
         userImg: {
             type: DataTypes.STRING(100),
-            allowNull: false,
+            allowNull: true,
         },
         userGrade: {
             type: DataTypes.STRING(10),
-            allowNull: false,
+            allowNull: true,
         },
         categoryName: {
             type: DataTypes.STRING(30),
-            allowNull: false,
+            allowNull: true,
         },
     },
     {
@@ -176,7 +176,12 @@ const INCLUDED_ALL: FindOptions<BoardAttributes> = {
     ],
 };
 
-const ORDER_DESC: FindOptions<BoardAttributes> = {order: [["createdAt", "DESC"]]};
+const ORDER_DESC: FindOptions<BoardAttributes> = {
+    order: [
+        ["createdAt", "DESC"],
+        ["id", "DESC"],
+    ],
+};
 
 export async function getAllbyPages(offset: number, listNum: number) {
     return Board.findAll({
@@ -280,7 +285,7 @@ export async function getById(id: number) {
     });
 }
 
-export async function create(title: string, content: string, hiddenNum: string, userId: number, categoryId: number) {
+export async function create(title: string, content: string, userId: number, categoryId: number) {
     return Board.create<Board>({
         title: title,
         content: content,
@@ -288,8 +293,8 @@ export async function create(title: string, content: string, hiddenNum: string, 
         hits: 0,
         dislikes: 0,
         reported: 0,
-        hidden: hiddenNum,
-        userId,
+        hidden: "0",
+        userId: userId,
         categoryId: categoryId,
     }).then((result) => {
         return getById(result.dataValues.id);
@@ -299,12 +304,12 @@ export async function create(title: string, content: string, hiddenNum: string, 
 export async function update(id: number, title: string, content: string, hiddenNum: string, categoryId: number) {
     return Board.findByPk(id, {
         ...INCLUDED_ALL,
-    }).then((post: any) => {
-        post.title = title;
-        post.content = content;
-        post.hidden = hiddenNum;
-        post.categoryId = categoryId;
-        return post.save();
+    }).then((post: Board | null) => {
+        post!.title = title;
+        post!.content = content;
+        post!.hidden = hiddenNum;
+        post!.categoryId = categoryId;
+        return post!.save();
     });
 }
 
