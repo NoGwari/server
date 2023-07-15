@@ -1,5 +1,6 @@
 import SQ, {Association, FindOptions, Op} from "sequelize";
 import {sequelize} from "../../db/database.js";
+
 import {Category} from "./category.js";
 import {User} from "../user.js";
 import {Reply} from "./reply.js";
@@ -7,6 +8,7 @@ import {Reply} from "./reply.js";
 const Sequelize = SQ.Sequelize;
 const DataTypes = SQ.DataTypes;
 
+// import {BoardType, BoardAttributes} from "../../customType/board.js";
 interface BoardType {
     title: string;
     content: string;
