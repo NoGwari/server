@@ -41,7 +41,7 @@ paths:
                 content:
                     application/json:
                         schema:
-                            $ref: "#/components/schemas/Board"
+                            $ref: "#/components/schemas/CreateBoard"
             responses:
                 "201":
                     description: 게시글 추가 성공
@@ -353,6 +353,14 @@ components:
                     type: string
                 categoryName:
                     type: string
+        CreateBoard:
+            properties:
+                title:
+                    type: string
+                content:
+                    type: string
+                categoryId:
+                    type: int64
         Auth:
             properties:
                 token:
