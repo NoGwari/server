@@ -108,6 +108,12 @@ paths:
             security:
                 - bearerAuth: []
             tags: [Board]
+            requestBody:
+                required: true
+                content:
+                    application/json:
+                        schema:
+                            $ref: "#/components/schemas/UpdateBoard"
             consumes:
                 - application/json
             parameters:
@@ -358,6 +364,16 @@ components:
                 title:
                     type: string
                 content:
+                    type: string
+                categoryId:
+                    type: int64
+        UpdateBoard:
+            properties:
+                title:
+                    type: string
+                content:
+                    type: string
+                hiddenNum:
                     type: string
                 categoryId:
                     type: int64
