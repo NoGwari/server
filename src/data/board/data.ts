@@ -322,3 +322,12 @@ export async function remove(id: number) {
         post.destroy();
     });
 }
+
+export async function incrementViewCount(id: number) {
+    return Board.findByPk(id, {
+        ...INCLUDED_ALL,
+    }).then((post: Board | null) => {
+        post!.views += 1;
+        return post!.save();
+    });
+}

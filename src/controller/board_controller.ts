@@ -55,6 +55,7 @@ export async function getPosting(req: Request, res: Response) {
     if (!data) {
         res.status(404).json(id);
     } else {
+        await boardRepository.incrementViewCount(id);
         res.status(200).json(data);
     }
 }
@@ -63,11 +64,15 @@ export async function getSearch(req: Request, res: Response) {
     const pageId: number = req.query.page ? Number(req.query.page) : 1;
     const listNum: number = req.query.list_num ? Number(req.query.list_num) : 5; // 검색할 post 개수
     const offset = 0 + (pageId - 1) * listNum; // skip할 item의 개수
-    if (!(req.query.searchType && req.query.searchType)) {
+    console.log(req.query.searchType, req.query.keyword);
+    if (req.query.searchType === "" || req.query.keyword === "") {
         return res.status(400).json({message: "값을 제대로 입력해주세요."});
     }
     const searchType: string = String(req.query.searchType);
     const keyword: string = String(req.query.searchType);
+    if (searchType !== "title" && searchType !== "nickname") {
+        return res.status(400).json({message: "종류를 제대로 입력해주세요."});
+    }
     let data: BoardAttributes[] | null;
     switch (searchType) {
         case "title":
