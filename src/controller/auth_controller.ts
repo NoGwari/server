@@ -10,7 +10,6 @@ import {config} from "../config.js";
 
 type User = {
     id: string;
-    realid: string;
     password: string;
     nickname: string;
     email: string;
@@ -37,14 +36,13 @@ type EmailOption = {
 };
 
 export async function signup(req: Request, res: Response) {
-    const {realid, password, nickname, email, img} = req.body;
-    const found = await userRepository.findByRealId(realid);
+    const {password, nickname, email, img} = req.body;
+    const found = await userRepository.findByRealId(email);
     if (found) {
-        return res.status(409).json({message: `${realid} is already exists!`});
+        return res.status(409).json({message: `${email} is already exists!`});
     }
     const hashed = await bcrypt.hash(password, config.bcrypt.saltRounds);
     const userId = await userRepository.createUser({
-        realid,
         password: hashed,
         nickname,
         email,
@@ -56,7 +54,7 @@ export async function signup(req: Request, res: Response) {
     });
     const token = createJwtToken(userId);
     const expriesInSec = config.jwt.expriesInSec;
-    res.status(200).json({token, realid, expriesInSec});
+    res.status(200).json({token, email, expriesInSec});
 }
 
 export async function mailSubmit(req: Request, res: Response) {
@@ -151,7 +149,6 @@ async function loginToGoogle(profile: any) {
         // ID가 DB에 없으므로 회원가입
         const hashed = await bcrypt.hash(profile.sub, config.bcrypt.saltRounds); // 비밀번호는 ID를 hash함
         const userId = await userRepository.createUser({
-            realid: profile.sub,
             password: hashed,
             nickname: profile.name,
             email: profile.email,
