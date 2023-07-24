@@ -4,7 +4,6 @@ import SQ from "sequelize";
 const DataTypes = SQ.DataTypes;
 
 interface UserType {
-    realid: string;
     password: string;
     nickname: string;
     email: string;
@@ -21,7 +20,6 @@ interface UserAttributes extends UserType {
 
 export class User extends SQ.Model<UserAttributes, UserType> implements UserAttributes {
     public id!: number;
-    public realid!: string;
     public password!: string;
     public nickname!: string;
     public email!: string;
@@ -42,11 +40,6 @@ User.init(
             autoIncrement: true,
             allowNull: false,
             primaryKey: true,
-        },
-        realid: {
-            type: DataTypes.STRING(20),
-            allowNull: false,
-            unique: true,
         },
         password: {
             type: DataTypes.STRING(100),
@@ -97,8 +90,8 @@ User.init(
     }
 );
 
-export async function findByRealId(realid: string): Promise<UserAttributes | null> {
-    return User.findOne({where: {realid: realid}});
+export async function findByRealId(email: string): Promise<UserAttributes | null> {
+    return User.findOne({where: {email: email}});
 }
 
 export async function findById(id: number): Promise<UserAttributes | null> {
@@ -106,9 +99,8 @@ export async function findById(id: number): Promise<UserAttributes | null> {
 }
 
 export async function createUser(user: UserType): Promise<string> {
-    const {realid, password, nickname, email, img} = user;
+    const {password, nickname, email, img} = user;
     return User.create({
-        realid: realid,
         password: password,
         nickname: nickname,
         email: email,
@@ -120,6 +112,6 @@ export async function createUser(user: UserType): Promise<string> {
     }).then((result) => result.dataValues.id.toString());
 }
 
-export async function checkAdmin(realid: string): Promise<UserAttributes | null> {
-    return User.findOne({where: {realid: realid, grade: "admin"}});
+export async function checkAdmin(email: string): Promise<UserAttributes | null> {
+    return User.findOne({where: {email: email, grade: "admin"}});
 }
