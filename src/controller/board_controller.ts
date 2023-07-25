@@ -1,5 +1,6 @@
 import {Request, Response} from "express";
 import * as boardRepository from "../data/board/data.js";
+import * as hitBoardRepository from "../data/board/hit_board.js";
 
 // import {BoardType, BoardAttributes} from "../../customType/board.js";
 export interface BoardType {
@@ -111,11 +112,25 @@ export async function deletePost(req: Request, res: Response) {
     const id = Number(req.params.id);
     const post: BoardAttributes | null = await boardRepository.getById(id);
     if (!post) {
-        res.status(404).json(id);
+        return res.status(404).json(id);
     }
     if (req.userId !== post!.userId) {
         return res.sendStatus(403);
     }
     const deletePosts = await boardRepository.remove(id);
     res.status(200).json(deletePosts);
+}
+
+export async function incrementHits(req: Request, res: Response) {
+    const id = Number(req.params.id);
+    const post: BoardAttributes | null = await boardRepository.getById(id);
+    if (!post) {
+        return res.status(404).json(id);
+    }
+    const isHits: boolean = await hitBoardRepository.isHits(id, req.userId!);
+    if (isHits) {
+        return res.sendStatus(400);
+    }
+    await hitBoardRepository.increment(id, req.userId!);
+    res.sendStatus(200);
 }
