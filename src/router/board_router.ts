@@ -11,6 +11,9 @@ router.get("/", boardController.getPostingByPage);
 // GET /board/search?searchType=title&keyword=제목
 router.get("/search", boardController.getSearch);
 
+// GET /board/hits/1
+router.get("/hits/:id", isAuth, boardController.incrementHits);
+
 // GET /board/1
 router.get("/:id", boardController.getPosting);
 
