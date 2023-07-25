@@ -7,7 +7,6 @@ export interface BoardType {
     content: string;
     views: number;
     hits: number;
-    dislikes: number;
     reported: number;
     hidden: string;
     userId: number;
@@ -20,7 +19,6 @@ export interface BoardAttributes extends BoardType {
     content: string;
     views: number;
     hits: number;
-    dislikes: number;
     reported: number;
     hidden: string;
     userId: number;
