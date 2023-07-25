@@ -14,7 +14,6 @@ interface BoardType {
     content: string;
     views: number;
     hits: number;
-    dislikes: number;
     reported: number;
     hidden: string;
     userId: number;
@@ -27,7 +26,6 @@ interface BoardAttributes extends BoardType {
     content: string;
     views: number;
     hits: number;
-    dislikes: number;
     reported: number;
     hidden: string;
     userId: number;
@@ -44,7 +42,6 @@ export class Board extends SQ.Model<BoardAttributes, BoardType> implements Board
     public content!: string;
     public views!: number;
     public hits!: number;
-    public dislikes!: number;
     public reported!: number;
     public hidden!: string;
     public readonly createdAt!: Date;
@@ -88,11 +85,6 @@ Board.init(
             defaultValue: 0,
         },
         hits: {
-            type: DataTypes.INTEGER,
-            allowNull: false,
-            defaultValue: 0,
-        },
-        dislikes: {
             type: DataTypes.INTEGER,
             allowNull: false,
             defaultValue: 0,
@@ -293,7 +285,6 @@ export async function create(title: string, content: string, userId: number, cat
         content: content,
         views: 1,
         hits: 0,
-        dislikes: 0,
         reported: 0,
         hidden: "0",
         userId: userId,
