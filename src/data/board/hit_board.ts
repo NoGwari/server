@@ -1,7 +1,7 @@
 import SQ, {Association, FindOptions, Op} from "sequelize";
-import {sequelize} from "../db/database.js";
-import {Board} from "./board/data.js";
-import {User} from "./user.js";
+import {sequelize} from "../../db/database.js";
+import {Board} from "./data.js";
+import {User} from "../user.js";
 
 const Sequelize = SQ.Sequelize;
 const DataTypes = SQ.DataTypes;
@@ -58,5 +58,25 @@ HitBoard.init(
     }
 );
 
-Board.belongsTo(User, {foreignKey: "userId", as: "user"});
-Board.belongsTo(Board, {foreignKey: "boardId", as: "board"});
+HitBoard.belongsTo(User, {foreignKey: "userId", as: "user"});
+HitBoard.belongsTo(Board, {foreignKey: "boardId", as: "board"});
+
+export async function isHits(board: number, user: number): Promise<boolean> {
+    const isExist = HitBoard.findOne({
+        attributes: ["id", "userId", "boardId"],
+        where: {boardId: board, userId: user},
+    });
+    if (await isExist) {
+        return true;
+    }
+    return false;
+}
+
+export async function increment(board: number, user: number): Promise<number> {
+    return HitBoard.create({
+        userId: user,
+        boardId: board,
+    }).then((result) => {
+        return result.dataValues.id;
+    });
+}
