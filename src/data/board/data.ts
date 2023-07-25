@@ -323,7 +323,7 @@ export async function incrementViewCount(id: number) {
     });
 }
 
-export async function incrementHits(id: number) {
+export async function plusHits(id: number) {
     return Board.findByPk(id, {
         ...INCLUDED_ALL,
     }).then((post: Board | null) => {
