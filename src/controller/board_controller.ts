@@ -132,5 +132,6 @@ export async function incrementHits(req: Request, res: Response) {
         return res.sendStatus(400);
     }
     await hitBoardRepository.increment(id, req.userId!);
+    await boardRepository.plusHits(id);
     res.sendStatus(200);
 }
