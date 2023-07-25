@@ -109,8 +109,8 @@ export async function checkVerifyKey(req: Request, res: Response) {
 }
 
 export async function login(req: Request, res: Response) {
-    const {realid, password} = req.body;
-    const user: any = await userRepository.findByRealId(realid);
+    const {email, password} = req.body;
+    const user: any = await userRepository.findByRealId(email);
     if (!user) {
         return res.status(401).json({message: `Invaild user or password`});
     }
@@ -120,11 +120,11 @@ export async function login(req: Request, res: Response) {
     }
     const token = createJwtToken(user.id);
     const expriesInSec = config.jwt.expriesInSec;
-    const isAdmin = await userRepository.checkAdmin(realid);
+    const isAdmin = await userRepository.checkAdmin(email);
     if (isAdmin) {
-        return res.status(200).json({token, realid, expriesInSec, role: "admin"});
+        return res.status(200).json({token, email, expriesInSec, role: "admin"});
     }
-    res.status(200).json({token, realid, expriesInSec});
+    res.status(200).json({token, email, expriesInSec});
 }
 
 function createJwtToken(id: string) {
@@ -172,9 +172,9 @@ passport.use(
         },
         async (accessToken, refreshToken, profile, done) => {
             const token = await loginToGoogle(profile._json);
-            const realId = profile.id;
+            const email = profile.id;
             const expriesInSec = config.jwt.expriesInSec;
-            return done(null, {realId, token, expriesInSec});
+            return done(null, {email, token, expriesInSec});
         }
     )
 );
