@@ -6,6 +6,7 @@ import morgan from "morgan";
 import YAML from "yamljs";
 import swaggerUi from "swagger-ui-express";
 import path from "path";
+import session from "express-session";
 import categoryRouter from "./router/category_router.js";
 import boardRouter from "./router/board_router.js";
 import authRouter from "./router/auth_router.js";
@@ -27,6 +28,16 @@ app.use(express.json());
 app.use(cors(corsOption));
 app.use(helmet());
 app.use(morgan("tiny"));
+app.use(
+    session({
+        secret: config.session.secretKey,
+        resave: false,
+        saveUninitialized: true,
+        cookie: {
+            maxAge: 600000, // 60초 (10분) 만료
+        },
+    })
+);
 
 app.use(passport.initialize());
 
