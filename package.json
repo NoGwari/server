@@ -61,6 +61,7 @@
     "license": "ISC",
     "description": "",
     "devDependencies": {
+        "@types/express-session": "^1.17.7",
         "concurrently": "^8.2.0",
         "nodemon": "^2.0.22",
         "swagger-autogen": "^2.23.4",
