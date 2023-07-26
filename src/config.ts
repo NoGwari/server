@@ -49,4 +49,7 @@ export const config = {
         host: required("REDIS_HOST"),
         port: required("REDIS_PORT"),
     },
+    session: {
+        secretKey: required("SESSION_SECRET_KEY"),
+    },
 };
