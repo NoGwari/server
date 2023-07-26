@@ -1,6 +1,6 @@
 import {Request, Response, NextFunction} from "express";
 import jwt from "jsonwebtoken";
-import redis from "redis";
+
 import * as userRepository from "../data/user.js";
 import {config} from "../config.js";
 
@@ -30,15 +30,5 @@ export const isAdimin = async (req: Request, res: Response, next: NextFunction) 
     if (req.role !== "admin") {
         return res.status(401).json(AUTH_ERROR);
     }
-    next();
-};
-
-export const redisMiddleware = async (req: Request, res: Response, next: NextFunction) => {
-    const redisURL = `redis://${process.env.REDIS_USERNAME}:${process.env.REDIS_PASSWORD}@${process.env.REDIS_HOST}:${process.env.REDIS_PORT}`;
-    const client = await redis.createClient({
-        url: redisURL,
-        legacyMode: true,
-    });
-    req.redisClient = client;
     next();
 };

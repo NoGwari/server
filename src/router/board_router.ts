@@ -2,6 +2,7 @@ import express from "express";
 import "express-async-errors";
 import * as boardController from "../controller/board_controller.js";
 import {isAdimin, isAuth} from "../middleware/auth_middleware.js";
+import {redisMiddleware} from "../middleware/redis.js";
 import {upload} from "../middleware/multer.js";
 const router = express.Router();
 
@@ -15,7 +16,7 @@ router.get("/search", boardController.getSearch);
 router.get("/hits/:id", isAuth, boardController.incrementHits);
 
 // GET /board/1
-router.get("/:id", boardController.getPosting);
+router.get("/:id", redisMiddleware, boardController.getPosting);
 
 // POST /board
 router.post("/", isAuth, boardController.newPosting);

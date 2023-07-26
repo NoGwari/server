@@ -2,7 +2,8 @@ import express from "express";
 import "express-async-errors";
 import passport from "../controller/auth_controller.js";
 import * as authController from "../controller/auth_controller.js";
-import {isAuth, redisMiddleware} from "../middleware/auth_middleware.js";
+import {isAuth} from "../middleware/auth_middleware.js";
+import {redisMiddleware} from "../middleware/redis.js";
 
 const router = express.Router();
 
