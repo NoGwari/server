@@ -83,6 +83,26 @@ paths:
                     description: searchType/keyword 값 미존재
                 "404":
                     description: 검색된 데이터 없음
+    /board/hits/{id}:
+        get:
+            summary: "게시물 따봉"
+            tags: [Board]
+            parameters:
+                - in: path
+                  name: id
+                  required: true
+                  type: integer
+                  minimun: 1
+                  description: "게시글의 ID값을 받아 따봉(hits) 증가"
+            responses:
+                "200":
+                    description: 게시글 따봉 성공
+                "400":
+                    description: 해당 user은 이미 따봉 눌렀습니다.
+                "401":
+                    description: 권한 없음
+                "404":
+                    description: 해당 게시글 미존재
     /board/{id}:
         get:
             summary: "단일 게시글 조회"
