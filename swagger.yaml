@@ -86,6 +86,8 @@ paths:
     /board/hits/{id}:
         get:
             summary: "게시물 따봉"
+            security:
+                - bearerAuth: []
             tags: [Board]
             parameters:
                 - in: path
