@@ -52,11 +52,16 @@ export async function getPosting(req: Request, res: Response) {
     const id: number = Number(req.params.id);
     const data: BoardAttributes | null = await boardRepository.getById(id);
     if (!data) {
-        res.status(404).json(id);
-    } else {
-        await boardRepository.incrementViewCount(id);
-        res.status(200).json(data);
+        return res.status(404).json(id);
     }
+    if (!req.session.viewCount) {
+        req.session.viewCount = [];
+    }
+    if (!req.session.viewCount.includes(id)) {
+        await boardRepository.incrementViewCount(id);
+        req.session.viewCount.push(id);
+    }
+    res.status(200).json(data);
 }
 
 export async function getSearch(req: Request, res: Response) {
