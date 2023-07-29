@@ -80,12 +80,12 @@ export async function mailSubmit(req: Request, res: Response) {
 
     transporter.sendMail(mailOptions, (error, info) => {
         if (error) {
-            return res.sendStatus(404);
+            return res.status(404).json({email});
         } else {
             console.log("Email sent: " + info.response);
+            return res.status(200).json({email});
         }
     });
-    res.sendStatus(200);
 }
 
 export async function checkVerifyKey(req: Request, res: Response) {
@@ -95,14 +95,14 @@ export async function checkVerifyKey(req: Request, res: Response) {
     client.get(`${email}`, (error: any, result: any) => {
         if (error) {
             console.error("Error:", error);
-            return res.sendStatus(404);
+            return res.status(400).json({email, verifyKey});
         } else if (result === null) {
-            return res.sendStatus(404);
+            return res.status(400).json({email, verifyKey});
         } else {
             if (result === verifyKey) {
-                return res.sendStatus(200);
+                return res.status(200).json({email, verifyKey});
             } else {
-                return res.sendStatus(404);
+                return res.status(404).json({email, verifyKey});
             }
         }
     });
