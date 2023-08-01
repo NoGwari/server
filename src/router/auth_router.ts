@@ -16,6 +16,9 @@ router.post("/login", authController.login);
 // POST /auth/signup
 router.post("/signup", authController.signup);
 
+// POST /auth/login
+router.post("/updatenick", isAuth, authController.changeNickname);
+
 // POST /auth/mailsubmit
 router.post("/mailsubmit", redisMiddleware, authController.mailSubmit);
 
