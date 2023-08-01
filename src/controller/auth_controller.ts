@@ -133,6 +133,16 @@ function createJwtToken(id: string) {
     });
 }
 
+export async function changeNickname(req: Request, res: Response) {
+    const userId = Number(req.userId);
+    const {nickname} = req.body;
+    const user: any = await userRepository.updateNickname(userId, nickname);
+    if (!user) {
+        return res.status(404).json({message: `User Not found`});
+    }
+    res.status(200).json({nickname: user.nickname});
+}
+
 export async function me(req: Request, res: Response, next: NextFunction) {
     const id = req.userId;
     const user: any = await userRepository.findById(id!);
