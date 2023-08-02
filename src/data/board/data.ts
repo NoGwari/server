@@ -210,16 +210,16 @@ export async function getPagesToCategory(offset: number, listNum: number, catego
     });
 }
 
-export async function getPagesToTitle(offset: number, listNum: number, title: string) {
+export async function getPagesToTitle(offset: number, listNum: number, keyword: string) {
     return Board.findAll({
         ...INCLUDED_ALL,
         ...ORDER_DESC,
         offset: offset,
         limit: listNum,
         where: {
-            hidden: 0,
+            hidden: "0",
             title: {
-                [Op.like]: "%" + title + "%",
+                [Op.substring]: keyword,
             },
         },
     });
@@ -244,7 +244,7 @@ export async function getPagesToNickname(offset: number, listNum: number, paramN
                 attributes: [],
                 where: {
                     nickname: {
-                        [Op.like]: "%" + paramNickname + "%",
+                        [Op.substring]: paramNickname,
                     },
                 },
             },
