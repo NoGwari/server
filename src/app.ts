@@ -10,6 +10,7 @@ import session from "express-session";
 import categoryRouter from "./router/category_router.js";
 import boardRouter from "./router/board_router.js";
 import authRouter from "./router/auth_router.js";
+import mypageRouter from "./router/mypage_router.js";
 import passport from "./controller/auth_controller.js";
 import {config} from "./config.js";
 import {sequelize} from "./db/database.js";
@@ -44,6 +45,7 @@ app.use(passport.initialize());
 app.use("/board", boardRouter);
 app.use("/category", categoryRouter);
 app.use("/auth", authRouter);
+app.use("/mypage", mypageRouter);
 
 app.use((req: Request, res: Response, next: NextFunction) => {
     console.log("Finish Not Found");
