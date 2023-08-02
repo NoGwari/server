@@ -16,14 +16,14 @@ router.post("/login", authController.login);
 // POST /auth/signup
 router.post("/signup", authController.signup);
 
-// POST /auth/login
-router.post("/updatenick", isAuth, authController.changeNickname);
-
 // POST /auth/mailsubmit
 router.post("/mailsubmit", redisMiddleware, authController.mailSubmit);
 
 // POST /auth/checkkey
 router.post("/checkkey", redisMiddleware, authController.checkVerifyKey);
+
+// PUT /auth/updatenick
+router.put("/updatenick", isAuth, authController.changeNickname);
 
 // GET /auth/google
 router.get("/google", passport.authenticate("google", {scope: ["profile", "email"]}));
