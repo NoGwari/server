@@ -186,6 +186,8 @@ paths:
     /auth/me:
         get:
             summary: "로그인 확인"
+            security:
+                - bearerAuth: []
             tags: [Auth]
             responses:
                 "200":
@@ -276,7 +278,57 @@ paths:
                                 $ref: "#/components/schemas/Auth"
                 "401":
                     description: 로그인 실패
-    /Category:
+    /auth/updatenick:
+        put:
+            summary: "닉네임 변경"
+            tags: [Auth]
+            security:
+                - bearerAuth: []
+            consumes:
+                - application/json
+            requestBody:
+                required: true
+                content:
+                    application/json:
+                        schema:
+                            type: object
+                            properties:
+                                nickname:
+                                    type: string
+            responses:
+                "200":
+                    description: 닉네임변경 성공
+                    content:
+                        application/json:
+                            schema:
+                                type: object
+                                properties:
+                                    nickname:
+                                        type: string
+                "401":
+                    description: 닉네임변경 실패
+    /auth/withdrawal:
+        delete:
+            summary: "회원탈퇴"
+            tags: [Auth]
+            security:
+                - bearerAuth: []
+            consumes:
+                - application/json
+            responses:
+                "200":
+                    description: 회원탈퇴 성공
+                    content:
+                        application/json:
+                            schema:
+                                type: object
+                                properties:
+                                    id:
+                                        type: integer
+                                        format: int64
+                "401":
+                    description: 토큰이 제대로 안 들어가져있음
+    /category:
         get:
             summary: "전체 카테고리 조회"
             tags: [Category]
@@ -403,8 +455,10 @@ components:
             properties:
                 token:
                     type: string
-                realid:
+                email:
                     type: string
+                expriesInSec:
+                    type: int64
         Category:
             properties:
                 id:
@@ -421,13 +475,6 @@ components:
                     type: string
         Signup:
             properties:
-                required:
-                    - realid
-                    - password
-                    - nickname
-                    - email
-                realid:
-                    type: string
                 password:
                     type: string
                 nickname:
@@ -438,7 +485,7 @@ components:
                     type: string
         Login:
             properties:
-                realid:
+                email:
                     type: string
                 password:
                     type: string
