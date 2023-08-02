@@ -25,6 +25,9 @@ router.post("/checkkey", redisMiddleware, authController.checkVerifyKey);
 // PUT /auth/updatenick
 router.put("/updatenick", isAuth, authController.changeNickname);
 
+// DELETE /auth/withdrawal
+router.delete("/withdrawal", isAuth, authController.withDrawal);
+
 // GET /auth/google
 router.get("/google", passport.authenticate("google", {scope: ["profile", "email"]}));
 router.get("/google/callback", passport.authenticate("google", {failureRedirect: "/", session: false}), (req, res) => {
