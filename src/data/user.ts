@@ -112,6 +112,12 @@ export async function createUser(user: UserType): Promise<string> {
     }).then((result) => result.dataValues.id.toString());
 }
 
+export async function deleteUser(id: number) {
+    return User.findByPk(id).then((user: User | null) => {
+        return user!.destroy();
+    });
+}
+
 export async function updateNickname(id: number, changeNickname: string) {
     return User.findByPk(id).then((user: User | null) => {
         user!.nickname = changeNickname;
