@@ -136,12 +136,8 @@ function createJwtToken(id: string) {
 export async function changeNickname(req: Request, res: Response) {
     const id = Number(req.userId);
     const {nickname} = req.body;
-    const user: any = await userRepository.findById(id!);
-    if (!user) {
-        return res.status(404).json({message: `User Not found`});
-    }
     await userRepository.updateNickname(id, nickname);
-    res.status(200).json({nickname: user.nickname});
+    res.status(200).json({nickname: nickname});
 }
 
 export async function withDrawal(req: Request, res: Response) {
