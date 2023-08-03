@@ -35,7 +35,7 @@ app.use(
         resave: false,
         saveUninitialized: true,
         cookie: {
-            maxAge: 600000, // 60초 (10분) 만료
+            maxAge: 600000, // 600초 (10분) 만료
         },
     })
 );
