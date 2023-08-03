@@ -128,3 +128,17 @@ export async function updateNickname(id: number, changeNickname: string) {
 export async function checkAdmin(email: string): Promise<UserAttributes | null> {
     return User.findOne({where: {email: email, grade: "admin"}});
 }
+
+export async function incrementPostNum(id: number) {
+    return User.findByPk(id).then((user: User | null) => {
+        user!.posting_num++;
+        return user!.save();
+    });
+}
+
+export async function decrementPostNum(id: number) {
+    return User.findByPk(id).then((user: User | null) => {
+        user!.posting_num--;
+        return user!.save();
+    });
+}
