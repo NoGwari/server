@@ -133,18 +133,6 @@ function createJwtToken(id: string) {
     });
 }
 
-export async function changeNickname(req: Request, res: Response) {
-    const id = Number(req.userId);
-    const {nickname} = req.body;
-    await userRepository.updateNickname(id, nickname);
-    res.status(200).json({nickname: nickname});
-}
-
-export async function withDrawal(req: Request, res: Response) {
-    const deleteUser = await userRepository.deleteUser(req.userId!);
-    res.status(200).json(deleteUser);
-}
-
 export async function me(req: Request, res: Response, next: NextFunction) {
     const id = req.userId;
     const user: any = await userRepository.findById(id!);
