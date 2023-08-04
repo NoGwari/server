@@ -1,40 +1,12 @@
 import SQ, {Association, FindOptions, Op} from "sequelize";
 import {sequelize} from "../../db/database.js";
-
 import {Category} from "./category.js";
 import {User} from "../user.js";
 import {Reply} from "./reply.js";
+import {BoardType, BoardAttributes} from "../../customType/board";
 
 const Sequelize = SQ.Sequelize;
 const DataTypes = SQ.DataTypes;
-
-// import {BoardType, BoardAttributes} from "../../customType/board.js";
-interface BoardType {
-    title: string;
-    content: string;
-    views: number;
-    hits: number;
-    reported: number;
-    hidden: string;
-    userId: number;
-    categoryId: number;
-}
-
-interface BoardAttributes extends BoardType {
-    id: number;
-    title: string;
-    content: string;
-    views: number;
-    hits: number;
-    reported: number;
-    hidden: string;
-    userId: number;
-    categoryId: number;
-    userNickname?: string;
-    userImg?: string;
-    userGrade?: string;
-    categoryName?: string;
-}
 
 export class Board extends SQ.Model<BoardAttributes, BoardType> implements BoardAttributes {
     public id!: number;

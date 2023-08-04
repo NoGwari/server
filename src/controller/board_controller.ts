@@ -1,35 +1,8 @@
 import {Request, Response} from "express";
+import {BoardAttributes} from "../customType/board";
 import * as boardRepository from "../data/board/data.js";
 import * as hitBoardRepository from "../data/board/hit_board.js";
 import * as userRepository from "../data/user.js";
-
-// import {BoardType, BoardAttributes} from "../../customType/board.js";
-export interface BoardType {
-    title: string;
-    content: string;
-    views: number;
-    hits: number;
-    reported: number;
-    hidden: string;
-    userId: number;
-    categoryId: number;
-}
-
-export interface BoardAttributes extends BoardType {
-    id: number;
-    title: string;
-    content: string;
-    views: number;
-    hits: number;
-    reported: number;
-    hidden: string;
-    userId: number;
-    categoryId: number;
-    userNickname?: string;
-    userImg?: string;
-    userGrade?: string;
-    categoryName?: string;
-}
 
 export async function getPostingByPage(req: Request, res: Response) {
     const pageId: number = req.query.page ? Number(req.query.page) : 1;
