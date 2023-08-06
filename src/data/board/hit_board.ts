@@ -58,8 +58,8 @@ HitBoard.init(
     }
 );
 
-HitBoard.belongsTo(User, {foreignKey: "userId", as: "user"});
-HitBoard.belongsTo(Board, {foreignKey: "boardId", as: "board"});
+HitBoard.belongsTo(User, {foreignKey: "userId", as: "user", onDelete: "cascade"});
+HitBoard.belongsTo(Board, {foreignKey: "boardId", as: "board", onDelete: "cascade"});
 
 export async function isHits(board: number, user: number): Promise<boolean> {
     const isExist = HitBoard.findOne({
