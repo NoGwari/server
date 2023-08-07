@@ -13,9 +13,13 @@ import authRouter from "./router/auth_router.js";
 import userRouter from "./router/user_router.js";
 import passport from "./controller/auth_controller.js";
 import {config} from "./config.js";
-import {sequelize} from "./db/database.js";
+import {sequelize} from "./models/index.js";
 
 const app = express();
+
+sequelize.sync({force: false}).then(() => {
+    console.log("Connect!");
+});
 
 const corsOption = {
     origin: "*",
@@ -57,7 +61,4 @@ app.use((error: any, req: Request, res: Response, next: NextFunction) => {
     res.sendStatus(500);
 });
 
-sequelize.sync().then(() => {
-    console.log("Connect!");
-    app.listen(config.port);
-});
+app.listen(config.port);
