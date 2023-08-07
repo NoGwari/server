@@ -9,3 +9,5 @@ export const sequelize = new SQ.Sequelize(database, user, password, {
     dialect: "mysql",
     logging: false,
 });
+
+export default sequelize;
