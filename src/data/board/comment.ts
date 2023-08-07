@@ -1,10 +1,11 @@
 import {CommentsAttributes, CommentsType} from "../../customType/comment.js";
 import {sequelize} from "../../db/database.js";
 import SQ from "sequelize";
+import {dbType} from "../index.js";
 
 const DataTypes = SQ.DataTypes;
 
-export class Comments extends SQ.Model<CommentsAttributes, CommentsType> implements CommentsAttributes {
+export class Comment extends SQ.Model<CommentsAttributes, CommentsType> implements CommentsAttributes {
     public id!: number;
     public boardId!: number;
     public userId!: number;
@@ -18,7 +19,7 @@ export class Comments extends SQ.Model<CommentsAttributes, CommentsType> impleme
     public readonly updatedAt!: Date;
 }
 
-Comments.init(
+Comment.init(
     {
         id: {
             type: DataTypes.INTEGER,
@@ -52,3 +53,7 @@ Comments.init(
         collate: "utf8_general_ci",
     }
 );
+
+export const associate = (db: dbType) => {
+    db.Comment.belongsTo(db.Board);
+};
