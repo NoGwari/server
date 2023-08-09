@@ -55,8 +55,8 @@ Comment.init(
 );
 
 export const associate = (db: dbType) => {
-    db.Comment.belongsTo(db.Board);
-    db.Comment.belongsTo(db.User);
+    db.Comment.belongsTo(db.Board, {as: "board"});
+    db.Comment.belongsTo(db.User, {as: "user"});
 };
 
 export default Comment;

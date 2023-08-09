@@ -49,7 +49,7 @@ Category.init(
 );
 
 export const associate = (db: dbType) => {
-    db.Category.hasMany(db.Board);
+    db.Category.hasMany(db.Board, {onDelete: "SET NULL", onUpdate: "SET NULL", hooks: true});
 };
 
 export default Category;
