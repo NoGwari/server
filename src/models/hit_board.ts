@@ -60,8 +60,8 @@ HitBoard.init(
 );
 
 export const associate = (db: dbType) => {
-    HitBoard.belongsTo(User, {foreignKey: "userId", as: "user", onDelete: "cascade"});
-    HitBoard.belongsTo(Board, {foreignKey: "boardId", as: "board", onDelete: "cascade"});
+    HitBoard.belongsTo(User, {as: "user"});
+    HitBoard.belongsTo(Board, {as: "board"});
 };
-
+// {foreignKey: "userId", as: "user", onDelete: "CASCADE", hooks: true}
 export default HitBoard;
