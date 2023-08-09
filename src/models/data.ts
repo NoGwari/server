@@ -71,11 +71,11 @@ Board.init(
         },
         userId: {
             type: DataTypes.INTEGER,
-            allowNull: false,
+            allowNull: true,
         },
         categoryId: {
             type: DataTypes.INTEGER,
-            allowNull: false,
+            allowNull: true,
         },
         userNickname: {
             type: DataTypes.STRING(10),
@@ -105,10 +105,10 @@ Board.init(
 );
 
 export const associate = (db: dbType) => {
-    db.Board.belongsTo(db.User);
-    db.Board.belongsTo(db.Category, {as: "category", onDelete: "cascade"});
-    db.Board.hasMany(db.Comment);
-    db.Board.hasMany(db.HitBoard);
+    db.Board.belongsTo(db.User, {foreignKey: "userId", as: "user", onDelete: "SET NULL"});
+    db.Board.belongsTo(db.Category);
+    db.Board.hasMany(db.Comment, {onDelete: "CASCADE"});
+    db.Board.hasMany(db.HitBoard, {onDelete: "CASCADE"});
 };
 
 export default Board;
