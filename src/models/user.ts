@@ -92,9 +92,9 @@ User.init(
 );
 
 export const associate = (db: dbType) => {
-    db.User.hasMany(db.Board, {as: "posts"});
-    db.User.hasMany(db.Comment);
-    db.User.hasMany(db.HitBoard);
+    db.User.hasMany(db.Board, {onDelete: "CASCADE", onUpdate: "CASCADE", hooks: true});
+    db.User.hasMany(db.Comment, {onDelete: "CASCADE", onUpdate: "CASCADE", hooks: true});
+    db.User.hasMany(db.HitBoard, {onDelete: "CASCADE", onUpdate: "CASCADE", hooks: true});
 };
 
 export default User;

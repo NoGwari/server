@@ -17,20 +17,11 @@ class Board extends SQ.Model {
     public hidden!: string;
     public readonly createdAt!: Date;
     public readonly updatedAt!: Date;
-    public userId!: number;
-    public categoryId!: number;
-    public userNickname?: string;
-    public userImg?: string;
-    public userGrade?: string;
-    public categoryName?: string;
+    public userId?: number;
+    public categoryId?: number;
 
     public readonly user?: User;
     public readonly category?: Category;
-
-    public static associations: {
-        user: Association<Board, User>;
-        category: Association<Board, Category>;
-    };
 }
 
 Board.init(
@@ -77,22 +68,6 @@ Board.init(
             type: DataTypes.INTEGER,
             allowNull: true,
         },
-        userNickname: {
-            type: DataTypes.STRING(10),
-            allowNull: true,
-        },
-        userImg: {
-            type: DataTypes.STRING(100),
-            allowNull: true,
-        },
-        userGrade: {
-            type: DataTypes.STRING(10),
-            allowNull: true,
-        },
-        categoryName: {
-            type: DataTypes.STRING(30),
-            allowNull: true,
-        },
     },
     {
         sequelize,
@@ -105,10 +80,10 @@ Board.init(
 );
 
 export const associate = (db: dbType) => {
-    db.Board.belongsTo(db.User, {foreignKey: "userId", as: "user", onDelete: "SET NULL"});
-    db.Board.belongsTo(db.Category);
-    db.Board.hasMany(db.Comment, {onDelete: "CASCADE"});
-    db.Board.hasMany(db.HitBoard, {onDelete: "CASCADE"});
+    db.Board.belongsTo(db.User, {as: "user"});
+    db.Board.belongsTo(db.Category, {as: "category"});
+    db.Board.hasMany(db.Comment, {onDelete: "CASCADE", hooks: true});
+    db.Board.hasMany(db.HitBoard, {onDelete: "CASCADE", hooks: true});
 };
 
 export default Board;
