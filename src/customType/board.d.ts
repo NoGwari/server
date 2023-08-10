@@ -17,8 +17,8 @@ export interface BoardAttributes extends BoardType {
     hits: number;
     reported: number;
     hidden: string;
-    userId: number;
-    categoryId: number;
+    userId?: number;
+    categoryId?: number;
     userNickname?: string;
     userImg?: string;
     userGrade?: string;
