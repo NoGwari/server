@@ -3,7 +3,7 @@ import "express-async-errors";
 import * as boardController from "../controller/board_controller.js";
 import {isAdimin, isAuth} from "../middleware/auth_middleware.js";
 import {redisMiddleware} from "../middleware/redis.js";
-import {upload} from "../middleware/multer.js";
+import {upload} from "../db/multer.js";
 const router = express.Router();
 
 // GET /board?page=1&list_num=10&category=1
