@@ -3,6 +3,7 @@ import {BoardAttributes} from "../customType/board";
 import * as boardRepository from "../data/board/data.js";
 import * as hitBoardRepository from "../data/board/hit_board.js";
 import * as userRepository from "../data/user.js";
+import {upload} from "../db/multer.js";
 
 export async function getPostingByPage(req: Request, res: Response) {
     const pageId: number = req.query.page ? Number(req.query.page) : 1;
@@ -67,7 +68,10 @@ export async function getSearch(req: Request, res: Response) {
 }
 
 export async function newPosting(req: Request, res: Response) {
-    const {title, content, categoryId} = req.body;
+    const parseJson = JSON.parse(req.body.jsonData);
+    const {title, content, categoryId} = parseJson;
+    const image: any = req.files;
+    upload.array(image);
     const userId: number = req.userId!;
     const newPosts = await boardRepository.create(title, content, userId, categoryId);
     await userRepository.incrementPostNum(userId);
