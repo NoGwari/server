@@ -3,7 +3,6 @@ import "express-async-errors";
 import * as boardController from "../controller/board_controller.js";
 import {isAdimin, isAuth} from "../middleware/auth_middleware.js";
 import {redisMiddleware} from "../middleware/redis.js";
-import {upload} from "../db/multer.js";
 const router = express.Router();
 
 // GET /board?page=1&list_num=10&category=1
@@ -26,7 +25,5 @@ router.put("/:id", isAuth, boardController.updatePost);
 
 // Delete /board/1
 router.delete("/:id", isAuth, boardController.deletePost);
-
-router.post("/upload", upload.array("image"), boardController.newPosting);
 
 export default router;
