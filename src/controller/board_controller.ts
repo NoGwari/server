@@ -92,6 +92,11 @@ export async function updatePost(req: Request, res: Response) {
     res.status(200).json(updatePosts);
 }
 
+export async function uploadTest(req: Request, res: Response) {
+    const boardId: number = Number(req.params.id);
+    res.status(200).json();
+}
+
 export async function deletePost(req: Request, res: Response) {
     const postId = Number(req.params.id);
     const userId: number = req.userId!;
