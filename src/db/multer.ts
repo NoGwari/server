@@ -16,10 +16,13 @@ export const upload = multer({
         bucket: "nogwari2",
         acl: "public-read-write",
         contentType: multerS3.AUTO_CONTENT_TYPE,
-        key: function (req, file, cb) {
-            const fileId = shortId.generate();
+        key: function (req: any, file, cb) {
+            // console.log(req);
+            console.log("???", req.body.index);
+            const index = req.body.index;
+            const boardId: string = req.params.id;
             const type = file.mimetype.split("/")[1];
-            const fileName = `${fileId}.${type}`;
+            const fileName = `boardId${boardId}/imgNum.${type}`;
             cb(null, fileName);
         },
     }),
