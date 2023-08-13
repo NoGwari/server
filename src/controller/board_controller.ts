@@ -68,10 +68,13 @@ export async function getSearch(req: Request, res: Response) {
 }
 
 export async function newPosting(req: Request, res: Response) {
-    const parseJson = JSON.parse(req.body.jsonData);
-    const {title, content, categoryId} = parseJson;
-    const image: any = req.files;
-    upload.array(image);
+    const parsingJson = JSON.parse(req.body.jsonData);
+    const {title, content, categoryId} = parsingJson;
+    const imageFile = [];
+    for (let i = 0; req.body[`imageFile${i}`] !== undefined; i++) {
+        imageFile.push(req.body[`imageFile${i}`]);
+    }
+    console.log(title, content, categoryId, imageFile);
     const userId: number = req.userId!;
     const newPosts = await boardRepository.create(title, content, userId, categoryId);
     await userRepository.incrementPostNum(userId);
@@ -93,6 +96,7 @@ export async function updatePost(req: Request, res: Response) {
 }
 
 export async function uploadTest(req: Request, res: Response) {
+    upload.array("file");
     const boardId: number = Number(req.params.id);
     res.status(200).json();
 }
