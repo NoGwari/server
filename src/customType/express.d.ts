@@ -7,9 +7,7 @@ declare global {
             userId?: number;
             role: string;
             redisClient?: redis;
-            fileName?: string;
-            idx?: number;
-            boardId?: number;
+            file?: any;
         }
     }
 }
