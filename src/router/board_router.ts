@@ -27,6 +27,4 @@ router.put("/:id", isAuth, boardController.updatePost);
 // Delete /board/1
 router.delete("/:id", isAuth, boardController.deletePost);
 
-router.post("/upload/:id", upload.array("image"), boardController.uploadTest);
-
 export default router;
