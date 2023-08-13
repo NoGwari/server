@@ -70,11 +70,12 @@ export async function getSearch(req: Request, res: Response) {
 export async function newPosting(req: Request, res: Response) {
     const parsingJson = JSON.parse(req.body.jsonData);
     const {title, content, categoryId} = parsingJson;
-    const imageFile = [];
     for (let i = 0; req.body[`imageFile${i}`] !== undefined; i++) {
-        imageFile.push(req.body[`imageFile${i}`]);
+        const fileName = "imageFile" + "i";
+        req.fileName = req.body[`imageFile${i}`];
+        console.log(req.fileName);
     }
-    console.log(title, content, categoryId, imageFile);
+    console.log(title, content, categoryId);
     const userId: number = req.userId!;
     const newPosts = await boardRepository.create(title, content, userId, categoryId);
     await userRepository.incrementPostNum(userId);

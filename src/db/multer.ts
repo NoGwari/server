@@ -17,16 +17,6 @@ export const upload = multer({
         acl: "public-read-write",
         contentType: multerS3.AUTO_CONTENT_TYPE,
         key: function (req: any, file, cb) {
-            const imageFile = [];
-            for (let i = 0; req.body[`imageFile${i}`] !== undefined; i++) {
-                imageFile.push(req.body[`imageFile${i}`]);
-            }
-            console.log("body:" + req.body);
-            console.log("file:" + req.file);
-            console.log("body.jsonData:" + req.body.jsonData);
-            console.log("jsonData:" + req.jsonData);
-            console.log("imageFile:" + imageFile);
-            // const boardId: string = req.params.id;
             const type = file.mimetype.split("/")[1];
             const fileName = `boardId/imgNum.${type}`;
             cb(null, fileName);
