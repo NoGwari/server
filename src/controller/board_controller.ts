@@ -73,7 +73,7 @@ export async function newPosting(req: Request, res: Response) {
     if (req.files) {
         const imagefiles: any = req.files;
         for (let i = 0; i < imagefiles.length; i++) {
-            const fileName = req.files[i].fieldname;
+            const fileName = imagefiles[i].fieldname;
             req.fileName = req.body[`imageFile${i}`];
             console.log(req.fileName);
         }
@@ -81,6 +81,15 @@ export async function newPosting(req: Request, res: Response) {
     console.log(title, content, categoryId);
     const userId: number = req.userId!;
     const newPosts = await boardRepository.create(title, content, userId, categoryId);
+    if (req.files) {
+        const imagefiles: any = req.files;
+        for (let i = 0; i < imagefiles.length; i++) {
+            const fileName = imagefiles[i].fieldname;
+            req.idx = i;
+            req.boardId = newPosts?.id;
+            await upload.single(fileName);
+        }
+    }
     await userRepository.incrementPostNum(userId);
     res.status(200).json(newPosts);
 }
