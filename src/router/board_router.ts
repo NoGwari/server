@@ -19,7 +19,8 @@ router.get("/hits/:id", isAuth, boardController.incrementHits);
 router.get("/:id", redisMiddleware, boardController.getPosting);
 
 // POST /board
-router.post("/", isAuth, upload.array("image"), boardController.newPosting);
+router.post("/", isAuth, upload.any(), boardController.newPosting);
+// router.post("/", isAuth, upload.fields([{name: "image"} , {name: "jsonDate"}]), boardController.newPosting);
 
 // PUT /board/1
 router.put("/:id", isAuth, boardController.updatePost);
