@@ -19,7 +19,7 @@ router.get("/hits/:id", isAuth, boardController.incrementHits);
 router.get("/:id", redisMiddleware, boardController.getPosting);
 
 // POST /board
-router.post("/", isAuth, boardController.newPosting);
+router.post("/", isAuth, upload.array("image"), boardController.newPosting);
 
 // PUT /board/1
 router.put("/:id", isAuth, boardController.updatePost);

@@ -17,9 +17,11 @@ export const upload = multer({
         acl: "public-read-write",
         contentType: multerS3.AUTO_CONTENT_TYPE,
         key: function (req: any, file, cb) {
-            const boardId: string = req.params.id;
+            console.log("body:" + req.body);
+            console.log("file:" + req.file);
+            // const boardId: string = req.params.id;
             const type = file.mimetype.split("/")[1];
-            const fileName = `boardId${boardId}/imgNum.${type}`;
+            const fileName = `boardId/imgNum.${type}`;
             cb(null, fileName);
         },
     }),
