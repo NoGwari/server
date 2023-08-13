@@ -3,7 +3,6 @@ import {BoardAttributes} from "../customType/board";
 import * as boardRepository from "../data/board/data.js";
 import * as hitBoardRepository from "../data/board/hit_board.js";
 import * as userRepository from "../data/user.js";
-import {upload} from "../db/multer.js";
 
 export async function getPostingByPage(req: Request, res: Response) {
     const pageId: number = req.query.page ? Number(req.query.page) : 1;
@@ -68,21 +67,16 @@ export async function getSearch(req: Request, res: Response) {
 }
 
 export async function newPosting(req: Request, res: Response) {
-    const parsingJson = JSON.parse(req.body.jsonData);
-    const {title, content, categoryId} = parsingJson;
+    const {title, content, categoryId} = req.body;
     const userId: number = req.userId!;
     const newPosts = await boardRepository.create(title, content, userId, categoryId);
-    if (req.files) {
-        const imagefiles: any = req.files;
-        for (let i = 0; i < imagefiles.length; i++) {
-            const fileName = imagefiles[i].fieldname;
-            req.idx = i;
-            req.boardId = newPosts?.id;
-            await upload.single(fileName);
-        }
-    }
     await userRepository.incrementPostNum(userId);
     res.status(200).json(newPosts);
+}
+
+export async function newImage(req: Request, res: Response) {
+    const imageUrl: any = req.file!; // 이미지의 S3 URL
+    res.status(200).json(imageUrl.location);
 }
 
 export async function updatePost(req: Request, res: Response) {
@@ -97,12 +91,6 @@ export async function updatePost(req: Request, res: Response) {
     }
     const updatePosts = await boardRepository.update(postId, title, content, hiddenNum, categoryId);
     res.status(200).json(updatePosts);
-}
-
-export async function uploadTest(req: Request, res: Response) {
-    upload.array("file");
-    const boardId: number = Number(req.params.id);
-    res.status(200).json();
 }
 
 export async function deletePost(req: Request, res: Response) {
