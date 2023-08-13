@@ -18,7 +18,7 @@ export const upload = multer({
         contentType: multerS3.AUTO_CONTENT_TYPE,
         key: function (req: any, file, cb) {
             const type = file.mimetype.split("/")[1];
-            const fileName = `boardId/imgNum.${type}`;
+            const fileName = `boardId${req.boardId}/imgNum${req.idx}.${type}`;
             cb(null, fileName);
         },
     }),
