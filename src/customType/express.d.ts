@@ -7,6 +7,7 @@ declare global {
             userId?: number;
             role: string;
             redisClient?: redis;
+            fileName: string;
         }
     }
 }
