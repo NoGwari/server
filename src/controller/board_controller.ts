@@ -75,8 +75,8 @@ export async function newPosting(req: Request, res: Response) {
 }
 
 export async function newImage(req: Request, res: Response) {
-    const imageUrl: any = req.file!; // 이미지의 S3 URL
-    res.status(200).json(imageUrl.location);
+    const image: any = req.file!;
+    res.status(200).json(image.location); // 이미지의 S3 URL
 }
 
 export async function updatePost(req: Request, res: Response) {
