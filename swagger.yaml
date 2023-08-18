@@ -195,7 +195,14 @@ paths:
                     content:
                         application/json:
                             schema:
-                                $ref: "#/components/schemas/Signup"
+                                type: object
+                                properties:
+                                    nickname:
+                                        type: string
+                                    email:
+                                        type: string
+                                    img:
+                                        type: string
                 "401":
                     description: Authentication Error
                 "404":
@@ -278,7 +285,7 @@ paths:
                                 $ref: "#/components/schemas/Auth"
                 "401":
                     description: 로그인 실패
-    /auth/updatenick:
+    /user/updatenick:
         put:
             summary: "닉네임 변경"
             tags: [Auth]
@@ -307,7 +314,7 @@ paths:
                                         type: string
                 "401":
                     description: 닉네임변경 실패
-    /auth/withdrawal:
+    /user/withdrawal:
         delete:
             summary: "회원탈퇴"
             tags: [Auth]
