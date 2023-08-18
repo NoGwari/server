@@ -139,7 +139,7 @@ export async function me(req: Request, res: Response, next: NextFunction) {
     if (!user) {
         return res.status(404).json({message: "User not found!"});
     } else {
-        return res.status(200).json({nickname: user.nickname});
+        return res.status(200).json({nickname: user.nickname, email: user.email, img: user.img});
     }
 }
 
