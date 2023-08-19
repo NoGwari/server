@@ -53,7 +53,7 @@ export async function getSearch(req: Request, res: Response) {
     if (searchType !== "title" && searchType !== "nickname") {
         return res.status(400).json({message: "종류를 제대로 입력해주세요."});
     }
-    let data: BoardAttributes[];
+    let data: PostingData | null;
     switch (searchType) {
         case "title":
             data = await boardRepository.getPagesToTitle(offset, listNum, keyword);
@@ -62,7 +62,7 @@ export async function getSearch(req: Request, res: Response) {
             data = await boardRepository.getPagesToNickname(offset, listNum, keyword);
             break;
     }
-    if (data.length === 0) {
+    if (data?.count === 0) {
         return res.status(204).json(keyword);
     }
     res.status(200).json(data);

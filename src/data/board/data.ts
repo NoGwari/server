@@ -79,7 +79,7 @@ export async function getPagesToCategory(offset: number, listNum: number, catego
 }
 
 export async function getPagesToTitle(offset: number, listNum: number, keyword: string) {
-    return Board.findAll({
+    return Board.findAndCountAll({
         ...INCLUDED_ALL,
         ...ORDER_DESC,
         offset: offset,
@@ -94,7 +94,7 @@ export async function getPagesToTitle(offset: number, listNum: number, keyword: 
 }
 
 export async function getPagesToNickname(offset: number, listNum: number, paramNickname: string) {
-    return Board.findAll({
+    return Board.findAndCountAll({
         ...INCLUDED_ALL,
         ...ORDER_DESC,
         offset: offset,
