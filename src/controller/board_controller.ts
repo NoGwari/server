@@ -9,17 +9,17 @@ export async function getPostingByPage(req: Request, res: Response) {
     const listNum: number = req.query.list_num ? Number(req.query.list_num) : 5; // 검색할 post 개수
     const categoryID: number | undefined = req.query.category ? Number(req.query.category) : undefined;
     const offset = 0 + (pageId - 1) * listNum; // skip할 item의 개수
-    let data: BoardAttributes[] | null;
+    let data: any;
     if (!categoryID) {
         // categoryID가 없다면 전체 게시글 조회
         data = await boardRepository.getAllbyPages(offset, listNum);
     } else {
         data = await boardRepository.getPagesToCategory(offset, listNum, categoryID);
     }
-    if (!data) {
+    if (!data.rows) {
         res.sendStatus(404);
     }
-    res.status(200).json(data);
+    res.status(200).json({data: data.rows, count: Number(data.count)});
 }
 
 export async function getPosting(req: Request, res: Response) {

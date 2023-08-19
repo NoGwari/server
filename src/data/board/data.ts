@@ -46,7 +46,7 @@ const ORDER_DESC: FindOptions<BoardAttributes> = {
 };
 
 export async function getAllbyPages(offset: number, listNum: number) {
-    return Board.findAll({
+    return Board.findAndCountAll({
         ...INCLUDED_ALL,
         ...ORDER_DESC,
         offset: offset,
@@ -56,7 +56,7 @@ export async function getAllbyPages(offset: number, listNum: number) {
 }
 
 export async function getPagesToCategory(offset: number, listNum: number, categoryID: number) {
-    return Board.findAll({
+    return Board.findAndCountAll({
         ...INCLUDED_ALL,
         ...ORDER_DESC,
         offset: offset,
