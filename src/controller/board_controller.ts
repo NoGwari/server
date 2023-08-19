@@ -1,15 +1,17 @@
 import {Request, Response} from "express";
-import {BoardAttributes} from "../customType/board";
+import {BoardAttributes, PostingData} from "../customType/board";
 import * as boardRepository from "../data/board/data.js";
 import * as hitBoardRepository from "../data/board/hit_board.js";
 import * as userRepository from "../data/user.js";
+import {Json} from "sequelize/types/utils";
+import Board from "../models/data";
 
 export async function getPostingByPage(req: Request, res: Response) {
     const pageId: number = req.query.page ? Number(req.query.page) : 1;
     const listNum: number = req.query.list_num ? Number(req.query.list_num) : 5; // 검색할 post 개수
     const categoryID: number | undefined = req.query.category ? Number(req.query.category) : undefined;
     const offset = 0 + (pageId - 1) * listNum; // skip할 item의 개수
-    let data: any;
+    let data: PostingData | null;
     if (!categoryID) {
         // categoryID가 없다면 전체 게시글 조회
         data = await boardRepository.getAllbyPages(offset, listNum);
