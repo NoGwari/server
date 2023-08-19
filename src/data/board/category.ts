@@ -37,3 +37,17 @@ export async function remove(id: number): Promise<CategoryAttributes | void> {
         post.destroy();
     });
 }
+
+export async function incrementPostNum(id: number) {
+    return Category.findByPk(id).then((category: Category | null) => {
+        category!.post_num++;
+        return category!.save();
+    });
+}
+
+export async function decrementPostNum(id: number) {
+    return Category.findByPk(id).then((category: Category | null) => {
+        category!.post_num--;
+        return category!.save();
+    });
+}

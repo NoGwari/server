@@ -1,8 +1,9 @@
 import {Request, Response} from "express";
 import {BoardAttributes, PostingData} from "../customType/board";
+import * as userRepository from "../data/user.js";
 import * as boardRepository from "../data/board/data.js";
 import * as hitBoardRepository from "../data/board/hit_board.js";
-import * as userRepository from "../data/user.js";
+import * as categoryRepository from "../data/board/category.js";
 import {Json} from "sequelize/types/utils";
 import Board from "../models/data";
 
@@ -73,6 +74,7 @@ export async function newPosting(req: Request, res: Response) {
     const userId: number = req.userId!;
     const newPosts = await boardRepository.create(title, content, userId, categoryId);
     await userRepository.incrementPostNum(userId);
+    await categoryRepository.incrementPostNum(categoryId);
     res.status(200).json(newPosts);
 }
 
@@ -105,8 +107,9 @@ export async function deletePost(req: Request, res: Response) {
     if (req.userId !== post!.userId) {
         return res.sendStatus(403);
     }
-    const deletePosts = await boardRepository.remove(postId);
     await userRepository.decrementPostNum(userId);
+    await categoryRepository.decrementPostNum(post.categoryId!);
+    const deletePosts = await boardRepository.remove(postId);
     res.status(200).json(deletePosts);
 }
 
