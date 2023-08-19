@@ -24,3 +24,8 @@ export interface BoardAttributes extends BoardType {
     userGrade?: string;
     categoryName?: string;
 }
+
+export type PostingData = {
+    rows: BoardAttributes[];
+    count: number;
+};
