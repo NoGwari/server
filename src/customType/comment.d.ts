@@ -12,6 +12,8 @@ export interface CommentsAttributes extends CommentsType {
     userId: number;
     content: string;
     parentCommentsId: number;
+    hits: number;
+    reported: number;
     userNickname?: string;
     userImg?: string;
     userGrade?: string;

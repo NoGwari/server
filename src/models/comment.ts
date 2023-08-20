@@ -2,21 +2,25 @@ import SQ from "sequelize";
 import {CommentsAttributes, CommentsType} from "../customType/comment.js";
 import {sequelize} from "../db/database.js";
 import {dbType} from "./index.js";
+import User from "./user.js";
+import Board from "./data.js";
 
 const DataTypes = SQ.DataTypes;
 
 class Comment extends SQ.Model<CommentsAttributes, CommentsType> implements CommentsAttributes {
     public id!: number;
-    public boardId!: number;
-    public userId!: number;
     public content!: string;
     public parentCommentsId!: number;
-    public userNickname?: string;
-    public userImg?: string;
-    public userGrade?: string;
+    public hits!: number;
+    public reported!: number;
 
     public readonly createdAt!: Date;
     public readonly updatedAt!: Date;
+    public boardId!: number;
+    public userId!: number;
+
+    public readonly user?: User;
+    public readonly board?: Board;
 }
 
 Comment.init(
@@ -27,14 +31,6 @@ Comment.init(
             allowNull: false,
             primaryKey: true,
         },
-        boardId: {
-            type: DataTypes.INTEGER,
-            allowNull: false,
-        },
-        userId: {
-            type: DataTypes.INTEGER,
-            allowNull: false,
-        },
         content: {
             type: DataTypes.TEXT,
             allowNull: false,
@@ -42,6 +38,24 @@ Comment.init(
         parentCommentsId: {
             type: DataTypes.INTEGER,
             defaultValue: 0,
+        },
+        hits: {
+            type: DataTypes.INTEGER,
+            allowNull: false,
+            defaultValue: 0,
+        },
+        reported: {
+            type: DataTypes.INTEGER,
+            allowNull: false,
+            defaultValue: 0,
+        },
+        boardId: {
+            type: DataTypes.INTEGER,
+            allowNull: false,
+        },
+        userId: {
+            type: DataTypes.INTEGER,
+            allowNull: false,
         },
     },
     {
