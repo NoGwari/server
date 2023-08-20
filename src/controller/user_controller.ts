@@ -15,6 +15,8 @@ export async function withDrawal(req: Request, res: Response) {
 }
 
 export async function newImage(req: Request, res: Response) {
+    const id = Number(req.userId);
     const image: any = req.file!;
+    await userRepository.updateImg(id, image.location);
     res.status(200).json(image.location); // 이미지의 S3 URL
 }

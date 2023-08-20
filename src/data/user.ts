@@ -35,6 +35,13 @@ export async function updateNickname(id: number, changeNickname: string) {
     });
 }
 
+export async function updateImg(id: number, changeImg: string) {
+    return User.findByPk(id).then((user: User | null) => {
+        user!.img = changeImg;
+        return user!.save();
+    });
+}
+
 export async function checkAdmin(email: string): Promise<UserAttributes | null> {
     return User.findOne({where: {email: email, grade: "admin"}});
 }
