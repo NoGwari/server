@@ -38,9 +38,9 @@ export const uploadUserImg = multer({
         acl: "public-read-write",
         contentType: multerS3.AUTO_CONTENT_TYPE,
         key: function (req: any, file, cb) {
+            const userId = req.userId;
             const type = file.mimetype.split("/")[1];
-            const randomFileName = shortId.generate();
-            const filePath = `user/${randomFileName}.${type}`; // 저장될 파일 경로와 이름
+            const filePath = `user/userId:${userId}.${type}`; // 저장될 파일 경로와 이름
             cb(null, filePath);
         },
     }),
