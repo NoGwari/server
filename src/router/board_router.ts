@@ -3,7 +3,7 @@ import "express-async-errors";
 import * as boardController from "../controller/board_controller.js";
 import {isAdimin, isAuth} from "../middleware/auth_middleware.js";
 import {redisMiddleware} from "../middleware/redis.js";
-import {upload} from "../db/multer.js";
+import {uploadPostImg} from "../middleware/multer.js";
 const router = express.Router();
 
 // GET /board?page=1&list_num=10&category=1
@@ -22,7 +22,7 @@ router.get("/:id", redisMiddleware, boardController.getPosting);
 router.post("/", isAuth, boardController.newPosting);
 
 // POST /board/upload
-router.post("/upload", upload.single("image"), boardController.newImage);
+router.post("/upload", uploadPostImg.single("image"), boardController.newImage);
 
 // PUT /board/1
 router.put("/:id", isAuth, boardController.updatePost);
