@@ -12,6 +12,6 @@ router.put("/updatenick", isAuth, userController.changeNickname);
 router.delete("/withdrawal", isAuth, userController.withDrawal);
 
 // POST /user/upload
-router.post("/upload", uploadUserImg.single("image"), userController.newImage);
+router.post("/upload", isAuth, uploadUserImg.single("image"), userController.newImage);
 
 export default router;
