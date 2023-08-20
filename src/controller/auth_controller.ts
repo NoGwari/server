@@ -108,6 +108,11 @@ export async function checkVerifyKey(req: Request, res: Response) {
     });
 }
 
+export async function newImage(req: Request, res: Response) {
+    const image: any = req.file!;
+    res.status(200).json(image.location); // 이미지의 S3 URL
+}
+
 export async function login(req: Request, res: Response) {
     const {email, password} = req.body;
     const user: any = await userRepository.findByRealId(email);
