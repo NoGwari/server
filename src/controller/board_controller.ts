@@ -4,8 +4,6 @@ import * as userRepository from "../data/user.js";
 import * as boardRepository from "../data/board/data.js";
 import * as hitBoardRepository from "../data/board/hit_board.js";
 import * as categoryRepository from "../data/board/category.js";
-import {Json} from "sequelize/types/utils";
-import Board from "../models/data";
 
 export async function getPostingByPage(req: Request, res: Response) {
     const pageId: number = req.query.page ? Number(req.query.page) : 1;
