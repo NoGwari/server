@@ -4,8 +4,6 @@ import passport from "../controller/auth_controller.js";
 import * as authController from "../controller/auth_controller.js";
 import {isAuth} from "../middleware/auth_middleware.js";
 import {redisMiddleware} from "../middleware/redis.js";
-import {uploadUserImg} from "../middleware/multer.js";
-
 const router = express.Router();
 
 // GET /auth/me
@@ -22,9 +20,6 @@ router.post("/mailsubmit", redisMiddleware, authController.mailSubmit);
 
 // POST /auth/checkkey
 router.post("/checkkey", redisMiddleware, authController.checkVerifyKey);
-
-// POST /board/upload
-router.post("/upload", uploadUserImg.single("image"), authController.newImage);
 
 // GET /auth/google
 router.get("/google", passport.authenticate("google", {scope: ["profile", "email"]}));

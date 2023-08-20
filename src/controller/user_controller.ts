@@ -13,3 +13,8 @@ export async function withDrawal(req: Request, res: Response) {
     const deleteUser = await userRepository.deleteUser(req.userId!);
     res.status(200).json(deleteUser);
 }
+
+export async function newImage(req: Request, res: Response) {
+    const image: any = req.file!;
+    res.status(200).json(image.location); // 이미지의 S3 URL
+}
