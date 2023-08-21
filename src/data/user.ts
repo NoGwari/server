@@ -53,9 +53,23 @@ export async function incrementPostNum(id: number) {
     });
 }
 
+export async function incrementReplyNum(id: number) {
+    return User.findByPk(id).then((user: User | null) => {
+        user!.reply_num++;
+        return user!.save();
+    });
+}
+
 export async function decrementPostNum(id: number) {
     return User.findByPk(id).then((user: User | null) => {
         user!.posting_num--;
+        return user!.save();
+    });
+}
+
+export async function decrementReplyNum(id: number) {
+    return User.findByPk(id).then((user: User | null) => {
+        user!.reply_num--;
         return user!.save();
     });
 }
