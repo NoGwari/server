@@ -2,7 +2,7 @@ import SQ, {FindOptions} from "sequelize";
 import {CommentsAttributes, CommentsType} from "../../customType/comment.js";
 import Board from "../../models/data.js";
 import User from "../../models/user.js";
-
+import Comment from "../../models/comment.js";
 const Sequelize = SQ.Sequelize;
 
 const INCLUDED_ALL: FindOptions<CommentsAttributes> = {
@@ -15,6 +15,8 @@ const INCLUDED_ALL: FindOptions<CommentsAttributes> = {
         "reported",
         "createdAt",
         "updatedAt",
+        "userId",
+        "boardId",
         [Sequelize.col("user.nickname"), "userNickname"],
         [Sequelize.col("user.img"), "userImg"],
         [Sequelize.col("user.grade"), "userGrade"],
@@ -39,3 +41,23 @@ const ORDER_DESC: FindOptions<CommentsAttributes> = {
         ["id", "DESC"],
     ],
 };
+
+export async function getById(id: number) {
+    return Comment.findOne({
+        ...INCLUDED_ALL,
+        where: {id},
+    });
+}
+
+export async function create(content: string, userId: number, boardId: number) {
+    return Comment.create<Comment>({
+        content: content,
+        parentCommentsId: 0,
+        hits: 0,
+        reported: 0,
+        userId: userId,
+        boardId: boardId,
+    }).then((result) => {
+        return getById(result.dataValues.id);
+    });
+}
