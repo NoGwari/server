@@ -7,7 +7,7 @@ import Board from "./data.js";
 
 const DataTypes = SQ.DataTypes;
 
-class Comment extends SQ.Model<CommentsAttributes, CommentsType> implements CommentsAttributes {
+class Comment extends SQ.Model {
     public id!: number;
     public content!: string;
     public parentCommentsId!: number;
@@ -16,8 +16,8 @@ class Comment extends SQ.Model<CommentsAttributes, CommentsType> implements Comm
 
     public readonly createdAt!: Date;
     public readonly updatedAt!: Date;
-    public boardId!: number;
-    public userId!: number;
+    public boardId?: number;
+    public userId?: number;
 
     public readonly user?: User;
     public readonly board?: Board;
@@ -51,11 +51,11 @@ Comment.init(
         },
         boardId: {
             type: DataTypes.INTEGER,
-            allowNull: false,
+            allowNull: true,
         },
         userId: {
             type: DataTypes.INTEGER,
-            allowNull: false,
+            allowNull: true,
         },
     },
     {
