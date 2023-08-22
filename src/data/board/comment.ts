@@ -61,3 +61,16 @@ export async function create(content: string, userId: number, boardId: number) {
         return getById(result.dataValues.id);
     });
 }
+
+export async function createReply(content: string, parentCommentId: number, userId: number, boardId: number) {
+    return Comment.create<Comment>({
+        content: content,
+        parentCommentsId: parentCommentId,
+        hits: 0,
+        reported: 0,
+        userId: userId,
+        boardId: boardId,
+    }).then((result) => {
+        return getById(result.dataValues.id);
+    });
+}
