@@ -42,6 +42,13 @@ const ORDER_DESC: FindOptions<CommentsAttributes> = {
     ],
 };
 
+export async function getAll(boardId: number) {
+    return Comment.findAll({
+        ...INCLUDED_ALL,
+        where: {boardId},
+    });
+}
+
 export async function getById(id: number) {
     return Comment.findOne({
         ...INCLUDED_ALL,
