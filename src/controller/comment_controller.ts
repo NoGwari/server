@@ -4,6 +4,17 @@ import * as commentRepository from "../data/board/comment.js";
 import * as boardRepository from "../data/board/data.js";
 import * as hitBoardRepository from "../data/board/hit_board.js";
 
+export async function getComment(req: Request, res: Response) {
+    const boardId: number = Number(req.params.id);
+    const comment = await commentRepository.getAllComment(boardId);
+    const reply = await commentRepository.getAllReply(boardId);
+    const result = {
+        comment: comment,
+        reply: reply,
+    };
+    res.status(200).json(result);
+}
+
 export async function newComment(req: Request, res: Response) {
     const boardId: number = Number(req.params.id);
     const userId: number = req.userId!;
