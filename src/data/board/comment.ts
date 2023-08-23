@@ -1,4 +1,4 @@
-import SQ, {FindOptions} from "sequelize";
+import SQ, {FindOptions, Op} from "sequelize";
 import {CommentsAttributes, CommentsType} from "../../customType/comment.js";
 import Board from "../../models/data.js";
 import User from "../../models/user.js";
@@ -17,6 +17,7 @@ const INCLUDED_ALL: FindOptions<CommentsAttributes> = {
         "updatedAt",
         "userId",
         "boardId",
+        "parentCommentsId",
         [Sequelize.col("user.nickname"), "userNickname"],
         [Sequelize.col("user.img"), "userImg"],
         [Sequelize.col("user.grade"), "userGrade"],
@@ -42,10 +43,22 @@ const ORDER_DESC: FindOptions<CommentsAttributes> = {
     ],
 };
 
-export async function getAll(boardId: number) {
+export async function getAllComment(boardId: number) {
     return Comment.findAll({
         ...INCLUDED_ALL,
-        where: {boardId},
+        where: {boardId, parentCommentsId: 0},
+    });
+}
+
+export async function getAllReply(boardId: number) {
+    return Comment.findAll({
+        ...INCLUDED_ALL,
+        where: {
+            boardId,
+            parentCommentsId: {
+                [Op.gt]: 0,
+            },
+        },
     });
 }
 
