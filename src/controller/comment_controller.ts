@@ -25,9 +25,9 @@ export async function newComment(req: Request, res: Response) {
 }
 
 export async function newReply(req: Request, res: Response) {
-    // const boardId: number = Number(req.params.id);
+    const boardId: number = Number(req.params.id);
     const userId: number = req.userId!;
-    const {boardId, content, parentCommentId} = req.body;
+    const {content, parentCommentId} = req.body;
     const createReply = await commentRepository.createReply(content, parentCommentId, userId, boardId);
     await userRepository.incrementReplyNum(userId);
     res.status(200).json(createReply);

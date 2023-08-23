@@ -4,13 +4,13 @@ import * as commentController from "../controller/comment_controller.js";
 import {isAuth} from "../middleware/auth_middleware.js";
 const router = express.Router();
 
-// GET /comment/:id
+// GET /comment/:boardId
 router.get("/:id", commentController.getComment);
 
-// POST /comment/reply
-router.post("/reply", isAuth, commentController.newReply);
-
-// POST /comment/:id
+// POST /comment/:boardId
 router.post("/:id", isAuth, commentController.newComment);
+
+// POST /comment/reply/:boardId
+router.post("/reply/:id", isAuth, commentController.newReply);
 
 export default router;
