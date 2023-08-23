@@ -12,7 +12,6 @@ const INCLUDED_ALL: FindOptions<BoardAttributes> = {
         "content",
         "hits",
         "views",
-        "dislikes",
         "reported",
         "hidden",
         "createdAt",
