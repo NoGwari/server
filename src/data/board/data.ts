@@ -198,3 +198,12 @@ export async function plusHits(id: number) {
         return post!.save();
     });
 }
+
+export async function minusHits(id: number) {
+    return Board.findByPk(id, {
+        ...INCLUDED_ALL,
+    }).then((post: Board | null) => {
+        post!.hits -= 1;
+        return post!.save();
+    });
+}

@@ -19,3 +19,12 @@ export async function increment(board: number, user: number): Promise<number> {
         return result.dataValues.id;
     });
 }
+
+export async function decrement(board: number, user: number) {
+    return HitBoard.findOne({
+        attributes: ["id", "userId", "boardId"],
+        where: {boardId: board, userId: user},
+    }).then((data) => {
+        data!.destroy();
+    });
+}
