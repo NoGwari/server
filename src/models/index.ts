@@ -3,6 +3,7 @@ import Comment, {associate as associateComment} from "./comment.js";
 import User, {associate as associateUser} from "./user.js";
 import Category, {associate as associateCategory} from "./category.js";
 import HitBoard, {associate as associateHitBoard} from "./hit_board.js";
+import HitComment, {associate as associateHitComment} from "./hit_comment.js";
 export * from "../db/database.js";
 
 const db = {
@@ -11,6 +12,7 @@ const db = {
     Comment,
     Board,
     HitBoard,
+    HitComment,
 };
 
 export type dbType = typeof db;
