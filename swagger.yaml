@@ -530,6 +530,70 @@ paths:
                     description: 인증 실패
                 "404":
                     description: 해당 게시글 미존재
+    /comment/ishit/{id}:
+        get:
+            summary: "댓글 따봉 확인"
+            security:
+                - bearerAuth: []
+            tags: [Comment]
+            parameters:
+                - in: path
+                  name: id
+                  required: true
+                  type: integer
+                  minimun: 1
+                  description: "댓글의 ID값을 받아 따봉(hits) 확인"
+            responses:
+                "200":
+                    description: 댓글 따봉 확인(true -> 따봉되어있는 상태 / false -> 따봉 안되어 있는 상태)
+                "401":
+                    description: 권한 없음
+                "404":
+                    description: 해당 게시글 미존재
+    /comment/hits/{id}:
+        get:
+            summary: "댓글 따봉"
+            security:
+                - bearerAuth: []
+            tags: [Comment]
+            parameters:
+                - in: path
+                  name: id
+                  required: true
+                  type: integer
+                  minimun: 1
+                  description: "댓글의 ID값을 받아 따봉(hits) 증가"
+            responses:
+                "200":
+                    description: 댓글 따봉 성공
+                "400":
+                    description: 해당 user은 이미 따봉 눌렀습니다.
+                "401":
+                    description: 권한 없음
+                "404":
+                    description: 해당 게시글 미존재
+    /comment/unhits/{id}:
+        get:
+            summary: "댓글 따봉 취소"
+            security:
+                - bearerAuth: []
+            tags: [Comment]
+            parameters:
+                - in: path
+                  name: id
+                  required: true
+                  type: integer
+                  minimun: 1
+                  description: "댓글의 ID값을 받아 따봉(hits) 확인후, 있다면 따봉 감소"
+            responses:
+                "200":
+                    description: 댓글 따봉 취소 성공
+                "400":
+                    description: 해당 user는 따봉 누르지 않은 상태
+                "401":
+                    description: 권한 없음
+                "404":
+                    description: 해당 게시글 미존재
 components:
     schemas:
         Board:
