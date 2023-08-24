@@ -63,9 +63,8 @@ export async function getAllReply(boardId: number) {
 }
 
 export async function getById(id: number) {
-    return Comment.findOne({
+    return Comment.findByPk(id, {
         ...INCLUDED_ALL,
-        where: {id},
     });
 }
 
@@ -92,5 +91,23 @@ export async function createReply(content: string, parentCommentId: number, user
         boardId: boardId,
     }).then((result) => {
         return getById(result.dataValues.id);
+    });
+}
+
+export async function plusHits(id: number) {
+    return Comment.findByPk(id, {
+        ...INCLUDED_ALL,
+    }).then((comment: Comment | null) => {
+        comment!.hits += 1;
+        return comment!.save();
+    });
+}
+
+export async function minusHits(id: number) {
+    return Comment.findByPk(id, {
+        ...INCLUDED_ALL,
+    }).then((comment: Comment | null) => {
+        comment!.hits -= 1;
+        return comment!.save();
     });
 }
