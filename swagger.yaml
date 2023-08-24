@@ -105,6 +105,28 @@ paths:
                     description: 권한 없음
                 "404":
                     description: 해당 게시글 미존재
+    /board/unhits/{id}:
+        get:
+            summary: "게시물 따봉 취소"
+            security:
+                - bearerAuth: []
+            tags: [Board]
+            parameters:
+                - in: path
+                  name: id
+                  required: true
+                  type: integer
+                  minimun: 1
+                  description: "게시글의 ID값을 받아 따봉(hits) 확인후, 있다면 따봉 감소"
+            responses:
+                "200":
+                    description: 게시글 따봉 취소 성공
+                "400":
+                    description: 해당 user는 따봉 누르지 않은 상태
+                "401":
+                    description: 권한 없음
+                "404":
+                    description: 해당 게시글 미존재
     /board/{id}:
         get:
             summary: "단일 게시글 조회"
