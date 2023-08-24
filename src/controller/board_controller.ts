@@ -125,3 +125,18 @@ export async function incrementHits(req: Request, res: Response) {
     await boardRepository.plusHits(postId);
     res.sendStatus(200);
 }
+
+export async function decrementHits(req: Request, res: Response) {
+    const postId = Number(req.params.id);
+    const post: BoardAttributes | null = await boardRepository.getById(postId);
+    if (!post) {
+        return res.status(404).json(postId);
+    }
+    const isHits: boolean = await hitBoardRepository.isHits(postId, req.userId!);
+    if (!isHits) {
+        return res.sendStatus(400);
+    }
+    await hitBoardRepository.decrement(postId, req.userId!);
+    await boardRepository.minusHits(postId);
+    res.sendStatus(200);
+}
