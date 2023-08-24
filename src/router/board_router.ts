@@ -15,6 +15,9 @@ router.get("/search", boardController.getSearch);
 // GET /board/hits/1
 router.get("/hits/:id", isAuth, boardController.incrementHits);
 
+// GET /board/unhits/1
+router.get("/unhits/:id", isAuth, boardController.decrementHits);
+
 // GET /board/1
 router.get("/:id", redisMiddleware, boardController.getPosting);
 
