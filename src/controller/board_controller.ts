@@ -111,6 +111,16 @@ export async function deletePost(req: Request, res: Response) {
     res.status(200).json(deletePosts);
 }
 
+export async function isHits(req: Request, res: Response) {
+    const postId = Number(req.params.id);
+    const post: BoardAttributes | null = await boardRepository.getById(postId);
+    if (!post) {
+        return res.status(404).json(postId);
+    }
+    const isHits: boolean = await hitBoardRepository.isHits(postId, req.userId!);
+    res.status(200).json(isHits);
+}
+
 export async function incrementHits(req: Request, res: Response) {
     const postId = Number(req.params.id);
     const post: BoardAttributes | null = await boardRepository.getById(postId);
