@@ -8,6 +8,10 @@ export async function findById(id: number): Promise<UserAttributes | null> {
     return User.findByPk(id);
 }
 
+export async function findByNickname(nickname: string): Promise<UserAttributes | null> {
+    return User.findOne({where: {nickname}});
+}
+
 export async function createUser(user: UserType): Promise<string> {
     const {password, nickname, email, img} = user;
     return User.create({
