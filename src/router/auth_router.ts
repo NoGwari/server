@@ -23,10 +23,10 @@ router.post("/checkkey", redisMiddleware, authController.checkVerifyKey);
 
 // GET /auth/google
 router.get("/google", passport.authenticate("google", {scope: ["profile", "email"]}));
-router.get("/google/callback", passport.authenticate("google", {failureRedirect: "/", session: false}), (req, res) => {
-    res.redirect("/");
-    // const {realId, token, expriesInSec} = req.user;
-    // res.status(200).json({token, realId, expriesInSec});
-});
+router.get(
+    "/google/callback",
+    passport.authenticate("google", {failureRedirect: "/", session: false}),
+    authController.googleCallBack
+);
 
 export default router;
