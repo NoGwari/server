@@ -144,13 +144,24 @@ export async function me(req: Request, res: Response, next: NextFunction) {
 }
 
 async function loginToGoogle(profile: any) {
-    const found = await userRepository.findByRealId(profile.sub);
+    const found = await userRepository.findByRealId(profile.email);
     if (!found) {
         // ID가 DB에 없으므로 회원가입
+        let nickname = "";
+        let i = 0;
+        while (true) {
+            const preNickname = profile.name + String(i);
+            const isUser = await userRepository.findByNickname(preNickname);
+            if (!isUser) {
+                nickname = preNickname;
+                break;
+            }
+            i++;
+        } // nickname이 중복될 수 없으므로 이름 뒤에 숫자를 붙여줌
         const hashed = await bcrypt.hash(profile.sub, config.bcrypt.saltRounds); // 비밀번호는 ID를 hash함
         const userId = await userRepository.createUser({
             password: hashed,
-            nickname: profile.name,
+            nickname: nickname,
             email: profile.email,
             img: profile.picture,
             grade: "grade1",
@@ -163,6 +174,12 @@ async function loginToGoogle(profile: any) {
     return token;
 }
 
+export async function googleCallBack(req: Request, res: Response) {
+    const user = req.user;
+    const {id, token, expriesInSec} = user!;
+    res.status(200).json({id, token, expriesInSec});
+}
+
 passport.use(
     new GoogleStrategy(
         {
@@ -172,9 +189,9 @@ passport.use(
         },
         async (accessToken, refreshToken, profile, done) => {
             const token = await loginToGoogle(profile._json);
-            const email = profile.id;
+            const id = profile.id;
             const expriesInSec = config.jwt.expriesInSec;
-            return done(null, {email, token, expriesInSec});
+            return done(null, {id, token, expriesInSec});
         }
     )
 );
