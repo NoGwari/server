@@ -84,6 +84,7 @@ export const associate = (db: dbType) => {
     db.Board.belongsTo(db.Category, {as: "category"});
     db.Board.hasMany(db.Comment, {onDelete: "CASCADE", hooks: true});
     db.Board.hasMany(db.HitBoard, {onDelete: "CASCADE", hooks: true});
+    db.Board.hasMany(db.ReportedBoard, {onDelete: "CASCADE", hooks: true});
 };
 
 export default Board;
