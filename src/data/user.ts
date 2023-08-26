@@ -77,3 +77,10 @@ export async function decrementReplyNum(id: number) {
         return user!.save();
     });
 }
+
+export async function incrementReportedNum(id: number) {
+    return User.findByPk(id).then((user: User | null) => {
+        user!.reported += 1;
+        return user!.save();
+    });
+}

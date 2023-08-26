@@ -207,3 +207,10 @@ export async function minusHits(id: number) {
         return post!.save();
     });
 }
+
+export async function plusReportedNum(id: number) {
+    return Board.findByPk(id).then((post: Board | null) => {
+        post!.reported += 1;
+        return post!.save();
+    });
+}
