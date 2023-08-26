@@ -3,6 +3,7 @@ import {BoardAttributes, PostingData} from "../customType/board";
 import * as userRepository from "../data/user.js";
 import * as boardRepository from "../data/board/data.js";
 import * as hitBoardRepository from "../data/board/hit_board.js";
+import * as reportedBoardRepository from "../data/board/reported_board.js";
 import * as categoryRepository from "../data/board/category.js";
 
 export async function getPostingByPage(req: Request, res: Response) {
@@ -148,5 +149,23 @@ export async function decrementHits(req: Request, res: Response) {
     }
     await hitBoardRepository.decrement(postId, req.userId!);
     await boardRepository.minusHits(postId);
+    res.sendStatus(200);
+}
+
+export async function report(req: Request, res: Response) {
+    const postId = Number(req.params.id);
+    const userId = Number(req.userId); // 신고한 사람 id
+    const reason = req.body.reason;
+    const post: BoardAttributes | null = await boardRepository.getById(postId);
+    if (!post) {
+        return res.status(404).json(postId);
+    }
+    const isReported = await reportedBoardRepository.isReported(postId, userId);
+    if (isReported) {
+        return res.status(400).json({postId, userId});
+    }
+    await reportedBoardRepository.report(postId, userId, reason);
+    await boardRepository.plusReportedNum(postId);
+    await userRepository.incrementReportedNum(post.id); // 신고 당한사람 아이디
     res.sendStatus(200);
 }
