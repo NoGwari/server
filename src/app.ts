@@ -23,28 +23,29 @@ sequelize.sync({force: false}).then(() => {
 });
 
 const corsOption = {
-    origin: "*",
+    origin: "http://localhost:3000",
     optionsSuccessStatus: 200,
     credentials: true,
 };
 
 const __dirname = path.resolve();
 const swaggerDocument = YAML.load(path.join(__dirname, "./swagger.yaml"));
+app.use(
+    session({
+        secret: config.session.secretKey,
+        resave: true,
+        saveUninitialized: true,
+        cookie: {
+            secure: false,
+            maxAge: 600000, // 600초 (10분) 만료
+        },
+    })
+);
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 app.use(express.json());
 app.use(cors(corsOption));
 app.use(helmet());
 app.use(morgan("tiny"));
-app.use(
-    session({
-        secret: config.session.secretKey,
-        resave: false,
-        saveUninitialized: true,
-        cookie: {
-            maxAge: 600000, // 600초 (10분) 만료
-        },
-    })
-);
 
 app.use(passport.initialize());
 
