@@ -25,6 +25,7 @@ sequelize.sync({force: false}).then(() => {
 const corsOption = {
     origin: "*",
     optionsSuccessStatus: 200,
+    credentials: true,
 };
 
 const __dirname = path.resolve();
