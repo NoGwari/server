@@ -143,8 +143,37 @@ paths:
                     description: 게시글 따봉 취소 성공
                 "400":
                     description: 해당 user는 따봉 누르지 않은 상태
+    /board/report/{id}:
+        post:
+            summary: "게시글 신고"
+            tags: [Board]
+            security:
+                - bearerAuth: []
+            consumes:
+                - application/json
+            parameters:
+                - in: path
+                  name: id
+                  required: true
+                  type: integer
+                  minimun: 1
+                  description: "게시글의 ID"
+            requestBody:
+                required: true
+                content:
+                    application/json:
+                        schema:
+                            type: object
+                            properties:
+                                reason:
+                                    type: string
+            responses:
+                "201":
+                    description: 게시글 신고 성공
+                "400":
+                    description: 이미 신고 했음
                 "401":
-                    description: 권한 없음
+                    description: 인증 실패
                 "404":
                     description: 해당 게시글 미존재
     /board/{id}:
@@ -530,6 +559,39 @@ paths:
                     description: 인증 실패
                 "404":
                     description: 해당 게시글 미존재
+    /comment/report/{id}:
+        post:
+            summary: "댓글 신고"
+            tags: [Comment]
+            security:
+                - bearerAuth: []
+            consumes:
+                - application/json
+            parameters:
+                - in: path
+                  name: id
+                  required: true
+                  type: integer
+                  minimun: 1
+                  description: "댓글의 ID"
+            requestBody:
+                required: true
+                content:
+                    application/json:
+                        schema:
+                            type: object
+                            properties:
+                                reason:
+                                    type: string
+            responses:
+                "201":
+                    description: 댓글 신고 성공
+                "400":
+                    description: 이미 신고 했음
+                "401":
+                    description: 인증 실패
+                "404":
+                    description: 해당 댓글 미존재
     /comment/ishit/{id}:
         get:
             summary: "댓글 따봉 확인"

@@ -103,6 +103,6 @@ export async function report(req: Request, res: Response) {
     await reportedCommentRepository.report(commentId, userId, reason);
     await commentRepository.plusReportedNum(commentId);
     await userRepository.incrementReportedNum(comments.userId!); // 신고 당한사람 아이디
-    res.sendStatus(200);
+    res.sendStatus(201);
 }
 //

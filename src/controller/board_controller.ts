@@ -167,5 +167,5 @@ export async function report(req: Request, res: Response) {
     await reportedBoardRepository.report(postId, userId, reason);
     await boardRepository.plusReportedNum(postId);
     await userRepository.incrementReportedNum(post.userId!); // 신고 당한사람 아이디
-    res.sendStatus(200);
+    res.sendStatus(201);
 }
