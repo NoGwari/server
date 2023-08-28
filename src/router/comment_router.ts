@@ -13,6 +13,9 @@ router.post("/:id", isAuth, commentController.newComment);
 // POST /comment/reply/:boardId
 router.post("/reply/:id", isAuth, commentController.newReply);
 
+// POST /comment/report/1
+router.post("/report/:id", isAuth, commentController.report);
+
 // GET /comment/hits/:commentId
 router.get("/hits/:id", isAuth, commentController.incrementHits);
 

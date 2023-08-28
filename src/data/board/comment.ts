@@ -111,3 +111,10 @@ export async function minusHits(id: number) {
         return comment!.save();
     });
 }
+
+export async function plusReportedNum(id: number) {
+    return Comment.findByPk(id).then((comment: Comment | null) => {
+        comment!.reported += 1;
+        return comment!.save();
+    });
+}

@@ -1,6 +1,6 @@
 import SQ, {Association, FindOptions, Op} from "sequelize";
 import {sequelize} from "../db/database.js";
-import Board from "./data.js";
+import Comment from "./data.js";
 import User from "./user.js";
 import {dbType} from "./index.js";
 
@@ -9,14 +9,14 @@ const DataTypes = SQ.DataTypes;
 
 interface ReportedCommentType {
     userId: number;
-    boardId: number;
+    commentId: number;
     reason: string;
 }
 
 interface ReportedCommentAttributes {
     id: number;
     userId: number;
-    boardId: number;
+    commentId: number;
     reason: string;
 }
 
@@ -26,15 +26,15 @@ class ReportedComment
 {
     public id!: number;
     public userId!: number;
-    public boardId!: number;
+    public commentId!: number;
     public reason!: string;
 
     public readonly user?: User;
-    public readonly board?: Board;
+    public readonly comment?: Comment;
 
     public static associations: {
         user: Association<ReportedComment, User>;
-        board: Association<ReportedComment, Board>;
+        comment: Association<ReportedComment, Comment>;
     };
 }
 
@@ -50,7 +50,7 @@ ReportedComment.init(
             type: DataTypes.INTEGER,
             allowNull: false,
         },
-        boardId: {
+        commentId: {
             type: DataTypes.INTEGER,
             allowNull: false,
         },
@@ -71,7 +71,7 @@ ReportedComment.init(
 
 export const associate = (db: dbType) => {
     ReportedComment.belongsTo(User, {as: "user"});
-    ReportedComment.belongsTo(Board, {as: "board"});
+    ReportedComment.belongsTo(Comment, {as: "comment"});
 };
 
 export default ReportedComment;
