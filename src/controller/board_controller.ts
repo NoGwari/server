@@ -69,9 +69,9 @@ export async function getSearch(req: Request, res: Response) {
 }
 
 export async function newPosting(req: Request, res: Response) {
-    const {title, content, categoryId} = req.body;
+    const {title, content, categoryId, imageUrl} = req.body;
     const userId: number = req.userId!;
-    const newPosts = await boardRepository.create(title, content, userId, categoryId);
+    const newPosts = await boardRepository.create(title, content, userId, categoryId, imageUrl);
     await userRepository.incrementPostNum(userId);
     await categoryRepository.incrementPostNum(categoryId);
     res.status(200).json(newPosts);

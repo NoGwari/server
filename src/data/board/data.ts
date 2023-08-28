@@ -16,6 +16,7 @@ const INCLUDED_ALL: FindOptions<BoardAttributes> = {
         "hidden",
         "createdAt",
         "updatedAt",
+        "thumbnail",
         "userId",
         "categoryId",
         [Sequelize.col("user.nickname"), "userNickname"],
@@ -146,7 +147,7 @@ export async function getById(id: number) {
     });
 }
 
-export async function create(title: string, content: string, userId: number, categoryId: number) {
+export async function create(title: string, content: string, userId: number, categoryId: number, imageUrl: string) {
     return Board.create<Board>({
         title: title,
         content: content,
@@ -154,6 +155,7 @@ export async function create(title: string, content: string, userId: number, cat
         hits: 0,
         reported: 0,
         hidden: "0",
+        thumbnail: imageUrl,
         userId: userId,
         categoryId: categoryId,
     }).then((result) => {
