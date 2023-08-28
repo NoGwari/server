@@ -617,6 +617,8 @@ components:
                 reported:
                     type: integer
                     format: int64
+                thumbnail:
+                    type: string
                 createdAt:
                     type: string
                     format: date-time
@@ -645,6 +647,8 @@ components:
                     type: string
                 categoryId:
                     type: int64
+                imageUrl:
+                    type: string
         UpdateBoard:
             properties:
                 title:
