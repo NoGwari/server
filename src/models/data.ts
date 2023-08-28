@@ -15,6 +15,7 @@ class Board extends SQ.Model {
     public hits!: number;
     public reported!: number;
     public hidden!: string;
+    public thumbnail!: string;
     public readonly createdAt!: Date;
     public readonly updatedAt!: Date;
     public userId?: number;
@@ -59,6 +60,9 @@ Board.init(
         hidden: {
             type: DataTypes.STRING(1),
             allowNull: false,
+        },
+        thumbnail: {
+            type: DataTypes.STRING(100),
         },
         userId: {
             type: DataTypes.INTEGER,
