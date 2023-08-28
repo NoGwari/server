@@ -52,9 +52,7 @@ export async function signup(req: Request, res: Response) {
         reply_num: 0,
         reported: 0,
     });
-    const token = createJwtToken(userId);
-    const expriesInSec = config.jwt.expriesInSec;
-    res.status(200).json({token, email, expriesInSec});
+    res.status(200).json({userId});
 }
 
 export async function mailSubmit(req: Request, res: Response) {
@@ -124,7 +122,7 @@ export async function login(req: Request, res: Response) {
     if (isAdmin) {
         return res.status(200).json({token, email, expriesInSec, role: "admin"});
     }
-    res.status(200).json({token, email, expriesInSec});
+    res.status(200).json({token, expriesInSec});
 }
 
 function createJwtToken(id: string) {
