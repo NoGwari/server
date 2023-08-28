@@ -3,6 +3,7 @@ import * as userRepository from "../data/user.js";
 import * as commentRepository from "../data/board/comment.js";
 import * as boardRepository from "../data/board/data.js";
 import * as hitCommentRepository from "../data/board/hit_comment.js";
+import * as reportedCommentRepository from "../data/board/reported_comment.js";
 import Board from "../models/data.js";
 import {CommentsAttributes} from "../customType/comment.js";
 
@@ -86,3 +87,22 @@ export async function decrementHits(req: Request, res: Response) {
     await commentRepository.minusHits(commentId);
     res.sendStatus(200);
 }
+
+export async function report(req: Request, res: Response) {
+    const commentId = Number(req.params.id);
+    const userId = Number(req.userId); // 신고한 사람 id
+    const reason = req.body.reason;
+    const comments = await commentRepository.getById(commentId);
+    if (!comments) {
+        return res.status(404).json({commentId});
+    }
+    const isReported = await reportedCommentRepository.isReported(commentId, userId);
+    if (isReported) {
+        return res.status(400).json({commentId, userId});
+    }
+    await reportedCommentRepository.report(commentId, userId, reason);
+    await commentRepository.plusReportedNum(commentId);
+    await userRepository.incrementReportedNum(comments.userId!); // 신고 당한사람 아이디
+    res.sendStatus(200);
+}
+//
