@@ -166,6 +166,6 @@ export async function report(req: Request, res: Response) {
     }
     await reportedBoardRepository.report(postId, userId, reason);
     await boardRepository.plusReportedNum(postId);
-    await userRepository.incrementReportedNum(post.id); // 신고 당한사람 아이디
+    await userRepository.incrementReportedNum(post.userId!); // 신고 당한사람 아이디
     res.sendStatus(200);
 }
