@@ -10,6 +10,12 @@ router.get("/:id", commentController.getComment);
 // POST /comment/:boardId
 router.post("/:id", isAuth, commentController.newComment);
 
+// PUT /comment/:commentId
+router.put("/:id", isAuth, commentController.updateComment);
+
+// DELETE /comment/:commentId
+router.delete("/:id", isAuth, commentController.deleteComment);
+
 // POST /comment/reply/:boardId
 router.post("/reply/:id", isAuth, commentController.newReply);
 
