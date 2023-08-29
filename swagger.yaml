@@ -521,6 +521,65 @@ paths:
                     description: 인증 실패
                 "404":
                     description: 해당 게시글 미존재
+        put:
+            summary: "댓글 수정"
+            tags: [Comment]
+            security:
+                - bearerAuth: []
+            consumes:
+                - application/json
+            parameters:
+                - in: path
+                  name: id
+                  required: true
+                  type: integer
+                  minimun: 1
+                  description: "댓글의 ID값으로 서칭"
+            requestBody:
+                required: true
+                content:
+                    application/json:
+                        schema:
+                            type: object
+                            properties:
+                                content:
+                                    type: string
+            responses:
+                "200":
+                    description: 댓글 수정 성공
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Comment"
+                "400":
+                    description: 수정 희망 인원과 댓글 작성 인원이 다름
+                "401":
+                    description: 인증 실패
+                "404":
+                    description: 해당 댓글 미존재
+        delete:
+            summary: "댓글 삭제"
+            tags: [Comment]
+            security:
+                - bearerAuth: []
+            consumes:
+                - application/json
+            parameters:
+                - in: path
+                  name: id
+                  required: true
+                  type: integer
+                  minimun: 1
+                  description: "댓글의 ID값으로 서칭"
+            responses:
+                "204":
+                    description: 댓글 삭제 성공
+                "400":
+                    description: 삭제 희망 인원과 댓글 작성 인원이 다름
+                "401":
+                    description: 인증 실패
+                "404":
+                    description: 해당 댓글 미존재
     /comment/reply/{id}:
         post:
             summary: "답글 쓰기"
