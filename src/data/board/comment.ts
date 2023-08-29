@@ -118,3 +118,16 @@ export async function plusReportedNum(id: number) {
         return comment!.save();
     });
 }
+
+export async function update(id: number, content: string) {
+    return Comment.findByPk(id).then((comment: Comment | null) => {
+        comment!.content = content;
+        return comment!.save();
+    });
+}
+
+export async function remove(id: number) {
+    return Comment.findByPk(id).then((comment: Comment | null) => {
+        comment?.destroy();
+    });
+}
