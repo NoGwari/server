@@ -105,4 +105,35 @@ export async function report(req: Request, res: Response) {
     await userRepository.incrementReportedNum(comments.userId!); // 신고 당한사람 아이디
     res.sendStatus(201);
 }
-//
+
+export async function updateComment(req: Request, res: Response) {
+    const commentId = Number(req.params.id);
+    const userId = Number(req.userId); // 수정 희망한 사람 id
+    const content = req.body.content;
+    const comments = await commentRepository.getById(commentId);
+    if (!comments) {
+        return res.status(404).json({commentId});
+    }
+    if (comments.userId !== userId) {
+        // 댓글 수정희망 인원과 댓글 주인이 다름
+        return res.status(400).json({commentId});
+    }
+    await commentRepository.update(commentId, content);
+    res.sendStatus(200);
+}
+
+export async function deleteComment(req: Request, res: Response) {
+    const commentId = Number(req.params.id);
+    const userId = Number(req.userId); // 삭제 희망한 사람 id
+    const comments = await commentRepository.getById(commentId);
+    if (!comments) {
+        return res.status(404).json({commentId});
+    }
+    if (comments.userId !== userId) {
+        // 댓글 삭제희망 인원과 댓글 주인이 다름
+        return res.status(400).json({commentId});
+    }
+    await commentRepository.remove(commentId);
+    await userRepository.decrementReplyNum(userId);
+    res.sendStatus(204);
+}
