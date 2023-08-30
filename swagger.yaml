@@ -483,6 +483,33 @@ paths:
                         application/json:
                             schema:
                                 $ref: "#/components/schemas/Comment"
+                            example:
+                                comment:
+                                    - id: 1
+                                      boardId: 8
+                                      userId: 1
+                                      content: "댓글예시"
+                                      hits: 0
+                                      reported: 1
+                                      createdAt: "2023-08-28T07:09:08.000Z"
+                                      updatedAt: "2023-08-28T07:09:19.000Z"
+                                      parentCommentsId: 0
+                                      userNickname: "nick1"
+                                      userImg: null
+                                      userGrade: "grade1"
+                                reply:
+                                    - id: 1
+                                      boardId: 8
+                                      userId: 1
+                                      content: "답글예시"
+                                      hits: 0
+                                      reported: 1
+                                      createdAt: "2023-08-28T07:09:08.000Z"
+                                      updatedAt: "2023-08-28T07:09:19.000Z"
+                                      parentCommentsId: 0
+                                      userNickname: "nick1"
+                                      userImg: null
+                                      userGrade: "grade1"
                 "204":
                     description: 게시글에 댓글 없음
                 "404":
