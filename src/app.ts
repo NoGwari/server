@@ -60,7 +60,7 @@ app.use((req: Request, res: Response, next: NextFunction) => {
     res.sendStatus(404);
 });
 
-app.use((error: any, req: Request, res: Response, next: NextFunction) => {
+app.use((error: Error, req: Request, res: Response, next: NextFunction) => {
     console.log(error);
     res.sendStatus(500);
 });

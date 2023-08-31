@@ -90,7 +90,7 @@ export async function checkVerifyKey(req: Request, res: Response) {
     const client = req.redisClient;
     client.connect(); // redis connect 완료
     const {email, verifyKey} = req.body;
-    client.get(`${email}`, (error: any, result: any) => {
+    client.get(`${email}`, (error: Error, result: any) => {
         if (error) {
             console.error("Error:", error);
             return res.status(400).json({email, verifyKey});
