@@ -9,7 +9,7 @@ import * as categoryRepository from "../data/board/category.js";
 export async function getPostingByPage(req: Request, res: Response) {
     const pageId: number = req.query.page ? Number(req.query.page) : 1;
     const listNum: number = req.query.list_num ? Number(req.query.list_num) : 5; // 검색할 post 개수
-    const categoryID: number | undefined = req.query.category ? Number(req.query.category) : undefined;
+    const categoryID: number | undefined = req.query.category ? Number(req.query.category) : 0;
     const offset = 0 + (pageId - 1) * listNum; // skip할 item의 개수
     let data: PostingData | null;
     if (!categoryID) {
