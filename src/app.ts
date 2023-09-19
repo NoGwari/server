@@ -60,9 +60,4 @@ app.use((req: Request, res: Response, next: NextFunction) => {
     res.sendStatus(404);
 });
 
-app.use((error: Error, req: Request, res: Response, next: NextFunction) => {
-    console.log(error);
-    res.sendStatus(500);
-});
-
 app.listen(config.port);
