@@ -36,7 +36,11 @@ type EmailOption = {
 };
 
 export async function signup(req: Request, res: Response) {
-    const {password, nickname, email, img} = req.body;
+    const {password, nickname, email} = req.body;
+    let img;
+    req.body.img
+        ? (img = req.body.img)
+        : (img = "https://nogwari2.s3.ap-northeast-2.amazonaws.com/user/userId%3A5.png");
     const found = await userRepository.findByRealId(email);
     if (found) {
         return res.status(409).json({message: `${email} is already exists!`});
