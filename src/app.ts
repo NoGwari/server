@@ -23,7 +23,7 @@ sequelize.sync({force: false}).then(() => {
 });
 
 const corsOption = {
-    origin: "http://localhost:3000",
+    origin: ["http://ec2-54-180-141-84.ap-northeast-2.compute.amazonaws.com", "http://localhost:3000"],
     optionsSuccessStatus: 200,
     credentials: true,
 };
