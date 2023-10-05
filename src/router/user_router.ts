@@ -5,6 +5,9 @@ import {isAuth} from "../middleware/auth_middleware.js";
 import {uploadUserImg} from "../middleware/multer.js";
 const router = express.Router();
 
+// GET /user/default
+router.get("/default", isAuth, userController.updateDefalutImage);
+
 // PUT /user/updatenick
 router.put("/updatenick", isAuth, userController.changeNickname);
 
