@@ -51,7 +51,12 @@ export async function getAllbyPages(offset: number, listNum: number) {
         ...ORDER_DESC,
         offset: offset,
         limit: listNum,
-        where: {hidden: 0},
+        where: {
+            hidden: 0,
+            categoryId: {
+                [Op.ne]: null,
+            },
+        },
     });
 }
 
@@ -61,7 +66,12 @@ export async function getPagesToCategory(offset: number, listNum: number, catego
         ...ORDER_DESC,
         offset: offset,
         limit: listNum,
-        where: {hidden: 0},
+        where: {
+            hidden: 0,
+            categoryId: {
+                [Op.ne]: null,
+            },
+        },
         include: [
             {
                 model: Category,
