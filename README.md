@@ -1,4 +1,4 @@
-# NoGwari's server
+# NoGwari server README
 
 ### 📘 ERD
 
