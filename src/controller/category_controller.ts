@@ -21,7 +21,6 @@ export async function deleteCategory(req: Request, res: Response) {
     if (!category) {
         res.status(404).json(id);
     }
-    //TODO 관리자 권한 파악후 삭제여부 기능 추가
     const deleteCategoryID = await categoryRepository.remove(id);
     res.status(200).json(deleteCategoryID);
 }
