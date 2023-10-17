@@ -103,7 +103,7 @@ export async function deletePost(req: Request, res: Response) {
     if (!post) {
         return res.status(404).json(postId);
     }
-    if (req.userId !== post!.userId) {
+    if (req.role != "admin" && req.userId !== post!.userId) {
         return res.sendStatus(403);
     }
     await userRepository.decrementPostNum(userId);
