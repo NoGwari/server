@@ -359,7 +359,7 @@ paths:
     /user/updatenick:
         put:
             summary: "닉네임 변경"
-            tags: [Auth]
+            tags: [User]
             security:
                 - bearerAuth: []
             consumes:
@@ -388,7 +388,7 @@ paths:
     /user/withdrawal:
         delete:
             summary: "회원탈퇴"
-            tags: [Auth]
+            tags: [User]
             security:
                 - bearerAuth: []
             consumes:
@@ -404,6 +404,19 @@ paths:
                                     id:
                                         type: integer
                                         format: int64
+                "401":
+                    description: 토큰이 제대로 안 들어가져있음
+    /user/mypost:
+        get:
+            summary: "내가 쓴 글 조회"
+            tags: [User]
+            security:
+                - bearerAuth: []
+            consumes:
+                - application/json
+            responses:
+                "200":
+                    description: 회원탈퇴 성공
                 "401":
                     description: 토큰이 제대로 안 들어가져있음
     /category:
