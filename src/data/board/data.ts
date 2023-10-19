@@ -226,3 +226,36 @@ export async function plusReportedNum(id: number) {
         return post!.save();
     });
 }
+
+export async function getMyPost(userId: number) {
+    return Board.findAndCountAll({
+        attributes: [
+            "title",
+            "hidden",
+            "createdAt",
+            "updatedAt",
+            "thumbnail",
+            [Sequelize.col("user.nickname"), "userNickname"],
+            [Sequelize.col("category.name"), "categoryName"],
+        ],
+        include: [
+            {
+                model: User,
+                as: "user",
+                attributes: [],
+            },
+            {
+                model: Category,
+                as: "category",
+                attributes: [],
+            },
+        ],
+        order: [
+            ["createdAt", "DESC"],
+            ["title", "DESC"],
+        ],
+        where: {
+            userId,
+        },
+    });
+}

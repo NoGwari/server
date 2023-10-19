@@ -26,3 +26,9 @@ export async function updateDefalutImage(req: Request, res: Response) {
     await userRepository.updateImg(id, "https://nogwari2.s3.ap-northeast-2.amazonaws.com/user/defalut.png");
     res.status(200).json({id, url: "https://nogwari2.s3.ap-northeast-2.amazonaws.com/user/defalut.png"}); // 이미지의 S3 URL
 }
+
+export async function getPost(req: Request, res: Response) {
+    const id = Number(req.userId);
+    const data = await boardRepository.getMyPost(id);
+    res.status(200).json(data);
+}
