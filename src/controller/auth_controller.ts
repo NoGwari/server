@@ -7,6 +7,7 @@ import nodemailer, {Transporter} from "nodemailer";
 import "express-async-errors";
 import * as userRepository from "../data/user.js";
 import {config} from "../config.js";
+import {UserType} from "../models/user.js";
 
 type User = {
     id: string;
@@ -37,18 +38,16 @@ type EmailOption = {
 
 export async function signup(req: Request, res: Response) {
     const {password, nickname, email} = req.body;
-    let img;
-    req.body.img ? (img = req.body.img) : (img = "https://nogwari2.s3.ap-northeast-2.amazonaws.com/user/defalut.png");
     const found = await userRepository.findByRealId(email);
     if (found) {
         return res.status(409).json({message: `${email} is already exists!`});
     }
     const hashed = await bcrypt.hash(password, config.bcrypt.saltRounds);
-    const userId = await userRepository.createUser({
+    const userId: string = await userRepository.createUser({
         password: hashed,
         nickname,
         email,
-        img,
+        img: "https://nogwari2.s3.ap-northeast-2.amazonaws.com/user/defalut.png",
         grade: "",
         posting_num: 0,
         reply_num: 0,

@@ -13,13 +13,13 @@ export async function findByNickname(nickname: string): Promise<UserAttributes |
 }
 
 export async function createUser(user: UserType): Promise<string> {
-    const {password, nickname, email, img} = user;
+    const {password, nickname, email} = user;
     return User.create({
         password: password,
         nickname: nickname,
         email: email,
         grade: "grade1",
-        img: img,
+        img: "https://nogwari2.s3.ap-northeast-2.amazonaws.com/user/defalut.png",
         posting_num: 0,
         reply_num: 0,
         reported: 0,
