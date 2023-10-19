@@ -11,8 +11,8 @@ router.get("/default", isAuth, userController.updateDefalutImage);
 // GET /user/mypost
 router.get("/mypost", isAuth, userController.getPost);
 
-// GET /user/comment//
-// router.get("comment", isAuth, userController.getComment);
+// GET /user/comment
+router.get("/mycomment", isAuth, userController.getComment);
 
 // PUT /user/updatenick
 router.put("/updatenick", isAuth, userController.changeNickname);
