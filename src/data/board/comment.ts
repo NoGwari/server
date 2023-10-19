@@ -131,3 +131,13 @@ export async function remove(id: number) {
         comment?.destroy();
     });
 }
+
+export async function getMyComment(userId: number) {
+    return Comment.findAndCountAll({
+        ...INCLUDED_ALL,
+        where: {
+            userId,
+            parentCommentsId: 0,
+        },
+    });
+}

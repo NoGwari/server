@@ -1,5 +1,6 @@
 import {Request, Response} from "express";
 import * as boardRepository from "../data/board/data.js";
+import * as commentRepository from "../data/board/comment.js";
 import * as userRepository from "../data/user.js";
 
 export async function changeNickname(req: Request, res: Response) {
@@ -30,5 +31,11 @@ export async function updateDefalutImage(req: Request, res: Response) {
 export async function getPost(req: Request, res: Response) {
     const id = Number(req.userId);
     const data = await boardRepository.getMyPost(id);
+    res.status(200).json(data);
+}
+
+export async function getComment(req: Request, res: Response) {
+    const id = Number(req.userId);
+    const data = await commentRepository.getMyComment(id);
     res.status(200).json(data);
 }
