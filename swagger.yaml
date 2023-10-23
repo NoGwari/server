@@ -254,6 +254,27 @@ paths:
                     description: 삭제 권한 없음
                 "404":
                     description: 해당 게시글 미존재
+    /board/upload:
+        post:
+            summary: "이미지 변경"
+            tags: [Board]
+            security:
+                - bearerAuth: []
+            requestBody:
+                required: true
+                content:
+                    multipart/form-data:
+                        schema:
+                            type: object
+                            properties:
+                                image:
+                                    type: string
+                                    format: binary
+            responses:
+                200:
+                    description: Image uploaded successfully
+                400:
+                    description: Bad request
     /auth/me:
         get:
             summary: "로그인 확인"
