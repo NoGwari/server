@@ -419,6 +419,27 @@ paths:
                     description: 회원탈퇴 성공
                 "401":
                     description: 토큰이 제대로 안 들어가져있음
+    /user/upload:
+        post:
+            summary: "이미지 변경"
+            tags: [User]
+            security:
+                - bearerAuth: []
+            requestBody:
+                required: true
+                content:
+                    multipart/form-data:
+                        schema:
+                            type: object
+                            properties:
+                                image:
+                                    type: string
+                                    format: binary
+            responses:
+                200:
+                    description: Image uploaded successfully
+                400:
+                    description: Bad request
     /category:
         get:
             summary: "전체 카테고리 조회"
