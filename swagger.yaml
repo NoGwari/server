@@ -104,7 +104,7 @@ paths:
                 "404":
                     description: 해당 게시글 미존재
     /board/hits/{id}:
-        get:
+        post:
             summary: "게시물 따봉"
             security:
                 - bearerAuth: []
@@ -126,7 +126,7 @@ paths:
                 "404":
                     description: 해당 게시글 미존재
     /board/unhits/{id}:
-        get:
+        post:
             summary: "게시물 따봉 취소"
             security:
                 - bearerAuth: []
