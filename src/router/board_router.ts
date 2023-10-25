@@ -12,14 +12,14 @@ router.get("/", boardController.getPostingByPage);
 // GET /board/search?searchType=title&keyword=제목
 router.get("/search", boardController.getSearch);
 
-// GET /board/hits/1
-router.get("/hits/:id", isAuth, boardController.incrementHits);
-
-// GET /board/unhits/1
-router.get("/unhits/:id", isAuth, boardController.decrementHits);
-
 // GET /board/ishits/1
 router.get("/ishit/:id", isAuth, boardController.isHits);
+
+// POST /board/hits/1
+router.post("/hits/:id", isAuth, boardController.incrementHits);
+
+// POST /board/unhits/1
+router.post("/unhits/:id", isAuth, boardController.decrementHits);
 
 // POST /board/report/1
 router.post("/report/:id", isAuth, boardController.report);
