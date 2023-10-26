@@ -96,6 +96,20 @@ export async function updatePost(req: Request, res: Response) {
     res.status(200).json(updatePosts);
 }
 
+export async function updateHidden(req: Request, res: Response) {
+    const userId = Number(req.userId);
+    const postId = Number(req.params.id);
+    const post: BoardAttributes | null = await boardRepository.getById(postId);
+    if (!post) {
+        return res.status(404).json(postId);
+    }
+    if (req.userId !== post.userId) {
+        return res.sendStatus(403);
+    }
+    const updateHiddenPosts = await boardRepository.updateHidden(postId);
+    res.status(200).json(updateHiddenPosts);
+}
+
 export async function deletePost(req: Request, res: Response) {
     const postId = Number(req.params.id);
     const userId: number = req.userId!;

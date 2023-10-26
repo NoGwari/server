@@ -185,6 +185,15 @@ export async function update(id: number, title: string, content: string, hiddenN
     });
 }
 
+export async function updateHidden(id: number) {
+    return Board.findByPk(id, {
+        ...INCLUDED_ALL,
+    }).then((post: Board | null) => {
+        post!.hidden == "0" ? (post!.hidden = "1") : (post!.hidden = "0");
+        return post!.save();
+    });
+}
+
 export async function remove(id: number) {
     return Board.findByPk(id, {
         ...INCLUDED_ALL,

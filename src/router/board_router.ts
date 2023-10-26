@@ -33,6 +33,9 @@ router.post("/", isAuth, boardController.newPosting);
 // POST /board/upload
 router.post("/upload", uploadPostImg.single("image"), boardController.newImage);
 
+// PATCH /board/hidden/1
+router.patch("/hidden/:id", isAuth, boardController.updateHidden);
+
 // PUT /board/1
 router.put("/:id", isAuth, boardController.updatePost);
 
