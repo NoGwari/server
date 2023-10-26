@@ -256,7 +256,7 @@ paths:
                     description: 해당 게시글 미존재
     /board/upload:
         post:
-            summary: "이미지 변경"
+            summary: "게시글 이미지 추가"
             tags: [Board]
             security:
                 - bearerAuth: []
@@ -442,7 +442,7 @@ paths:
                     description: 토큰이 제대로 안 들어가져있음
     /user/upload:
         post:
-            summary: "이미지 변경"
+            summary: "유저 이미지 변경"
             tags: [User]
             security:
                 - bearerAuth: []
