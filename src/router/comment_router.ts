@@ -23,10 +23,10 @@ router.post("/reply/:id", isAuth, commentController.newReply);
 router.post("/report/:id", isAuth, commentController.report);
 
 // GET /comment/hits/:commentId
-router.get("/hits/:id", isAuth, commentController.incrementHits);
+router.post("/hits/:id", isAuth, commentController.incrementHits);
 
 // GET /comment/unhits/:commentId
-router.get("/unhits/:id", isAuth, commentController.decrementHits);
+router.post("/unhits/:id", isAuth, commentController.decrementHits);
 
 // GET /comment/ishits/:commentId
 router.get("/ishit/:id", isAuth, commentController.isHits);
