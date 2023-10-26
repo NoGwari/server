@@ -51,6 +51,27 @@ paths:
                                 $ref: "#/components/schemas/Board"
                 "401":
                     description: 인증 실패
+    /board/upload:
+        post:
+            summary: "게시글 이미지 추가"
+            tags: [Board]
+            security:
+                - bearerAuth: []
+            requestBody:
+                required: true
+                content:
+                    multipart/form-data:
+                        schema:
+                            type: object
+                            properties:
+                                image:
+                                    type: string
+                                    format: binary
+            responses:
+                200:
+                    description: Image uploaded successfully
+                400:
+                    description: Bad request
     /board/search:
         get:
             summary: "게시글 검색"
@@ -83,6 +104,84 @@ paths:
                     description: searchType/keyword 값 미존재
                 "404":
                     description: 검색된 데이터 없음
+    /board/{id}:
+        get:
+            summary: "단일 게시글 조회"
+            tags: [Board]
+            parameters:
+                - in: path
+                  name: id
+                  required: true
+                  type: integer
+                  minimun: 1
+                  description: "게시글의 ID값으로 서칭"
+            responses:
+                "200":
+                    description: 게시글 조회 성공
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Board"
+                "404":
+                    description: 해당 게시글 미존재
+        put:
+            summary: "게시글 수정"
+            security:
+                - bearerAuth: []
+            tags: [Board]
+            requestBody:
+                required: true
+                content:
+                    application/json:
+                        schema:
+                            $ref: "#/components/schemas/UpdateBoard"
+            consumes:
+                - application/json
+            parameters:
+                - in: path
+                  name: id
+                  required: true
+                  type: integer
+                  minimun: 1
+                  description: "게시글의 ID값으로 서칭"
+            responses:
+                "200":
+                    description: 게시글 수정 성공
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Board"
+                "401":
+                    description: 인증 실패
+                "403":
+                    description: 수정 권한 없음
+                "404":
+                    description: 해당 게시글 미존재
+        delete:
+            summary: "단일 게시글 삭제"
+            security:
+                - bearerAuth: []
+            tags: [Board]
+            parameters:
+                - in: path
+                  name: id
+                  required: true
+                  type: integer
+                  minimun: 1
+                  description: "게시글의 ID값으로 서칭"
+            responses:
+                "204":
+                    description: 게시글 삭제 성공
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Board"
+                "401":
+                    description: 인증 실패
+                "403":
+                    description: 삭제 권한 없음
+                "404":
+                    description: 해당 게시글 미존재
     /board/ishit/{id}:
         get:
             summary: "게시물 따봉 확인"
@@ -176,129 +275,6 @@ paths:
                     description: 인증 실패
                 "404":
                     description: 해당 게시글 미존재
-    /board/{id}:
-        get:
-            summary: "단일 게시글 조회"
-            tags: [Board]
-            parameters:
-                - in: path
-                  name: id
-                  required: true
-                  type: integer
-                  minimun: 1
-                  description: "게시글의 ID값으로 서칭"
-            responses:
-                "200":
-                    description: 게시글 조회 성공
-                    content:
-                        application/json:
-                            schema:
-                                $ref: "#/components/schemas/Board"
-                "404":
-                    description: 해당 게시글 미존재
-        put:
-            summary: "게시글 수정"
-            security:
-                - bearerAuth: []
-            tags: [Board]
-            requestBody:
-                required: true
-                content:
-                    application/json:
-                        schema:
-                            $ref: "#/components/schemas/UpdateBoard"
-            consumes:
-                - application/json
-            parameters:
-                - in: path
-                  name: id
-                  required: true
-                  type: integer
-                  minimun: 1
-                  description: "게시글의 ID값으로 서칭"
-            responses:
-                "200":
-                    description: 게시글 수정 성공
-                    content:
-                        application/json:
-                            schema:
-                                $ref: "#/components/schemas/Board"
-                "401":
-                    description: 인증 실패
-                "403":
-                    description: 수정 권한 없음
-                "404":
-                    description: 해당 게시글 미존재
-        delete:
-            summary: "단일 게시글 삭제"
-            security:
-                - bearerAuth: []
-            tags: [Board]
-            parameters:
-                - in: path
-                  name: id
-                  required: true
-                  type: integer
-                  minimun: 1
-                  description: "게시글의 ID값으로 서칭"
-            responses:
-                "204":
-                    description: 게시글 삭제 성공
-                    content:
-                        application/json:
-                            schema:
-                                $ref: "#/components/schemas/Board"
-                "401":
-                    description: 인증 실패
-                "403":
-                    description: 삭제 권한 없음
-                "404":
-                    description: 해당 게시글 미존재
-    /board/upload:
-        post:
-            summary: "게시글 이미지 추가"
-            tags: [Board]
-            security:
-                - bearerAuth: []
-            requestBody:
-                required: true
-                content:
-                    multipart/form-data:
-                        schema:
-                            type: object
-                            properties:
-                                image:
-                                    type: string
-                                    format: binary
-            responses:
-                200:
-                    description: Image uploaded successfully
-                400:
-                    description: Bad request
-    /auth/me:
-        get:
-            summary: "로그인 확인"
-            security:
-                - bearerAuth: []
-            tags: [Auth]
-            responses:
-                "200":
-                    description: 로그인 확인 완료
-                    content:
-                        application/json:
-                            schema:
-                                type: object
-                                properties:
-                                    nickname:
-                                        type: string
-                                    email:
-                                        type: string
-                                    img:
-                                        type: string
-                "401":
-                    description: Authentication Error
-                "404":
-                    description: 해당 로그인 정보 없음
     /auth/signup:
         post:
             summary: "회원가입"
@@ -377,6 +353,90 @@ paths:
                                 $ref: "#/components/schemas/Auth"
                 "401":
                     description: 로그인 실패
+    /auth/me:
+        get:
+            summary: "로그인 확인"
+            security:
+                - bearerAuth: []
+            tags: [Auth]
+            responses:
+                "200":
+                    description: 로그인 확인 완료
+                    content:
+                        application/json:
+                            schema:
+                                type: object
+                                properties:
+                                    nickname:
+                                        type: string
+                                    email:
+                                        type: string
+                                    img:
+                                        type: string
+                "401":
+                    description: Authentication Error
+                "404":
+                    description: 해당 로그인 정보 없음
+    /user/mypost:
+        get:
+            summary: "내가 쓴 글 조회"
+            tags: [User]
+            security:
+                - bearerAuth: []
+            consumes:
+                - application/json
+            responses:
+                "200":
+                    description: 내가 쓴 글 조회 성공
+                "401":
+                    description: 토큰이 제대로 안 들어가져있음
+    /user/mycomment:
+        get:
+            summary: "내가 쓴 글 조회"
+            tags: [User]
+            security:
+                - bearerAuth: []
+            consumes:
+                - application/json
+            responses:
+                "200":
+                    description: 내가 쓴 댓글 조회 성공
+                "401":
+                    description: 토큰이 제대로 안 들어가져있음
+    /user/upload:
+        post:
+            summary: "유저 이미지 변경"
+            tags: [User]
+            security:
+                - bearerAuth: []
+            requestBody:
+                required: true
+                content:
+                    multipart/form-data:
+                        schema:
+                            type: object
+                            properties:
+                                image:
+                                    type: string
+                                    format: binary
+            responses:
+                200:
+                    description: Image uploaded successfully
+                400:
+                    description: Bad request
+    /user/default:
+        put:
+            summary: "유저 이미지 기본값으로 변경"
+            tags: [User]
+            security:
+                - bearerAuth: []
+            consumes:
+                - application/json
+            responses:
+                "200":
+                    description: 기본값으로 변경 성공
+                "401":
+                    description: 기본값으로 변경 실패
     /user/updatenick:
         put:
             summary: "닉네임 변경"
@@ -427,53 +487,6 @@ paths:
                                         format: int64
                 "401":
                     description: 토큰이 제대로 안 들어가져있음
-    /user/mypost:
-        get:
-            summary: "내가 쓴 글 조회"
-            tags: [User]
-            security:
-                - bearerAuth: []
-            consumes:
-                - application/json
-            responses:
-                "200":
-                    description: 내가 쓴 글 조회 성공
-                "401":
-                    description: 토큰이 제대로 안 들어가져있음
-    /user/mycomment:
-        get:
-            summary: "내가 쓴 글 조회"
-            tags: [User]
-            security:
-                - bearerAuth: []
-            consumes:
-                - application/json
-            responses:
-                "200":
-                    description: 내가 쓴 댓글 조회 성공
-                "401":
-                    description: 토큰이 제대로 안 들어가져있음
-    /user/upload:
-        post:
-            summary: "유저 이미지 변경"
-            tags: [User]
-            security:
-                - bearerAuth: []
-            requestBody:
-                required: true
-                content:
-                    multipart/form-data:
-                        schema:
-                            type: object
-                            properties:
-                                image:
-                                    type: string
-                                    format: binary
-            responses:
-                200:
-                    description: Image uploaded successfully
-                400:
-                    description: Bad request
     /category:
         get:
             summary: "전체 카테고리 조회"
