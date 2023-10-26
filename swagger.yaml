@@ -767,7 +767,7 @@ paths:
                 "404":
                     description: 해당 게시글 미존재
     /comment/hits/{id}:
-        get:
+        post:
             summary: "댓글 따봉"
             security:
                 - bearerAuth: []
@@ -789,7 +789,7 @@ paths:
                 "404":
                     description: 해당 게시글 미존재
     /comment/unhits/{id}:
-        get:
+        post:
             summary: "댓글 따봉 취소"
             security:
                 - bearerAuth: []
