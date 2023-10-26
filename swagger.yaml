@@ -157,6 +157,32 @@ paths:
                     description: 수정 권한 없음
                 "404":
                     description: 해당 게시글 미존재
+    /board/hidden/{id}:
+        patch:
+            summary: "게시글 숨김처리(toggle)"
+            security:
+                - bearerAuth: []
+            tags: [Board]
+            parameters:
+                - in: path
+                  name: id
+                  required: true
+                  type: integer
+                  minimun: 1
+                  description: "게시글의 ID값을 받아 숨김처리"
+            responses:
+                "200":
+                    description: 게시글 숨김처리 성공(만약 숨겨져 있던 게시글이였다면 숨김해제)
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Board"
+                "401":
+                    description: 인증 실패
+                "403":
+                    description: 수정 권한 없음
+                "404":
+                    description: 해당 게시글 미존재
         delete:
             summary: "단일 게시글 삭제"
             security:
