@@ -183,3 +183,8 @@ export async function report(req: Request, res: Response) {
     await userRepository.incrementReportedNum(post.userId!); // 신고 당한사람 아이디
     res.sendStatus(201);
 }
+
+export async function getPopularPost(req: Request, res: Response) {
+    const popularPosts = await boardRepository.getPopularPost();
+    res.status(200).json(popularPosts);
+}

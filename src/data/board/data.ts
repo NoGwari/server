@@ -1,8 +1,9 @@
 import {BoardType, BoardAttributes} from "../../customType/board";
-import SQ, {FindOptions, Op} from "sequelize";
+import SQ, {FindOptions, Op, QueryTypes} from "sequelize";
 import Board from "../../models/data.js";
 import User from "../../models/user.js";
 import Category from "../../models/category.js";
+import {sequelize} from "../../models/index.js";
 const Sequelize = SQ.Sequelize;
 
 const INCLUDED_ALL: FindOptions<BoardAttributes> = {
@@ -267,4 +268,14 @@ export async function getMyPost(userId: number) {
             userId,
         },
     });
+}
+
+export async function getPopularPost() {
+    const posts = await sequelize.query(
+        "SELECT * FROM board AS B WHERE id IN ( SELECT * FROM (SELECT boardId FROM hitboard WHERE DATEDIFF(NOW(), createdAt) < 1 GROUP BY boardId ORDER BY COUNT(*) DESC LIMIT 3) AS HB )",
+        {
+            type: QueryTypes.SELECT,
+        }
+    );
+    return posts;
 }
