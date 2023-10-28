@@ -42,4 +42,7 @@ router.put("/:id", isAuth, boardController.updatePost);
 // Delete /board/1
 router.delete("/:id", isAuth, boardController.deletePost);
 
+// GET /board/popular
+router.get("/popular", boardController.getPopularPost);
+
 export default router;
