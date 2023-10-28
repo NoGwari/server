@@ -24,6 +24,9 @@ router.post("/unhits/:id", isAuth, boardController.decrementHits);
 // POST /board/report/1
 router.post("/report/:id", isAuth, boardController.report);
 
+// GET /board/popular
+router.get("/popular", boardController.getPopularPost);
+
 // GET /board/1
 router.get("/:id", redisMiddleware, boardController.getPosting);
 
