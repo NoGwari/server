@@ -104,6 +104,13 @@ paths:
                     description: searchType/keyword 값 미존재
                 "404":
                     description: 검색된 데이터 없음
+    /board/popular:
+        get:
+            summary: "인기있는 게시글 조회(24시간 내 추천을 제일 많이 받은 게시글)"
+            tags: [Board]
+            responses:
+                "200":
+                    description: 게시글 조회 성공
     /board/{id}:
         get:
             summary: "단일 게시글 조회"
