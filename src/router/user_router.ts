@@ -14,6 +14,9 @@ router.get("/mycomment", isAuth, userController.getComment);
 // PUT /user/default
 router.put("/default", isAuth, userController.updateDefalutImage);
 
+// PUT /user/initpassword
+router.put("/initpassword", userController.updateInitPassword);
+
 // PUT /user/updatenick
 router.put("/updatenick", isAuth, userController.changeNickname);
 
