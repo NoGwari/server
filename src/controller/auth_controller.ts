@@ -58,8 +58,12 @@ export async function signup(req: Request, res: Response) {
 
 export async function mailSubmit(req: Request, res: Response) {
     const client = req.redisClient;
-    client.connect(); // redis connect 완료
     const {email} = req.body;
+    const found = await userRepository.findByRealId(email);
+    if (found) {
+        return res.status(409).json({message: `${email} is already exists!`});
+    }
+    client.connect(); // redis connect 완료
     const verifyKey = Math.floor(Math.random() * 899999) + 100000; // 무작위값 생성
     await req.redisClient.set(`${email}`, `${verifyKey}`, "EX", 300);
     const emailConfig: EmailConfiguration = {
