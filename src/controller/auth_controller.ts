@@ -21,7 +21,7 @@ type User = {
     reported: number;
 };
 
-type EmailConfiguration = {
+export type EmailConfiguration = {
     service: string;
     auth: {
         user: string;
@@ -29,7 +29,7 @@ type EmailConfiguration = {
     };
 };
 
-type EmailOption = {
+export type EmailOption = {
     from: string;
     to: string;
     subject: string;
@@ -63,7 +63,7 @@ export async function mailSubmit(req: Request, res: Response) {
     if (found) {
         return res.status(409).json({message: `${email} is already exists!`});
     }
-    client.connect(); // redis connect 완료
+    await client.connect(); // redis connect 완료
     const verifyKey = Math.floor(Math.random() * 899999) + 100000; // 무작위값 생성
     await req.redisClient.set(`${email}`, `${verifyKey}`, "EX", 300);
     const emailConfig: EmailConfiguration = {
@@ -81,7 +81,7 @@ export async function mailSubmit(req: Request, res: Response) {
         text: `안녕하세요!\n\n 아래에 나오는 인증번호로 인증 부탁드려요! \n\n 인증번호 : ${verifyKey}`,
     };
 
-    transporter.sendMail(mailOptions, (error, info) => {
+    await transporter.sendMail(mailOptions, (error, info) => {
         if (error) {
             return res.status(404).json({email});
         } else {
