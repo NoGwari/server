@@ -327,6 +327,8 @@ paths:
                                 $ref: "#/components/schemas/Signup"
                 "401":
                     description: 회원가입 실패
+                "409":
+                    description: 중복된 이메일 있음
     /auth/mailsubmit:
         post:
             summary: "인증키 메일 전송"
@@ -346,6 +348,8 @@ paths:
                                 $ref: "#/components/schemas/MailSubmit"
                 "404":
                     description: 메일 찾을 수 없음
+                "409":
+                    description: 중복된 이메일 있음
     /auth/checkkey:
         post:
             summary: "인증키 확인"
