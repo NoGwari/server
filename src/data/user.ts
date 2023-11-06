@@ -39,6 +39,13 @@ export async function updateNickname(id: number, changeNickname: string) {
     });
 }
 
+export async function updatePassword(id: number, changePassword: string) {
+    return User.findByPk(id).then((user: User | null) => {
+        user!.password = changePassword;
+        return user!.save();
+    });
+}
+
 export async function updateImg(id: number, changeImg: string) {
     return User.findByPk(id).then((user: User | null) => {
         user!.img = changeImg;
