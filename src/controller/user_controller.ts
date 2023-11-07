@@ -33,9 +33,16 @@ export async function updateDefalutImage(req: Request, res: Response) {
     res.status(200).json({id, url: "https://nogwari2.s3.ap-northeast-2.amazonaws.com/user/defalut.png"}); // 이미지의 S3 URL
 }
 
-export async function updateInitPassword(req: Request, res: Response) {
-    const email: string = String(req.body.email);
-    const randomPassword = shortId.generate();
+export async function mailSubmitForInitPassword(req: Request, res: Response) {
+    const client = req.redisClient;
+    const {email} = req.body;
+    const found = await userRepository.findByRealId(email);
+    if (!found) {
+        return res.status(404).json({message: `${email} is already not exists!`});
+    } // email에 해당하는 사용자가 존재하지 않을때,
+    await client.connect(); // redis connect 완료
+    const verifyKey = Math.floor(Math.random() * 899999) + 100000; // 무작위값 생성
+    await req.redisClient.set(`${email}`, `${verifyKey}`, "EX", 300);
     const emailConfig: EmailConfiguration = {
         service: config.email.emailService,
         auth: {
@@ -43,25 +50,46 @@ export async function updateInitPassword(req: Request, res: Response) {
             pass: config.email.emailPW,
         },
     };
-    const transporter: Transporter = await nodemailer.createTransport(emailConfig);
+    const transporter: Transporter = nodemailer.createTransport(emailConfig);
     const mailOptions: EmailOption = {
         from: emailConfig.auth.user,
         to: email,
-        subject: "Nogwari 비밀번호 초기화",
-        text: `안녕하세요!\n\n 아래에 나오는 비밀번호로 재로그인 부탁드려요! \n\n 비밀번호 : ${randomPassword}`,
+        subject: "Nogwari 이메일 인증",
+        text: `안녕하세요!\n\n 아래에 나오는 인증번호로 인증 부탁드려요! \n\n 인증번호 : ${verifyKey}`,
     };
+
     await transporter.sendMail(mailOptions, (error, info) => {
         if (error) {
-            console.error(error);
-            return res.status(400).json({email});
+            return res.status(404).json({email});
         } else {
             console.log("Email sent: " + info.response);
+            return res.status(200).json({email});
+        }
+    });
+}
+
+export async function updateInitPassword(req: Request, res: Response) {
+    const {email, verifyKey} = req.body;
+    const client = req.redisClient;
+    shortId.characters("0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ#@");
+    const randomPassword = shortId.generate();
+    client.connect(); // redis connect 완료
+    client.get(`${email}`, (error: Error, result: any) => {
+        if (error) {
+            console.error("Error:", error);
+            return res.status(400).json({email, verifyKey});
+        } else if (result === null) {
+            return res.status(400).json({email, verifyKey});
+        } else {
+            if (result !== verifyKey) {
+                return res.status(404).json({email, verifyKey});
+            }
         }
     });
     const hashed = await bcrypt.hash(randomPassword, config.bcrypt.saltRounds);
     const user = await userRepository.findByRealId(email);
     await userRepository.updatePassword(user!.id, hashed);
-    res.sendStatus(200);
+    return res.status(200).json({email, randomPassword});
 }
 
 export async function getPost(req: Request, res: Response) {
