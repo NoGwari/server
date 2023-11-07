@@ -461,9 +461,9 @@ paths:
                     description: Image uploaded successfully
                 400:
                     description: Bad request
-    /user/initpassword:
-        put:
-            summary: "유저 비밀번호 초기화(초기화 비밀번호 이메일 전송)"
+    /user/mailSubmitForInitPassword:
+        post:
+            summary: "메일 전송(유저 비밀번호 초기화)"
             tags: [User]
             consumes:
                 - application/json
@@ -479,8 +479,32 @@ paths:
             responses:
                 "200":
                     description: 비밀번호 초기화 성공
+                "404":
+                    description: 메일 전송 에러
+    /user/initpassword:
+        put:
+            summary: "유저 비밀번호 초기화(인증번호 검사)"
+            tags: [User]
+            consumes:
+                - application/json
+            requestBody:
+                required: true
+                content:
+                    application/json:
+                        schema:
+                            type: object
+                            properties:
+                                email:
+                                    type: string
+                                verifyKey:
+                                    type: string
+            responses:
+                "200":
+                    description: 비밀번호 초기화 성공
                 "400":
-                    description: 메일 전송 오류발생
+                    description: 인증번호 검사 실패
+                "404":
+                    description: 인증번호 다름
     /user/default:
         put:
             summary: "유저 이미지 기본값으로 변경"
