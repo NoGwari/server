@@ -15,6 +15,13 @@ export async function changeNickname(req: Request, res: Response) {
     res.status(200).json({nickname: nickname});
 }
 
+export async function changePassword(req: Request, res: Response) {
+    const id = Number(req.userId);
+    const {password} = req.body;
+    await userRepository.updatePassword(id, password);
+    res.status(200).json({password: password});
+}
+
 export async function withDrawal(req: Request, res: Response) {
     const deleteUser = await userRepository.deleteUser(req.userId!);
     res.status(200).json(deleteUser);
