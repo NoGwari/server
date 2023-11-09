@@ -38,7 +38,7 @@ export async function mailSubmitForInitPassword(req: Request, res: Response) {
     const {email} = req.body;
     const found = await userRepository.findByRealId(email);
     if (!found) {
-        return res.status(404).json({message: `${email} is already not exists!`});
+        return res.status(404).json({message: `${email} is not exists!`});
     } // email에 해당하는 사용자가 존재하지 않을때,
     await client.connect(); // redis connect 완료
     const verifyKey = Math.floor(Math.random() * 899999) + 100000; // 무작위값 생성
@@ -50,6 +50,7 @@ export async function mailSubmitForInitPassword(req: Request, res: Response) {
             pass: config.email.emailPW,
         },
     };
+
     const transporter: Transporter = nodemailer.createTransport(emailConfig);
     const mailOptions: EmailOption = {
         from: emailConfig.auth.user,
@@ -57,7 +58,6 @@ export async function mailSubmitForInitPassword(req: Request, res: Response) {
         subject: "Nogwari 이메일 인증",
         text: `안녕하세요!\n\n 아래에 나오는 인증번호로 인증 부탁드려요! \n\n 인증번호 : ${verifyKey}`,
     };
-
     await transporter.sendMail(mailOptions, (error, info) => {
         if (error) {
             return res.status(404).json({email});
@@ -73,23 +73,32 @@ export async function updateInitPassword(req: Request, res: Response) {
     const client = req.redisClient;
     shortId.characters("0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ#@");
     const randomPassword = shortId.generate();
+    const hashed = await bcrypt.hash(randomPassword, config.bcrypt.saltRounds);
+    const user = await userRepository.findByRealId(email);
+    let status: number;
     client.connect(); // redis connect 완료
     client.get(`${email}`, (error: Error, result: any) => {
         if (error) {
             console.error("Error:", error);
-            return res.status(400).json({email, verifyKey});
+            status = 400;
         } else if (result === null) {
-            return res.status(400).json({email, verifyKey});
+            status = 400;
         } else {
             if (result !== verifyKey) {
-                return res.status(404).json({email, verifyKey});
+                status = 404;
+            } else {
+                userRepository.updatePassword(user!.id, hashed);
+                status = 200;
             }
         }
     });
-    const hashed = await bcrypt.hash(randomPassword, config.bcrypt.saltRounds);
-    const user = await userRepository.findByRealId(email);
-    await userRepository.updatePassword(user!.id, hashed);
-    return res.status(200).json({email, randomPassword});
+    if (status! === 400) {
+        return res.status(400).json({email, verifyKey});
+    } else if (status! === 404) {
+        return res.status(404).json({email, verifyKey});
+    } else {
+        return res.status(200).json({email, randomPassword});
+    }
 }
 
 export async function getPost(req: Request, res: Response) {
