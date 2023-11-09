@@ -547,6 +547,35 @@ paths:
                                         type: string
                 "401":
                     description: 닉네임변경 실패
+    /user/updatepassword:
+        put:
+            summary: "비밀번호 변경"
+            tags: [User]
+            security:
+                - bearerAuth: []
+            consumes:
+                - application/json
+            requestBody:
+                required: true
+                content:
+                    application/json:
+                        schema:
+                            type: object
+                            properties:
+                                password:
+                                    type: string
+            responses:
+                "200":
+                    description: 비밀번호 변경 성공
+                    content:
+                        application/json:
+                            schema:
+                                type: object
+                                properties:
+                                    password:
+                                        type: string
+                "401":
+                    description: 비밀번호 변경 실패(권한 없음)
     /user/withdrawal:
         delete:
             summary: "회원탈퇴"
