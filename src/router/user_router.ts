@@ -24,6 +24,9 @@ router.put("/initpassword", redisMiddleware, userController.updateInitPassword);
 // PUT /user/updatenick
 router.put("/updatenick", isAuth, userController.changeNickname);
 
+// PUT /user/updatePassword
+router.Put("/updatePassword", isAuth, userController.changePassword);
+
 // DELETE /user/withdrawal
 router.delete("/withdrawal", isAuth, userController.withDrawal);
 
