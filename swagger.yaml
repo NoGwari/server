@@ -885,6 +885,10 @@ paths:
             responses:
                 "200":
                     description: 댓글 따봉 확인(true -> 따봉되어있는 상태 / false -> 따봉 안되어 있는 상태)
+                    content:
+                        application/json:
+                            schema:
+                                type: boolean
                 "401":
                     description: 권한 없음
                 "404":
