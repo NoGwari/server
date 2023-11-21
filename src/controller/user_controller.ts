@@ -18,7 +18,8 @@ export async function changeNickname(req: Request, res: Response) {
 export async function changePassword(req: Request, res: Response) {
     const id = Number(req.userId);
     const {password} = req.body;
-    await userRepository.updatePassword(id, password);
+    const hashed = await bcrypt.hash(password, config.bcrypt.saltRounds);
+    await userRepository.updatePassword(id, hashed);
     res.status(200).json({password: password});
 }
 
