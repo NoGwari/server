@@ -1,4 +1,4 @@
-import Board, {associate as associateBoard} from "./data.js";
+import Board, {associate as associateBoard} from "./board.js";
 import Comment, {associate as associateComment} from "./comment.js";
 import User, {associate as associateUser} from "./user.js";
 import Category, {associate as associateCategory} from "./category.js";

@@ -1,7 +1,7 @@
 import {Request, Response} from "express";
 import {BoardAttributes, PostingData} from "../customType/board";
 import * as userRepository from "../data/user.js";
-import * as boardRepository from "../data/board/data.js";
+import * as boardRepository from "../data/board/board.js";
 import * as hitBoardRepository from "../data/board/hit_board.js";
 import * as reportedBoardRepository from "../data/board/reported_board.js";
 import * as categoryRepository from "../data/board/category.js";

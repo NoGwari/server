@@ -1,6 +1,6 @@
 import {BoardType, BoardAttributes} from "../../customType/board";
 import SQ, {FindOptions, Op, QueryTypes} from "sequelize";
-import Board from "../../models/data.js";
+import Board from "../../models/board.js";
 import User from "../../models/user.js";
 import Category from "../../models/category.js";
 import {sequelize} from "../../models/index.js";

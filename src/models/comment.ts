@@ -3,7 +3,7 @@ import {CommentsAttributes, CommentsType} from "../customType/comment.js";
 import {sequelize} from "../db/database.js";
 import {dbType} from "./index.js";
 import User from "./user.js";
-import Board from "./data.js";
+import Board from "./board.js";
 
 const DataTypes = SQ.DataTypes;
 

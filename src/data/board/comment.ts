@@ -1,6 +1,6 @@
 import SQ, {FindOptions, Op} from "sequelize";
 import {CommentsAttributes, CommentsType} from "../../customType/comment.js";
-import Board from "../../models/data.js";
+import Board from "../../models/board.js";
 import User from "../../models/user.js";
 import Comment from "../../models/comment.js";
 const Sequelize = SQ.Sequelize;

@@ -2,7 +2,7 @@ import {Request, Response} from "express";
 import nodemailer, {Transporter} from "nodemailer";
 import shortId from "shortid";
 import bcrypt, {hash} from "bcrypt";
-import * as boardRepository from "../data/board/data.js";
+import * as boardRepository from "../data/board/board.js";
 import * as commentRepository from "../data/board/comment.js";
 import * as userRepository from "../data/user.js";
 import {config} from "../config.js";

@@ -1,10 +1,10 @@
 import {Request, Response} from "express";
 import * as userRepository from "../data/user.js";
 import * as commentRepository from "../data/board/comment.js";
-import * as boardRepository from "../data/board/data.js";
+import * as boardRepository from "../data/board/board.js";
 import * as hitCommentRepository from "../data/board/hit_comment.js";
 import * as reportedCommentRepository from "../data/board/reported_comment.js";
-import Board from "../models/data.js";
+import Board from "../models/board.js";
 import {CommentsAttributes} from "../customType/comment.js";
 
 export async function getComment(req: Request, res: Response) {

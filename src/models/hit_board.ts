@@ -1,6 +1,6 @@
 import SQ, {Association, FindOptions, Op} from "sequelize";
 import {sequelize} from "../db/database.js";
-import Board from "./data.js";
+import Board from "./board.js";
 import User from "./user.js";
 import {dbType} from "./index.js";
 
