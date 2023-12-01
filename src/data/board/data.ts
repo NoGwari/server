@@ -240,6 +240,7 @@ export async function plusReportedNum(id: number) {
 export async function getMyPost(userId: number) {
     return Board.findAndCountAll({
         attributes: [
+            "id",
             "title",
             "hidden",
             "createdAt",
