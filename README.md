@@ -10,9 +10,6 @@
 
 ![NogwariERD](https://github.com/NoGwari/server/assets/108740187/e8804455-bcf0-47bf-9394-9c4efbed5244)
 
-### ✍🏻 Swagger
-http://ec2-15-164-55-240.ap-northeast-2.compute.amazonaws.com/api-docs/
-
 ### 🛠️ Stack
 <img src="https://img.shields.io/badge/node.js-339933?style=for-the-badge&logo=Node.js&logoColor=white"> <img src="https://img.shields.io/badge/express-000000?style=for-the-badge&logo=express&logoColor=white"> <img src="https://img.shields.io/badge/typescript-3178C6?style=for-the-badge&logo=typescript&logoColor=white">
 
